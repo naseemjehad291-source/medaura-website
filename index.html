@@ -464,16 +464,18 @@ footer:after{content:"";display:block;width:100%;height:2px;position:absolute;to
 <footer><div class="wrap" id="ft"></div></footer>
 <button id="back-top" type="button" aria-label="العودة إلى أعلى الصفحة" title="العودة إلى الأعلى">↑</button>
 <script src="content.js"></script>
+<script src="supabase-config.js"></script>
+<script src="public-data.js" defer></script>
 <script>
 document.getElementById('skip-intro')?.addEventListener('click',()=>document.getElementById('intro').classList.add('intro-skipped'));
 const D=window.MEDAURA,L=D.links,$=s=>document.querySelector(s);
 function setupImpact(){const el=$('#impact-count'),cap=$('#impact-caption');if(!el)return;const raw=D.impact&&D.impact.studentsReached;const label=(D.impact&&D.impact.impactLabel)||'طالب وطالبة استفادوا من أنشطة MEDAURA';if(raw===null||raw===undefined||raw===''||!Number.isFinite(Number(raw))||Number(raw)<0){el.textContent='أضف الرقم';el.classList.add('impact-unset');cap.textContent='عدد الطلاب المستفيدين — عدّله في content.js بعد اعتماد الرقم';return}el.classList.remove('impact-unset');cap.textContent=label;const target=Math.floor(Number(raw));const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const start=performance.now();const duration=reduce?0:1450;function tick(now){const t=duration?Math.min(1,(now-start)/duration):1;const eased=1-Math.pow(1-t,3);el.textContent=Math.round(target*eased).toLocaleString('en-US');if(t<1)requestAnimationFrame(tick)}requestAnimationFrame(tick)}
 
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const ST={open:'مفتوح للتسجيل',upcoming:'قريباً',done:'مكتملة'};
+const ST={open:'مفتوح للتسجيل',upcoming:'قريباً',done:'مكتملة',completed:'مكتملة'};
 const fmt=d=>{try{return new Date(d).toLocaleDateString('ar-u-nu-latn',{year:'numeric',month:'long',day:'numeric'})}catch(e){return d}};
 const safe=u=>/^https?:\/\//.test(u||'')?u:'';
-const ph=(f,a)=>f?`<img class="ph" src="photos/${esc(f)}" alt="${esc(a)}" loading="lazy">`:`<div class="ph" role="img" aria-label="${esc(a)}">صورة حقيقية من أنشطتنا (مكان مؤقت)</div>`;
+const ph=(f,a)=>f?`<img class="ph" src="${esc(/^https:\/\//.test(f)?f:"photos/"+f)}" alt="${esc(a)}" loading="lazy">`:`<div class="ph" role="img" aria-label="${esc(a)}">صورة حقيقية من أنشطتنا (مكان مؤقت)</div>`;
 const empty=(t,s)=>`<div class="empty"><b>${t}</b><br>${s||''}</div>`;
 const smp=x=>x.sample?'<i class="smp">مثال تجريبي</i>':'';
 const card=c=>`<a class="card" href="#/course/${esc(c.id)}">${ph(c.photo,c.title)}<span class="chip s-${esc(c.status)}">${ST[c.status]||''}</span>${smp(c)}<div class="cb"><span class="cat">${esc(c.cat)}</span><h3>${esc(c.title)}</h3><ul class="meta"><li>المستوى: ${esc(c.level)}</li><li>${esc(c.duration)}</li><li>${esc(c.format)}</li></ul><div class="cf"><span>${esc(c.instructor)}</span><b>التفاصيل والتسجيل</b></div></div></a>`;
@@ -526,7 +528,7 @@ addEventListener('scroll',onScroll,{passive:true});onScroll();
 topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));
 function revealSections(){const nodes=document.querySelectorAll('#app section:not(.hero),#app .card,#app .box');if(!('IntersectionObserver' in window)){nodes.forEach(n=>n.classList.add('in-view'));return}const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -24px 0px'});nodes.forEach((n,i)=>{if(!n.classList.contains('reveal')){n.classList.add('reveal');n.style.transitionDelay=(Math.min(i%4,3)*65)+'ms'}io.observe(n)})}
 const observer=new MutationObserver(()=>revealSections());observer.observe($('#app'),{childList:true,subtree:true});
-addEventListener('hashchange',paint);paint();revealSections();setupImpact();
+addEventListener('hashchange',paint);window.MEDAURA_REFRESH=()=>{paint();revealSections()};paint();revealSections();setupImpact();
 // Learning Lab: all data remains on this browser; no network requests.
 const LAB_KEY='medaura-learning-lab-v1',LAB_DAYS=[1,3,7,14,30];
 function labLoad(){try{const v=JSON.parse(localStorage.getItem(LAB_KEY)||'[]');return Array.isArray(v)?v.filter(x=>x&&typeof x==='object').slice(0,300):[]}catch{return []}}
