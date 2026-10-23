@@ -3,7 +3,7 @@ const cfg=window.MEDAURA_SUPABASE;
 const supabase=createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});
 const $=id=>document.getElementById(id);
 let current='courses', rows=[],role=null;
-const opts={courses:[['draft','مسودة'],['open','التسجيل مفتوح'],['upcoming','قريباً'],['completed','مكتملة']],events:[['draft','مسودة'],['upcoming','قادمة'],['completed','مكتملة'],['cancelled','ملغاة']]};
+const opts={courses:[['draft','مسودة'],['open','التسجيل مفتوح'],['upcoming','قريباً'],['completed','مكتملة']],};
 function message(s,error=false){$('message').hidden=false;$('message').className='msg'+(error?' error':'');$('message').textContent=s;window.scrollTo({top:0,behavior:'smooth'});}
 function clearMessage(){$('message').hidden=true;}
 function validURL(v){if(!v)return null;const u=new URL(v);if(!['https:','http:'].includes(u.protocol))throw Error('رابط غير صالح');return u.href;}
