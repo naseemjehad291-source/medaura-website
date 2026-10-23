@@ -431,6 +431,12 @@ footer:after{content:"";display:block;width:100%;height:2px;position:absolute;to
 .lab-empty{color:#607d80;font-size:.9rem}
 @media(max-width:740px){.lab-form,.lab-results{grid-template-columns:1fr}.lab-form .wide,.lab-form .lab-actions{grid-column:auto}}
 @media(prefers-reduced-motion:reduce){#intro{display:none!important}}
+
+
+/* MEDAURA Our Work */
+.work-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:24px;margin:28px 0 60px}
+.work-card{display:block;background:white;border:1px solid #d8e9e5;border-radius:20px;overflow:hidden;text-decoration:none;color:#173943;box-shadow:0 12px 30px #062e3b0d;transition:transform .2s,box-shadow .2s}
+.work-card:hover{transform:translateY(-4px);box-shadow:0 16px 35px #062e3b22}.work-cover{width:100%;aspect-ratio:16/10;object-fit:cover;background:linear-gradient(135deg,#0e5260,#d4eae5);display:block}.work-card-body{padding:20px}.work-card h2{font-size:1.2rem;margin:7px 0}.work-card small,.work-meta{color:#607c81}.work-card p{margin:8px 0 0;line-height:1.8}.work-article{max-width:860px;margin:auto;padding:35px 0 70px}.work-article .work-cover{border-radius:20px;max-height:480px}.work-article h1{font-size:clamp(1.8rem,4vw,3rem);margin:18px 0 12px}.work-article .work-block{margin:24px 0}.work-article .work-block h2{margin:0 0 12px}.work-article .work-block p{line-height:2;white-space:pre-line}.work-article figure{margin:26px 0}.work-article figure img{width:100%;border-radius:16px;max-height:650px;object-fit:contain;background:#eaf2f1}.work-article figcaption{color:#607c81;text-align:center;margin-top:8px}.work-video{position:relative;aspect-ratio:16/9;width:100%;border-radius:16px;overflow:hidden;background:#102f40}.work-video iframe,.work-video video{width:100%;height:100%;border:0}.work-back{display:inline-block;margin-bottom:18px;color:#0b5961;font-weight:700}
 </style>
 </head>
 <body>
@@ -458,7 +464,7 @@ footer:after{content:"";display:block;width:100%;height:2px;position:absolute;to
 <a href="#/" aria-label="MEDAURA الرئيسية"><img src="logo.png" alt="شعار MEDAURA Medical Team"></a>
 <button id="mt" aria-expanded="false" aria-controls="nv">القائمة</button>
 <nav id="nv" aria-label="التنقل الرئيسي">
-<a href="#/" data-p="">الرئيسية</a><a href="#/about" data-p="about">من نحن</a><a href="#/courses" data-p="courses">الدورات والورشات</a><a href="#/events" data-p="events">الفعاليات والأنشطة</a><a href="#/resources" data-p="resources">المكتبة الطبية</a><a href="#/join" data-p="join">انضم إلى <bdi>MEDAURA</bdi></a><a href="#/contact" data-p="contact">تواصل معنا</a>
+<a href="#/" data-p="">الرئيسية</a><a href="#/about" data-p="about">من نحن</a><a href="#/courses" data-p="courses">الدورات والورشات</a><a href="#/events" data-p="events">الفعاليات والأنشطة</a><a href="#/work" data-p="work">أعمالنا</a><a href="#/resources" data-p="resources">المكتبة الطبية</a><a href="#/join" data-p="join">انضم إلى <bdi>MEDAURA</bdi></a><a href="#/contact" data-p="contact">تواصل معنا</a>
 </nav></div></header>
 <main id="app" tabindex="-1"></main>
 <footer><div class="wrap" id="ft"></div></footer>
@@ -466,6 +472,7 @@ footer:after{content:"";display:block;width:100%;height:2px;position:absolute;to
 <script src="content.js"></script>
 <script src="supabase-config.js"></script>
 <script src="public-data.js" defer></script>
+<script src="work-public.js" defer></script>
 <script>
 document.getElementById('skip-intro')?.addEventListener('click',()=>document.getElementById('intro').classList.add('intro-skipped'));
 const D=window.MEDAURA,L=D.links,$=s=>document.querySelector(s);
@@ -514,6 +521,12 @@ return `<section><div class="wrap dt"><div>${ph(c.photo,c.title)}</div><div clas
 event:id=>{const e=D.events.find(x=>x.id===id);if(!e)return head('الفعالية غير موجودة','<a href="#/events">العودة إلى الفعاليات</a>');
 return `<section><div class="wrap"><h1>${esc(e.title)} ${smp(e)}</h1><p class="lead">${fmt(e.date)}${e.place?' · '+esc(e.place):''}</p><p>${esc(e.summary)}</p><div class="grid">${(e.photos&&e.photos.length?e.photos:['']).map(p=>`<div class="card">${ph(p,e.title)}</div>`).join('')}</div>${e.course?`<p><a href="#/course/${esc(e.course)}">الدورة المرتبطة</a></p>`:''}<p><a href="#/events">العودة إلى الفعاليات</a></p></div></section>`}
 };
+
+// Our Work: published activity stories and media.
+const workVideo=u=>{try{const x=new URL(u);let id='';if(['youtube.com','www.youtube.com','m.youtube.com','youtube-nocookie.com','www.youtube-nocookie.com'].includes(x.hostname)){id=x.searchParams.get('v')||((x.pathname.match(/^\/(?:shorts|embed)\/([\w-]{11})/)||[])[1])||''}else if(x.hostname==='youtu.be')id=x.pathname.slice(1).split('/')[0];if(id&&/^[\w-]{11}$/.test(id))return `<div class="work-video"><iframe src="https://www.youtube-nocookie.com/embed/${id}" title="فيديو MEDAURA" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;if(x.protocol==='https:'&&/\.mp4(?:$|\?)/i.test(x.pathname))return `<div class="work-video"><video controls preload="metadata" src="${esc(x.href)}"></video></div>`}catch(e){}return `<p>رابط الفيديو غير مدعوم. استخدم رابط YouTube أو ملف MP4 مباشر عبر HTTPS.</p>`};
+V.work=()=>head('أعمالنا','نوثّق رحلتنا في التعليم الطبي: الدورات والورشات واللحظات التي صنعت فرقًا.')+`<section><div class="wrap"><span class="path-label">MEDAURA · OUR WORK</span>${D.work?.length?`<div class="work-grid">${D.work.map(w=>`<a class="work-card" href="#/work-post/${encodeURIComponent(w.id)}">${w.cover_url&&safe(w.cover_url)?`<img class="work-cover" src="${esc(w.cover_url)}" alt="${esc(w.title)}" loading="lazy">`:`<div class="work-cover"></div>`}<div class="work-card-body"><small>${esc(w.activity_date?fmt(w.activity_date):'MEDAURA TEAM')}</small><h2>${esc(w.title)}</h2><p>${esc(w.excerpt||'اقرأ تفاصيل النشاط وشاهد التوثيق')}</p><span class="cat">اقرأ القصة ←</span></div></a>`).join('')}</div>`:empty('أعمال MEDAURA','ستظهر الدورات والورشات السابقة بعد نشرها من لوحة الإدارة.')}</div></section>`;
+V['work-post']=id=>{const w=(D.work||[]).find(x=>x.id===id);if(!w)return head('العمل غير متاح','هذا النشاط غير منشور أو الرابط غير صحيح.')+`<section><div class="wrap"><a href="#/work">العودة إلى أعمالنا ←</a></div></section>`;return `<section><div class="wrap"><article class="work-article"><a class="work-back" href="#/work">← العودة إلى أعمالنا</a>${w.cover_url&&safe(w.cover_url)?`<img class="work-cover" src="${esc(w.cover_url)}" alt="${esc(w.title)}">`:''}<h1>${esc(w.title)}</h1><p class="work-meta">${esc(w.activity_date?fmt(w.activity_date):'')} ${w.location?' · '+esc(w.location):''}</p>${w.excerpt?`<p class="lead">${esc(w.excerpt)}</p>`:''}${(Array.isArray(w.blocks)?w.blocks:[]).map(b=>{if(b.type==='heading')return `<div class="work-block"><h2>${esc(b.text)}</h2></div>`;if(b.type==='text')return `<div class="work-block"><p>${esc(b.text)}</p></div>`;if(b.type==='image'&&safe(b.url))return `<figure><img src="${esc(b.url)}" alt="${esc(b.caption||w.title)}" loading="lazy">${b.caption?`<figcaption>${esc(b.caption)}</figcaption>`:''}</figure>`;if(b.type==='video')return `<div class="work-block">${workVideo(b.url)}${b.caption?`<p class="work-meta">${esc(b.caption)}</p>`:''}</div>`;return ''}).join('')}</article></div></section>`};
+
 function paint(){const h=location.hash.replace(/^#\/?/,''),[p,id]=h.split('/'),v=V[p]||V[''];$('#app').innerHTML=v(id);
 const cur=p==='course'?'courses':p==='event'?'events':p||'';document.querySelectorAll('nav a').forEach(a=>{a.dataset.p===cur?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});
 $('#nv').classList.remove('on');document.title=(($('#app h1')||{}).textContent||'الرئيسية')+' | MEDAURA';window.scrollTo(0,0);
