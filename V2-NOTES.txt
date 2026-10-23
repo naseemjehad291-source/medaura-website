@@ -1,0 +1,18 @@
+MEDAURA Admin V2 - first working release
+
+Included:
+- Existing courses/events dashboard retained.
+- New team member editor with image uploads.
+- Album and photo management with publication toggles.
+- Site settings editor for impact, hero subtitle, about, vision, mission, values and links.
+- Public website reads settings, team, and gallery from Supabase.
+- Image upload bucket switched to medaura-media; maximum file size 20 MB.
+
+Before publishing:
+1. Back up your current website.
+2. Ensure site_settings, team_members, gallery_albums, gallery_photos tables and their RLS policies exist.
+3. Ensure medaura-media Storage bucket and its admin upload policies exist.
+4. Deploy and log in as super_admin, then verify each feature.
+5. Site settings are PUBLIC and changes publish immediately; never put private data in them.
+
+Not included yet: comprehensive per-section visual page builder, navigation ordering, user management, resource manager, draft/preview publishing, advanced theme controls. These need subsequent implementation.
