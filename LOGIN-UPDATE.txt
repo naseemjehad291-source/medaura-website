@@ -1,0 +1,1 @@
+Adds a login link to the existing admin/ page. Authentication and permissions unchanged. Test on preview branch first.

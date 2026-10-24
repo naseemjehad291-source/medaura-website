@@ -442,6 +442,9 @@ footer:after{content:"";display:block;width:100%;height:2px;position:absolute;to
 #intro .signature-sub{letter-spacing:.12em!important;word-spacing:.12em!important}
 #intro .intro-tagline{letter-spacing:.015em!important}
 #intro .intro-bottomline{letter-spacing:.035em!important}
+/* Entry to the existing secured admin login. */
+nav a.admin-entry{border:1px solid var(--teal);color:var(--teal);font-weight:700;margin-inline-start:6px;white-space:nowrap}
+nav a.admin-entry:hover,nav a.admin-entry:focus-visible{background:var(--teal);color:#fff}
 </style>
 </head>
 <body>
@@ -469,7 +472,7 @@ footer:after{content:"";display:block;width:100%;height:2px;position:absolute;to
 <a href="#/" aria-label="MEDAURA الرئيسية"><img src="logo.png" alt="شعار MEDAURA Medical Team"></a>
 <button id="mt" aria-expanded="false" aria-controls="nv">القائمة</button>
 <nav id="nv" aria-label="التنقل الرئيسي">
-<a href="#/" data-p="">الرئيسية</a><a href="#/about" data-p="about">من نحن</a><a href="#/courses" data-p="courses">الدورات والورشات</a><a href="#/work" data-p="work">أعمالنا</a><a href="#/resources" data-p="resources">المكتبة الطبية</a><a href="#/join" data-p="join">انضم إلى <bdi>MEDAURA</bdi></a><a href="#/contact" data-p="contact">تواصل معنا</a>
+<a href="#/" data-p="">الرئيسية</a><a href="#/about" data-p="about">من نحن</a><a href="#/courses" data-p="courses">الدورات والورشات</a><a href="#/work" data-p="work">أعمالنا</a><a href="#/resources" data-p="resources">المكتبة الطبية</a><a href="#/join" data-p="join">انضم إلى <bdi>MEDAURA</bdi></a><a href="#/contact" data-p="contact">تواصل معنا</a><a href="admin/" class="admin-entry" aria-label="تسجيل دخول إدارة MEDAURA">تسجيل الدخول ↗</a>
 </nav></div></header>
 <main id="app" tabindex="-1"></main>
 <footer><div class="wrap" id="ft"></div></footer>
