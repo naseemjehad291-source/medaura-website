@@ -19,6 +19,7 @@
  ]);
   const d=window.MEDAURA;
   d.site=Object.fromEntries(settings.map(x=>[x.key,x.value]));
+  if(d.site.resourcesJSON){try{const parsed=JSON.parse(d.site.resourcesJSON);if(Array.isArray(parsed))d.resources=parsed.filter(x=>x&&typeof x.title==='string').map(x=>({title:x.title,cat:x.cat||'',type:x.type||'مورد تعليمي',url:x.url||'',sample:false}));}catch(err){console.warn('Invalid resourcesJSON',err)}}
   d.team=team;
   d.albums=albums.map(a=>({...a,photos:photos.filter(p=>p.album_id===a.id)}));
   if(d.site.studentsReached!==undefined)d.impact.studentsReached=d.site.studentsReached;
