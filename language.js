@@ -9,9 +9,9 @@ const textNodes=(root)=>{const w=document.createTreeWalker(root,NodeFilter.SHOW_
 function translateNode(node){if(node.parentElement?.closest('script,style,svg,textarea,[contenteditable="true"],.language-morph,.intro-brand'))return;
  if(!originalText.has(node))originalText.set(node,node.nodeValue);
  const raw=originalText.get(node),match=raw.match(/^(\s*)([\s\S]*?)(\s*)$/);if(!match)return;
- const t=translated(match[2]);node.nodeValue=current==='en'&&t?match[1]+t+match[3]:raw;
+ const t=translated(match[2]);const next=current==='en'&&t?match[1]+t+match[3]:raw;if(node.nodeValue!==next)node.nodeValue=next;
 }
-function translateAttrs(el){for(const attr of ['placeholder','aria-label','title','alt']){if(!el.hasAttribute(attr))continue;let stored=originalAttr.get(el);if(!stored){stored={};originalAttr.set(el,stored)}if(!(attr in stored))stored[attr]=el.getAttribute(attr);const t=translated(stored[attr]);el.setAttribute(attr,current==='en'&&t?t:stored[attr]);}}
+function translateAttrs(el){for(const attr of ['placeholder','aria-label','title','alt']){if(!el.hasAttribute(attr))continue;let stored=originalAttr.get(el);if(!stored){stored={};originalAttr.set(el,stored)}if(!(attr in stored))stored[attr]=el.getAttribute(attr);const t=translated(stored[attr]);const next=current==='en'&&t?t:stored[attr];if(el.getAttribute(attr)!==next)el.setAttribute(attr,next);}}
 function apply(root=document){const target=root.nodeType===1?root:document.body;if(!target)return;for(const n of textNodes(target))translateNode(n);for(const el of [target,...target.querySelectorAll('*')])translateAttrs(el);
  document.documentElement.lang=current;document.documentElement.dir=current==='en'?'ltr':'rtl';document.getElementById('lang-ar')?.setAttribute('aria-pressed',String(current==='ar'));document.getElementById('lang-en')?.setAttribute('aria-pressed',String(current==='en'));
 }
