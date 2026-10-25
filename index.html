@@ -576,6 +576,16 @@ html[lang="en"] #app,html[lang="en"] footer{direction:ltr;text-align:left}
 html[lang="en"] .language-morph{direction:ltr}
 @media(max-width:780px){.language-morph{margin:6px auto;padding:3px}.language-morph button{padding:7px 10px}}
 @media(prefers-reduced-motion:reduce){.language-morph button,#app,#ft{transition:none!important}body.language-changing #app,body.language-changing #ft{opacity:1;transform:none}}
+
+/* Readable secondary headings on light surfaces — MEDAURA */
+:where(main section:not(.hero):not(.ph1):not(.signature-section)) .wrap > h2,
+:where(main section:not(.hero):not(.ph1):not(.signature-section)) .wrap > h3,
+:where(main section:not(.hero):not(.ph1):not(.signature-section)) .box h2,
+:where(main section:not(.hero):not(.ph1):not(.signature-section)) .box h3,
+:where(main section:not(.hero):not(.ph1):not(.signature-section)) .card h2,
+:where(main section:not(.hero):not(.ph1):not(.signature-section)) .card h3 {color:#142B43;}
+/* Preserve intentionally light headings on dark panels. */
+.impact-panel h2,.signature-section h2,.hero h1,.ph1 h1 {color:#fff;}
 </style>
 </head>
 <body class="medaura-intro-running">
