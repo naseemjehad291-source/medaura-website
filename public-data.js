@@ -19,6 +19,15 @@
  ]);
   const d=window.MEDAURA;
   d.site=Object.fromEntries(settings.map(x=>[x.key,x.value]));
+  // Optional English translations are entered as site settings ending in _en.
+  // The Arabic originals remain authoritative and are never machine-translated.
+  d.bilingualFields={};
+  for(const [key,value] of Object.entries(d.site))if(key.endsWith('_en')&&typeof value==='string'){
+    const ar=d.site[key.slice(0,-3)];if(typeof ar==='string'&&ar.trim()&&value.trim())d.bilingualFields[ar.trim()]=value.trim();
+  }
+  for(const item of [...courses,...events,...team])for(const field of ['title','description','name','position','bio','excerpt','location','instructor']){
+    if(typeof item[field]==='string'&&typeof item[field+'_en']==='string'&&item[field+'_en'].trim())d.bilingualFields[item[field].trim()]=item[field+'_en'].trim();
+  }
   if(d.site.resourcesJSON){try{const parsed=JSON.parse(d.site.resourcesJSON);if(Array.isArray(parsed))d.resources=parsed.filter(x=>x&&typeof x.title==='string').map(x=>({title:x.title,cat:x.cat||'',type:x.type||'مورد تعليمي',url:x.url||'',sample:false}));}catch(err){console.warn('Invalid resourcesJSON',err)}}
   d.team=team;
   d.albums=albums.map(a=>({...a,photos:photos.filter(p=>p.album_id===a.id)}));
