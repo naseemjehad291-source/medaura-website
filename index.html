@@ -506,6 +506,57 @@ body.medaura-intro-reveal #app .hero .arch {animation:medPageItem 1s cubic-bezie
 #intro .intro-ecg, #intro .intro-ecg .ecg-trace { filter:none!important; }
 #intro .intro-ecg .ecg-trace { stroke-dasharray:1800!important; stroke-dashoffset:1800; animation:medRefinedTrace 1.45s cubic-bezier(.42,0,.25,1) .12s forwards!important; }
 @media (prefers-reduced-motion:reduce) { #intro .intro-ecg .ecg-trace {animation:none!important;stroke-dashoffset:0!important;} }
+
+/* MEDAURA — focused visual refinements; public website only. */
+#intro .intro-ecg {
+  display:block!important;
+  width:min(82vw,560px)!important;
+  max-width:560px!important;
+  margin:0 auto!important;
+  align-self:center!important;
+  left:auto!important;
+  right:auto!important;
+  transform:none!important;
+}
+#intro .intro-bottomline {
+  width:100%;
+  box-sizing:border-box;
+  padding-inline:14px;
+  gap:10px;
+  text-align:center;
+}
+#intro .intro-bottomline small {
+  display:block;
+  white-space:nowrap;
+  font-family:"Outfit",Arial,sans-serif;
+  font-size:clamp(.58rem,1.7vw,.8rem);
+  letter-spacing:clamp(.015em,.15vw,.1em);
+}
+#intro .intro-bottomline span { flex:0 1 48px; min-width:0; }
+.instagram-handle {
+  color:#0f3445!important;
+  font-family:"Outfit",Arial,sans-serif;
+  font-weight:650;
+  direction:ltr;
+  unicode-bidi:isolate;
+  text-decoration:none;
+  display:inline-block;
+}
+.instagram-handle:hover { color:#0f7778!important; text-decoration:underline; }
+.hero-identity .hero-logo {
+  animation:medauraHeroFloat 5.5s ease-in-out infinite!important;
+  transform-origin:center center;
+  will-change:transform;
+  transition:filter .3s ease;
+}
+.hero-identity .hero-logo:hover { filter:drop-shadow(0 10px 18px rgba(15,76,85,.22)); }
+@keyframes medauraHeroFloat {
+  0%,100% {transform:translate3d(0,0,0) scale(1)}
+  50% {transform:translate3d(0,-7px,0) scale(1.012)}
+}
+@media (prefers-reduced-motion:reduce) {
+  .hero-identity .hero-logo {animation:none!important;will-change:auto;}
+}
 </style>
 </head>
 <body class="medaura-intro-running">
@@ -520,13 +571,13 @@ body.medaura-intro-reveal #app .hero .arch {animation:medPageItem 1s cubic-bezie
   <div class="intro-composition intro-3d-stage"><div class="intro-logo-3d"><span class="intro-logo-halo"></span><img src="logo.png" alt="" class="intro-real-logo"></div>
     <div class="intro-letter-stage" role="img" aria-label="MEDAURA — Learn. Apply. Save Lives."><svg viewBox="0 0 820 180" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><text class="signature-letter signature-word" x="410" y="128" text-anchor="middle" textLength="684" lengthAdjust="spacing">MEDAURA</text></svg><span class="signature-sub">MEDICAL TEAM</span></div>
     <svg class="intro-ecg" viewBox="0 0 900 110" role="presentation" aria-hidden="true">
-      <path class="ecg-base" d="M8 58H220L250 58L276 47L302 67L341 13L380 94L411 58H510L535 58L558 49L582 64L613 32L641 58H892"/>
-      <path class="ecg-trace" d="M8 58H220L250 58L276 47L302 67L341 13L380 94L411 58H510L535 58L558 49L582 64L613 32L641 58H892"/>
+      <path class="ecg-base" d="M8 58H325L355 58L379 48L405 68L448 10L491 99L519 58H892"/>
+      <path class="ecg-trace" d="M8 58H325L355 58L379 48L405 68L448 10L491 99L519 58H892"/>
     </svg>
     <p class="intro-tagline" dir="ltr">Learn <span>·</span> Apply <span>·</span> Save Lives</p>
   </div>
   <button type="button" id="skip-intro" aria-label="تخطي المقدمة">تخطي المقدمة ↗</button>
-  <div class="intro-bottomline"><span></span><small>MEDICAL EDUCATION · CLINICAL SKILLS · SHARED KNOWLEDGE</small><span></span></div>
+  <div class="intro-bottomline"><span></span><small>MEDICAL EDUCATIONAL TEAM</small><span></span></div>
 </div>
 <a class="skip" href="#app" onclick="event.preventDefault();document.getElementById('app').focus()">انتقل إلى المحتوى</a>
 <header><div class="bar">
@@ -587,7 +638,7 @@ return `<section class="hero"><div class="wrap" style="position:relative"><div><
 </div><div class="signature-endnote">MEDAURA · نتعلّم. نتدرّب. نرتقي.</div>
 </div></section>
 <section class="path-section"><div class="wrap"><span class="path-label">A LEARNING JOURNEY</span><h2>${esc(D.site?.homePathHeading||'من أول سؤال، لخطوة واثقة.')}</h2><p class="lead">${esc(D.site?.homePathDescription||'رحلة بسيطة تساعد الزائر يعرف وين يبدأ وكيف يكمل.')}</p><div class="path-grid"><article class="path-step" data-step="01"><h3>اكتشف ما يناسبك</h3><p>ابدأ من الدورات والورشات حسب اهتمامك ومستواك.</p></article><article class="path-step" data-step="02"><h3>تعلّم وجرّب</h3><p>تابع تفاصيل النشاط، أهدافه، وطريقة المشاركة فيه.</p></article><article class="path-step" data-step="03"><h3>طبّق ما تعلّمت</h3><p>استكشف الموارد أو انضم للمساهمة في أنشطة الفريق.</p></article></div></div></section>
-<section class="learning-lab" aria-labelledby="lab-title"><div class="wrap"><div class="lab-panel"><div class="lab-head"><div><span class="lab-kicker">MEDAURA · LEARNING LAB</span><h2 id="lab-title">اتعلّم. استرجع. ثبّت المعلومة.</h2><p class="lab-subtitle">مساحة لتنظيم المحاضرات واختبار استرجاعك وجدولة المراجعات — بدون حساب أو إنترنت.</p></div><div class="lab-note">بياناتك محفوظة على هذا المتصفح فقط. صدّر نسخة احتياطية حتى ما تضيع إذا تغيّر الجهاز.</div></div><form class="lab-form" id="learning-card"><label>اسم المحاضرة<input name="topic" required maxlength="100" placeholder="مثال: Cardiac Action Potential"></label><label>المادة<input name="subject" maxlength="70" placeholder="مثال: Physiology"></label><label class="wide">استرجع من ذاكرتك: شو أهم ثلاث أفكار؟<textarea name="learned" maxlength="1200" placeholder="سكر السلايدات واكتب اللي بتتذكره..." required></textarea></label><label class="wide">وين لسه في نقطة ضعف أو سؤال؟<textarea name="next" maxlength="700" placeholder="شو بدك تراجع أو تفهم أكثر؟"></textarea></label><div class="wide"><strong>قدرتك على شرح المحاضرة بدون سلايدات</strong><div class="lab-levels"><label><input type="radio" name="confidence" value="needs-work"> محتاج أراجع الأساسيات</label><label><input type="radio" name="confidence" value="developing" checked> فاهم بس بنسى التفاصيل</label><label><input type="radio" name="confidence" value="confident"> بقدر أشرحها</label></div></div><div class="lab-actions"><button class="btn" type="submit">احفظ الجلسة وأنشئ المراجعات</button><button class="btn soft" type="reset">تفريغ الحقول</button></div><p class="lab-status wide" id="lab-status" aria-live="polite">نظام المراجعة المقترح: 1، 3، 7، 14، 30 يومًا.</p></form><div class="lab-results"><div class="lab-widget"><h3>مراجعاتك القادمة</h3><div id="lab-upcoming" class="lab-empty">أضف أول محاضرة لتظهر المراجعات.</div></div><div class="lab-widget"><h3>محاضراتي المحفوظة <span id="lab-count"></span></h3><div id="lab-sessions" class="lab-empty">ما في محاضرات محفوظة بعد.</div><div class="lab-tool-actions"><button type="button" id="lab-export" class="primary">تصدير نسخة احتياطية</button><button type="button" id="lab-import">استيراد نسخة</button><button type="button" id="lab-print">طباعة الملخص / PDF</button><input type="file" id="lab-import-file" accept="application/json,.json" hidden></div></div></div></div></div></section>
+
 <section><div class="wrap"><h2>${esc(D.site?.homeCoursesHeading||'دورات وورشات قادمة')}</h2>${grid(up,card,'لا توجد دورات قادمة حالياً')}<p><a href="#/courses">عرض كل الدورات</a></p></div></section>
 <section class="alt"><div class="wrap two"><div><h2>رسالتنا</h2><p class="lead">${esc(D.site?.mission||'نص الرسالة والرؤية يُضاف بعد اعتماده من الفريق.')}</p></div><div><h2>${esc(D.site?.homeWorkHeading||'من أعمالنا')}</h2><p class="lead">${esc(D.site?.homeWorkDescription||'استكشف توثيق دوراتنا وورشاتنا السابقة.')}</p><a class="btn" href="#/work">عرض أعمالنا</a></div></div></section>
 <section><div class="wrap"><div class="box" style="text-align:center;padding:28px"><h2>${esc(D.site?.homeJoinHeading||'كن جزءاً من الفريق')}</h2><p class="lead" style="margin:0 auto 16px">${esc(D.site?.homeJoinDescription||'تطوّع، أو قدّم كمحاضر، أو اقترح شراكة.')}</p><a class="btn" href="#/join">انضم الآن</a></div></div></section>`},
@@ -595,7 +646,7 @@ about:()=>head('من نحن',esc(D.site?.aboutSubtitle||'MEDAURA مساحة طل
 courses:()=>head('الدورات والورشات',esc(D.site?.coursesIntro||'تعلّم عملي منظّم؛ اختر ما يناسب مستواك واهتمامك.'))+`<section><div class="wrap"><div class="course-toolbar"><div><strong>استكشف البرامج التعليمية</strong><div class="toolbar-note">صفِّ حسب حالة التسجيل أو ابحث باسم الدورة أو المجال.</div></div><input id="course-q" type="search" placeholder="ابحث عن دورة أو موضوع" aria-label="ابحث عن دورة أو موضوع"><div class="fl" role="group" aria-label="تصفية حسب الحالة">${[['all','كل الدورات'],['open','التسجيل مفتوح'],['upcoming','قريباً'],['done','أرشيف الدورات']].map((x,i)=>`<button data-f="${x[0]}" aria-pressed="${i==0}">${x[1]}</button>`).join('')}</div></div><div id="cg"></div></div></section>`,
 resources:()=>head('المكتبة الطبية',esc(D.site?.resourcesIntro||'مصادر تساعدك تراجع، تفهم، وتوسّع معرفتك.'))+`<section><div class="wrap"><div class="course-toolbar"><div><strong>ابحث في المعرفة</strong><div class="toolbar-note">ابحث باسم المورد أو تصنيفه للوصول للمادة المطلوبة.</div></div><input id="q" type="search" placeholder="ابحث عن ملف أو موضوع..." aria-label="ابحث في المكتبة"></div><div id="rl"></div><p class="resource-empty-note">تُضاف الموارد المعتمدة من الفريق فقط، مع احترام حقوق أصحابها.</p></div></section>`,
 join:()=>head('انضم إلى MEDAURA',D.site?.joinIntro||'ساهم في التعليم الطبي من خلال التطوّع أو التدريب أو الشراكات.')+`<section><div class="wrap"><div class="signature-heading"><div><span class="path-label">GROW WITH US</span><h2>${esc(D.site?.joinHeading||'كل شخص يضيف زاوية جديدة للمعرفة.')}</h2></div><p class="lead">${esc(D.site?.joinDescription||'اختر طريقة المشاركة المناسبة لك، وسنضيف تفاصيل التواصل بعد اعتمادها.')}</p></div><div class="grid">${[['تطوّع مع الفريق','ساعد في تنظيم الدورات والورشات وبناء تجربة تعليمية أفضل.','تطوّع','volunteer'],['قدّم طلب عضوية','ساهم بأفكارك ووقتك ومهاراتك ضمن عمل الفريق.','العضوية','membership'],['شارك كمحاضر','شارك معرفة تتقنها وساعد زملاءك على التعلّم.','التدريب','trainer'],['اقترح شراكة','افتح مجالًا لتعاون تعليمي مع جهة أو مبادرة.','الشراكات','partner']].map((x,i)=>`<article class="box join-card"><span class="constellation-icon">${['✳','◎','↗','⌘'][i]}</span><span class="path-label">0${i+1} / ${x[2]}</span><h3>${esc(D.site?.['join_'+x[3]+'_title']||x[0])}</h3><p class="lead">${esc(D.site?.['join_'+x[3]+'_description']||x[1])}</p>${link(D.site?.['join_'+x[3]+'_url']||(i===3?L.partnerForm:L.joinForm),esc(D.site?.['join_'+x[3]+'_button']||'ابدأ من هنا'))}</article>`).join('')}</div></div></section>`,
-contact:()=>head('تواصل معنا',esc(D.site?.contactIntro||'قنوات التواصل الرسمية للفريق.'))+(Object.values(L).some(Boolean)?'':`<section><div class="wrap">${empty('بيانات التواصل الرسمية قيد الإعداد','ستظهر هنا بعد اعتمادها: البريد، الحسابات، ونماذج التواصل والشراكة.')}</div></section>`)+(Object.values(L).some(Boolean)?`<section><div class="wrap two"><div class="box"><h2>${esc(D.site?.contactChannelsHeading||'التواصل')}</h2>${[['البريد',L.email&&`<a class="ltr" href="mailto:${esc(L.email)}">${esc(L.email)}</a>`],['إنستغرام',L.instagram&&link(L.instagram,'الحساب','')],['تيليغرام',L.telegram&&link(L.telegram,'القناة','')]].map(x=>x[1]?`<p>${x[0]}: ${x[1]}</p>`:`<p class="lead">${x[0]}: لم يُضف بعد.</p>`).join('')}</div><div class="box"><h2>${esc(D.site?.contactPartnerHeading||'رسالة أو شراكة')}</h2>${link(L.contactForm,'أرسل رسالة')}<p></p>${link(L.partnerForm,'نموذج الشراكات')}</div></div></section>`:''),
+contact:()=>head('تواصل معنا',esc(D.site?.contactIntro||'قنوات التواصل الرسمية للفريق.'))+(Object.values(L).some(Boolean)?'':`<section><div class="wrap">${empty('بيانات التواصل الرسمية قيد الإعداد','ستظهر هنا بعد اعتمادها: البريد، الحسابات، ونماذج التواصل والشراكة.')}</div></section>`)+(Object.values(L).some(Boolean)?`<section><div class="wrap two"><div class="box"><h2>${esc(D.site?.contactChannelsHeading||'التواصل')}</h2>${[['البريد',L.email&&`<a class="ltr" href="mailto:${esc(L.email)}">${esc(L.email)}</a>`],['إنستغرام',L.instagram&&link(L.instagram,'@medaura.team','instagram-handle')],['تيليغرام',L.telegram&&link(L.telegram,'القناة','')]].map(x=>x[1]?`<p>${x[0]}: ${x[1]}</p>`:`<p class="lead">${x[0]}: لم يُضف بعد.</p>`).join('')}</div><div class="box"><h2>${esc(D.site?.contactPartnerHeading||'رسالة أو شراكة')}</h2>${link(L.contactForm,'أرسل رسالة')}<p></p>${link(L.partnerForm,'نموذج الشراكات')}</div></div></section>`:''),
 course:id=>{const c=D.courses.find(x=>x.id===id);if(!c)return head('الدورة غير موجودة','<a href="#/courses">العودة إلى الدورات</a>');
 return `<section><div class="wrap dt"><div>${ph(c.photo,c.title)}</div><div class="course-detail-panel"><div class="course-detail-top"><span class="chip s-${esc(c.status)}" style="position:static;display:inline-block">${ST[c.status]||''}</span> ${smp(c)}<span class="path-label">${esc(c.cat)}</span></div><h1>${esc(c.title)}</h1><ul class="meta"><li>المستوى: ${esc(c.level)}</li><li>${esc(c.duration)}</li><li>${esc(c.format)}</li></ul><p><strong>المحاضر:</strong> ${esc(c.instructor)}</p><p class="lead">${esc(c.summary)}</p><h3>ماذا ستتعلّم؟</h3><ul>${(c.goals||[]).map(g=>`<li>${esc(g)}</li>`).join('')}</ul>${c.status==='open'?link(c.register,'سجّل في الدورة'):'<p class="lead">التسجيل غير متاح حالياً.</p>'}<p><a class="tl" href="#/courses">العودة إلى الدورات</a></p></div></div></section>`},
 };
