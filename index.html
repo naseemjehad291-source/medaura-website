@@ -7,7 +7,7 @@
 <meta name="description" content="MEDAURA فريق طبي جامعي يقدّم دورات وورشات في التعليم الطبي.">
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--teal:#0B5961;--navy:#142B43;--acc:#36A6A0;--mist:#F1F7F7;--ink:#20323A;--mute:#586B71;--line:#D9E6E7;--r:14px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
@@ -477,6 +477,13 @@ nav a.admin-entry:hover,nav a.admin-entry:focus-visible{background:var(--teal);c
 @keyframes medRefinedExit{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;pointer-events:none}}
 @media(prefers-reduced-motion:reduce){#intro{display:none!important}}
 
+
+/* MEDAURA typography refinement: modern type and mathematically even tracking. */
+#intro .signature-word{font-family:"Outfit",Arial,sans-serif!important;font-size:112px!important;font-weight:700!important;letter-spacing:0!important;animation:medRefinedLetter .85s cubic-bezier(.2,.7,.2,1) 1.25s both!important}
+#intro .signature-sub{font-family:"Outfit",Arial,sans-serif!important;font-weight:600!important;letter-spacing:.22em!important}
+#intro .intro-tagline{font-family:"Outfit",Arial,sans-serif!important;font-weight:500!important;letter-spacing:.015em!important}
+#intro .intro-bottomline{font-family:"Outfit",Arial,sans-serif!important;letter-spacing:.06em!important}
+.hero h1{font-family:"Outfit",Arial,sans-serif!important;font-weight:700!important;letter-spacing:-.025em!important}
 </style>
 </head>
 <body>
@@ -489,7 +496,7 @@ nav a.admin-entry:hover,nav a.admin-entry:focus-visible{background:var(--teal);c
     <span class="intro-cross"></span>
   </div>
   <div class="intro-composition intro-3d-stage"><div class="intro-logo-3d"><span class="intro-logo-halo"></span><img src="logo.png" alt="" class="intro-real-logo"></div>
-    <div class="intro-letter-stage" role="img" aria-label="MEDAURA — Learn. Apply. Save Lives."><svg viewBox="0 0 820 180" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><text class="signature-letter" x="65" y="128" style="--i:0">M</text><text class="signature-letter" x="164" y="128" style="--i:1">E</text><text class="signature-letter" x="263" y="128" style="--i:2">D</text><text class="signature-letter" x="362" y="128" style="--i:3">A</text><text class="signature-letter" x="461" y="128" style="--i:4">U</text><text class="signature-letter" x="560" y="128" style="--i:5">R</text><text class="signature-letter" x="659" y="128" style="--i:6">A</text></svg><span class="signature-sub">MEDICAL TEAM</span></div>
+    <div class="intro-letter-stage" role="img" aria-label="MEDAURA — Learn. Apply. Save Lives."><svg viewBox="0 0 820 180" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><text class="signature-letter signature-word" x="410" y="128" text-anchor="middle" textLength="684" lengthAdjust="spacing">MEDAURA</text></svg><span class="signature-sub">MEDICAL TEAM</span></div>
     <svg class="intro-ecg" viewBox="0 0 900 110" role="presentation" aria-hidden="true">
       <path class="ecg-base" d="M8 58H220L250 58L276 47L302 67L341 13L380 94L411 58H510L535 58L558 49L582 64L613 32L641 58H892"/>
       <path class="ecg-trace" d="M8 58H220L250 58L276 47L302 67L341 13L380 94L411 58H510L535 58L558 49L582 64L613 32L641 58H892"/>
