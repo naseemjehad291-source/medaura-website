@@ -1,0 +1,1 @@
+MEDAURA public bilingual preview. Arabic remains the source language. English UI translations are mapped in language.js. Content entered later through admin requires English counterparts for complete translation. Admin routes and scripts are unchanged.

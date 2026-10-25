@@ -557,6 +557,25 @@ body.medaura-intro-reveal #app .hero .arch {animation:medPageItem 1s cubic-bezie
 @media (prefers-reduced-motion:reduce) {
   .hero-identity .hero-logo {animation:none!important;will-change:auto;}
 }
+
+/* MEDAURA hero label — balanced, single-line typography */
+.hero .hero-kicker{display:inline-flex!important;white-space:nowrap!important;flex-wrap:nowrap!important;max-width:100%;font-family:"Outfit",Arial,sans-serif!important;font-size:clamp(.57rem,1.65vw,.78rem)!important;letter-spacing:.025em!important;gap:clamp(4px,1vw,9px)!important;padding:6px clamp(7px,1.4vw,12px)!important;direction:ltr!important;unicode-bidi:isolate!important;}
+.hero .hero-kicker::before{flex:0 0 clamp(8px,2vw,22px)!important;width:clamp(8px,2vw,22px)!important;}
+@media(max-width:380px){.hero .hero-kicker{font-size:.56rem!important;letter-spacing:0!important;gap:4px!important;padding-inline:6px!important;}}
+
+/* MEDAURA Language Morph — public website only */
+.language-morph{display:flex;align-items:center;gap:3px;border:1px solid rgba(60,161,151,.55);border-radius:99px;background:linear-gradient(125deg,#123745,#0e2836);padding:4px;box-shadow:0 7px 20px rgba(10,44,54,.13);direction:ltr;flex-shrink:0;position:relative;isolation:isolate}
+.language-morph button{font:600 12px Outfit,'IBM Plex Sans Arabic',sans-serif;border:0;border-radius:99px;background:transparent;color:#c3e0dd;padding:8px 12px;cursor:pointer;transition:background .35s,color .35s,transform .35s;white-space:nowrap}
+.language-morph button[aria-pressed="true"]{background:#d6f0ea;color:#113d43;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.language-morph button:focus-visible{outline:2px solid #2a9d9a;outline-offset:3px}
+.language-morph .language-pulse{font-size:15px;color:#67cbbb;line-height:1}
+body.language-changing #app,body.language-changing #ft{opacity:.35;transform:translateY(7px);transition:opacity .23s ease,transform .23s ease}
+#app,#ft{transition:opacity .34s ease,transform .34s ease}
+html[lang="en"] body{direction:ltr;text-align:left}
+html[lang="en"] #app,html[lang="en"] footer{direction:ltr;text-align:left}
+html[lang="en"] .language-morph{direction:ltr}
+@media(max-width:780px){.language-morph{margin:6px auto;padding:3px}.language-morph button{padding:7px 10px}}
+@media(prefers-reduced-motion:reduce){.language-morph button,#app,#ft{transition:none!important}body.language-changing #app,body.language-changing #ft{opacity:1;transform:none}}
 </style>
 </head>
 <body class="medaura-intro-running">
@@ -585,11 +604,12 @@ body.medaura-intro-reveal #app .hero .arch {animation:medPageItem 1s cubic-bezie
 <button id="mt" aria-expanded="false" aria-controls="nv">القائمة</button>
 <nav id="nv" aria-label="التنقل الرئيسي">
 <a href="#/" data-p="">الرئيسية</a><a href="#/about" data-p="about">من نحن</a><a href="#/courses" data-p="courses">الدورات والورشات</a><a href="#/work" data-p="work">أعمالنا</a><a href="#/resources" data-p="resources">المكتبة الطبية</a><a href="#/join" data-p="join">انضم إلى <bdi>MEDAURA</bdi></a><a href="#/contact" data-p="contact">تواصل معنا</a><a href="admin/" class="admin-entry" aria-label="تسجيل دخول إدارة MEDAURA">تسجيل الدخول ↗</a>
-</nav></div></header>
+</nav><div class="language-morph" role="group" aria-label="Website language"><button id="lang-ar" type="button" aria-pressed="true">عربي</button><span class="language-pulse" aria-hidden="true">⌁</span><button id="lang-en" type="button" aria-pressed="false">EN</button></div></div></header>
 <main id="app" tabindex="-1"></main>
 <footer><div class="wrap" id="ft"></div></footer>
 <button id="back-top" type="button" aria-label="العودة إلى أعلى الصفحة" title="العودة إلى الأعلى">↑</button>
 <script src="content.js"></script>
+<script src="language.js" defer></script>
 <script src="supabase-config.js"></script>
 <script src="public-data.js" defer></script>
 <script src="work-public.js" defer></script>
@@ -624,7 +644,7 @@ const link=(u,t,c='btn')=>safe(u)?`<a class="${c}" href="${esc(u)}" target="_bla
 const head=(t,s)=>`<section class="ph1"><div class="wrap"><h1>${t}</h1><p class="lead">${s||''}</p></div></section>`;
 const V={
 '':()=>{const up=D.courses.filter(c=>c.status!=='done').slice(0,3);
-return `<section class="hero"><div class="wrap" style="position:relative"><div><p class="hero-kicker" style="font-size:.78rem;letter-spacing:.12em;color:#B7E8DF;font-weight:700;margin:0 0 10px">MEDAURA · MEDICAL EDUCATION</p><h1>Learn. <em>Apply.</em><br><span class="hero-save">Save Lives.</span></h1><p class="hero-arabic">${esc(D.site?.heroSubtitle||'نتعلّم المعرفة، نطبّق المهارة، ونصنع فرقًا.')}</p><p>فريق طبي جامعي يقدّم دورات وورشات في التعليم الطبي.</p><div class="btns"><a class="btn w" href="#/courses">استكشف الدورات</a><a class="btn o" href="#/about">تعرّف على <bdi>MEDAURA</bdi></a></div></div><div class="arch"><svg class="pulse-orbit" viewBox="0 0 330 370" aria-hidden="true"><circle class="track" cx="165" cy="175" r="145"/><circle class="track" cx="165" cy="175" r="126"/><circle class="satellite" cx="165" cy="30" r="4"/><circle class="satellite" cx="310" cy="175" r="3" style="animation-direction:reverse;animation-duration:21s"/></svg><div class="hero-identity"><img class="hero-logo" src="logo.png" alt="شعار MEDAURA Medical Team"><div class="hero-identity-line" dir="ltr">LEARN <span>·</span> APPLY <span>·</span> SAVE LIVES</div></div></div>
+return `<section class="hero"><div class="wrap" style="position:relative"><div><p class="hero-kicker" style="color:#B7E8DF;font-weight:700;margin:0 0 10px">MEDAURA · MEDICAL EDUCATION</p><h1>Learn. <em>Apply.</em><br><span class="hero-save">Save Lives.</span></h1><p class="hero-arabic">${esc(D.site?.heroSubtitle||'نتعلّم المعرفة، نطبّق المهارة، ونصنع فرقًا.')}</p><p>فريق طبي جامعي يقدّم دورات وورشات في التعليم الطبي.</p><div class="btns"><a class="btn w" href="#/courses">استكشف الدورات</a><a class="btn o" href="#/about">تعرّف على <bdi>MEDAURA</bdi></a></div></div><div class="arch"><svg class="pulse-orbit" viewBox="0 0 330 370" aria-hidden="true"><circle class="track" cx="165" cy="175" r="145"/><circle class="track" cx="165" cy="175" r="126"/><circle class="satellite" cx="165" cy="30" r="4"/><circle class="satellite" cx="310" cy="175" r="3" style="animation-direction:reverse;animation-duration:21s"/></svg><div class="hero-identity"><img class="hero-logo" src="logo.png" alt="شعار MEDAURA Medical Team"><div class="hero-identity-line" dir="ltr">LEARN <span>·</span> APPLY <span>·</span> SAVE LIVES</div></div></div>
 <svg class="thread" viewBox="0 0 400 120" aria-hidden="true"><path d="M395 118C360 30 290 10 240 60S120 100 5 30" fill="none" stroke="#2A9D9A" stroke-width="3" stroke-linecap="round"/><circle cx="5" cy="30" r="6" fill="#2A9D9A"/></svg></div></section>
 <section class="impact-section" aria-labelledby="impact-title"><div class="wrap"><div class="impact-panel"><div class="impact-copy"><span class="impact-eyebrow">MEDAURA · LEARNING PULSE</span><h2 id="impact-title">كل مهارة بتفتح بابًا جديدًا.</h2><p>نؤمن أن التعليم الطبي الأقوى يجمع بين الفهم، والتجربة، والتعلّم المستمر.</p><div class="impact-number impact-unset" id="impact-count" aria-live="polite">أضف الرقم</div><span class="impact-caption" id="impact-caption">عدد الطلاب المستفيدين — قابل للتعديل من content.js</span></div><div class="impact-figure" aria-hidden="true"><svg viewBox="0 0 120 120"><circle class="orbit" cx="60" cy="60" r="42"/><circle class="orbit" cx="60" cy="60" r="28" style="animation-direction:reverse;animation-duration:17s"/><path d="M18 62 C32 62 32 35 46 35 S61 86 76 86 S91 55 103 55" fill="none" stroke="#9AE4D6" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 5"><animate attributeName="stroke-dashoffset" values="32;0" dur="3s" repeatCount="indefinite"/></path><circle class="core" cx="60" cy="60" r="9"/><circle class="node" cx="18" cy="62" r="3"/><circle class="node" cx="103" cy="55" r="3" style="animation-delay:.7s"/></svg></div></div></div></section>
 <section class="signature-section" aria-labelledby="constellation-title"><div class="wrap">
