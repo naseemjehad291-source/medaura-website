@@ -484,9 +484,27 @@ nav a.admin-entry:hover,nav a.admin-entry:focus-visible{background:var(--teal);c
 #intro .intro-tagline{font-family:"Outfit",Arial,sans-serif!important;font-weight:500!important;letter-spacing:.015em!important}
 #intro .intro-bottomline{font-family:"Outfit",Arial,sans-serif!important;letter-spacing:.06em!important}
 .hero h1{font-family:"Outfit",Arial,sans-serif!important;font-weight:700!important;letter-spacing:-.025em!important}
+
+/* MEDAURA: seamless handoff from cinematic intro to page. */
+body.medaura-intro-running > header,
+body.medaura-intro-running > main#app,
+body.medaura-intro-running > footer {opacity:0;}
+body.medaura-intro-running > header {transform:translateY(18px);}
+body.medaura-intro-running > main#app {transform:translateY(30px);}
+body.medaura-intro-running > footer {transform:translateY(22px);}
+body.medaura-intro-reveal > header {animation:medPageRise .85s cubic-bezier(.18,.75,.22,1) both;}
+body.medaura-intro-reveal > main#app {animation:medPageRise 1s cubic-bezier(.18,.75,.22,1) .12s both;}
+body.medaura-intro-reveal > footer {animation:medPageRise .9s cubic-bezier(.18,.75,.22,1) .22s both;}
+body.medaura-intro-reveal #app .hero-kicker {animation:medPageItem .75s cubic-bezier(.2,.8,.2,1) .3s both;}
+body.medaura-intro-reveal #app .hero h1 {animation:medPageItem .85s cubic-bezier(.2,.8,.2,1) .4s both;}
+body.medaura-intro-reveal #app .hero p:not(.hero-kicker) {animation:medPageItem .85s cubic-bezier(.2,.8,.2,1) .5s both;}
+body.medaura-intro-reveal #app .hero .arch {animation:medPageItem 1s cubic-bezier(.2,.8,.2,1) .38s both;}
+@keyframes medPageRise {from {opacity:0;transform:translateY(30px);filter:blur(5px)}to {opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes medPageItem {from {opacity:0;transform:translateY(20px)}to {opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){body.medaura-intro-running > header,body.medaura-intro-running > main#app,body.medaura-intro-running > footer{opacity:1;transform:none}body.medaura-intro-reveal > header,body.medaura-intro-reveal > main#app,body.medaura-intro-reveal > footer,body.medaura-intro-reveal #app .hero-kicker,body.medaura-intro-reveal #app .hero h1,body.medaura-intro-reveal #app .hero p,body.medaura-intro-reveal #app .hero .arch{animation:none!important}}
 </style>
 </head>
-<body>
+<body class="medaura-intro-running">
 <div id="scroll-progress" aria-hidden="true"></div>
 <div id="intro" aria-hidden="true">
   <div class="intro-backdrop" aria-hidden="true">
@@ -526,9 +544,9 @@ nav a.admin-entry:hover,nav a.admin-entry:focus-visible{background:var(--teal);c
 (function(){
   const intro=document.getElementById('intro');
   if(!intro)return;
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){intro.remove();return;}
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){intro.remove();document.body.classList.remove('medaura-intro-running');return;}
   let finished=false;
-  const finish=()=>{if(finished)return;finished=true;intro.remove();};
+  const finish=()=>{if(finished)return;finished=true;intro.remove();document.body.classList.remove('medaura-intro-running');document.body.classList.add('medaura-intro-reveal');window.setTimeout(()=>document.body.classList.remove('medaura-intro-reveal'),2000);};
   intro.addEventListener('animationend',e=>{if(e.target===intro)finish();});
   document.getElementById('skip-intro')?.addEventListener('click',()=>{intro.classList.add('intro-skipped');window.setTimeout(finish,260);});
   window.setTimeout(finish,5000);
