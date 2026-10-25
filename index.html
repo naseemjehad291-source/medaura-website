@@ -502,6 +502,10 @@ body.medaura-intro-reveal #app .hero .arch {animation:medPageItem 1s cubic-bezie
 @keyframes medPageRise {from {opacity:0;transform:translateY(30px);filter:blur(5px)}to {opacity:1;transform:translateY(0);filter:blur(0)}}
 @keyframes medPageItem {from {opacity:0;transform:translateY(20px)}to {opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){body.medaura-intro-running > header,body.medaura-intro-running > main#app,body.medaura-intro-running > footer{opacity:1;transform:none}body.medaura-intro-reveal > header,body.medaura-intro-reveal > main#app,body.medaura-intro-reveal > footer,body.medaura-intro-reveal #app .hero-kicker,body.medaura-intro-reveal #app .hero h1,body.medaura-intro-reveal #app .hero p,body.medaura-intro-reveal #app .hero .arch{animation:none!important}}
+/* ECG performance: animate the path without costly SVG glow repaints */
+#intro .intro-ecg, #intro .intro-ecg .ecg-trace { filter:none!important; }
+#intro .intro-ecg .ecg-trace { stroke-dasharray:1800!important; stroke-dashoffset:1800; animation:medRefinedTrace 1.45s cubic-bezier(.42,0,.25,1) .12s forwards!important; }
+@media (prefers-reduced-motion:reduce) { #intro .intro-ecg .ecg-trace {animation:none!important;stroke-dashoffset:0!important;} }
 </style>
 </head>
 <body class="medaura-intro-running">
