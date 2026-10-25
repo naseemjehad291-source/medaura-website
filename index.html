@@ -448,35 +448,33 @@ nav a.admin-entry:hover,nav a.admin-entry:focus-visible{background:var(--teal);c
 /* Show full team portraits without cropping */
 .card img.ph.team-member-photo{display:block;width:100%;height:auto;object-fit:contain;padding:0;background:#E3EEEE}
 
-/* MEDAURA THE FIRST PULSE — cinematic preview, scoped to existing intro */
-#intro{background:radial-gradient(ellipse at 50% 42%,#17465a 0%,#102b42 42%,#071524 100%)!important;color:#eefbfa!important;isolation:isolate}
-#intro::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 25%,rgba(68,208,197,.07) 50%,transparent 75%);background-size:240% 100%;animation:cinShimmer 3s ease-in-out both}
-#intro .intro-backdrop{opacity:.4!important;filter:brightness(.7) saturate(1.3)}
-#intro .intro-orbit{border-color:rgba(80,209,196,.2)!important}
-#intro .intro-composition{animation:cinStage 1.15s cubic-bezier(.2,.75,.25,1) both!important;filter:none!important}
-#intro .intro-logo-3d{animation:cinLogo 1.2s cubic-bezier(.16,.8,.2,1) .45s both!important}
-#intro .intro-real-logo{filter:drop-shadow(0 8px 28px rgba(62,219,204,.22))!important}
-#intro .intro-logo-halo{box-shadow:0 0 65px rgba(47,196,187,.18)!important}
-#intro .signature-letter{animation:cinLetter .55s ease-out calc(1.15s + var(--i)*.065s) both!important;fill:#f5fffe!important;stroke:rgba(115,233,222,.65)!important;stroke-width:.6px!important}
-#intro .signature-sub{color:#8cd8d3!important;animation:cinFade .65s ease 1.6s both!important}
-#intro .intro-tagline{color:#d0eae8!important;animation:cinFade .7s ease 1.8s both!important}
-#intro .intro-tagline span{color:#50d4c7!important}
-#intro .intro-ecg{opacity:1!important;animation:cinPulseReveal .7s ease .15s both!important;filter:drop-shadow(0 0 7px rgba(70,232,216,.5))}
-#intro .ecg-base{opacity:.12!important;stroke:#69cfc6!important}
-#intro .ecg-trace{stroke:#69eddb!important;stroke-width:3px!important;stroke-dasharray:1800!important;stroke-dashoffset:1800;animation:cinTrace 1.7s ease-in-out .1s forwards!important}
-#intro .intro-bottomline{color:#a7c6c8!important;opacity:.75!important}
-#intro #skip-intro{color:#f0fffd!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(174,233,226,.38)!important;z-index:5!important}
-#intro #skip-intro:hover{background:rgba(255,255,255,.2)!important}
-#intro:not(.intro-skipped){animation:cinExit .65s ease 2.75s forwards!important}
-#intro.intro-skipped{animation:cinExit .25s ease forwards!important}
-@keyframes cinShimmer{0%{background-position:130% 0}100%{background-position:-120% 0}}
-@keyframes cinStage{from{opacity:0;transform:translateY(22px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes cinLogo{from{opacity:0;transform:translateY(20px) scale(.84);filter:blur(8px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
-@keyframes cinLetter{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
-@keyframes cinFade{from{opacity:0}to{opacity:1}}
-@keyframes cinPulseReveal{from{opacity:0}to{opacity:1}}
-@keyframes cinTrace{0%{stroke-dashoffset:1800}100%{stroke-dashoffset:0}}
-@keyframes cinExit{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;pointer-events:none}}
+/* MEDAURA — refined brand-matched cinematic entrance. */
+#intro{background:radial-gradient(ellipse at 50% 46%,#fff 0%,#f1f8f7 56%,#dcecea 100%)!important;color:#00323b!important;isolation:isolate;animation:medRefinedExit .7s cubic-bezier(.65,0,.2,1) 3.4s forwards!important}
+#intro::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 28%,rgba(15,76,85,.065) 50%,transparent 72%);background-size:240% 100%;animation:medRefinedSweep 3.2s ease both}
+#intro .intro-backdrop{opacity:.3!important;filter:none!important}
+#intro .intro-orbit{border-color:rgba(15,76,85,.19)!important}
+#intro .intro-composition{animation:medRefinedStage .95s cubic-bezier(.2,.75,.25,1) both!important;filter:none!important;transform:none}
+#intro .intro-logo-3d{animation:medRefinedLogo 1.25s cubic-bezier(.16,.8,.2,1) .55s both!important}
+#intro .intro-real-logo{filter:drop-shadow(0 12px 16px rgba(15,76,85,.13))!important;animation:none!important;opacity:1!important}
+#intro .intro-logo-halo{border-color:rgba(15,76,85,.18)!important;box-shadow:0 0 60px rgba(15,76,85,.08)!important}
+#intro .signature-letter{animation:medRefinedLetter .5s ease-out calc(1.25s + var(--i)*.075s) both!important;fill:#00323b!important;stroke:#0f4c55!important;stroke-width:.5px!important}
+#intro .signature-sub{color:#0f4c55!important;animation:medRefinedFade .6s ease 1.9s both!important}
+#intro .intro-tagline{color:#245d64!important;animation:medRefinedFade .65s ease 2s both!important}
+#intro .intro-tagline span{color:#167e7c!important}
+#intro .intro-ecg{opacity:1!important;animation:medRefinedFade .5s ease .15s both!important;filter:drop-shadow(0 0 5px rgba(15,76,85,.12))!important}
+#intro .ecg-base{opacity:.14!important;stroke:#0f4c55!important}
+#intro .ecg-trace{stroke:#0f7778!important;stroke-width:3px!important;stroke-dasharray:1800!important;stroke-dashoffset:1800;animation:medRefinedTrace 2s ease-in-out .15s forwards!important}
+#intro .intro-bottomline{color:#37666c!important;opacity:.85!important}
+#intro #skip-intro{color:#0f4c55!important;background:rgba(255,255,255,.72)!important;border:1px solid rgba(15,76,85,.27)!important;z-index:5!important}
+#intro #skip-intro:hover{background:#fff!important}
+#intro.intro-skipped{animation:medRefinedExit .22s ease forwards!important}
+@keyframes medRefinedSweep{from{background-position:130% 0}to{background-position:-120% 0}}
+@keyframes medRefinedStage{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes medRefinedLogo{from{opacity:0;transform:translateY(22px) scale(.87);filter:blur(5px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes medRefinedLetter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes medRefinedFade{from{opacity:0}to{opacity:1}}
+@keyframes medRefinedTrace{from{stroke-dashoffset:1800}to{stroke-dashoffset:0}}
+@keyframes medRefinedExit{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;pointer-events:none}}
 @media(prefers-reduced-motion:reduce){#intro{display:none!important}}
 
 </style>
@@ -517,20 +515,18 @@ nav a.admin-entry:hover,nav a.admin-entry:focus-visible{background:var(--teal);c
 <script src="work-public.js" defer></script>
 <script>
 
-// Show the full cinematic intro only once per tab session; never block navigation.
+// Replay the intro on every page load, including refresh. No session storage.
 (function(){
   const intro=document.getElementById('intro');
   if(!intro)return;
-  let seen=false;
-  try{seen=sessionStorage.getItem('medaura_cinematic_seen_v1')==='1';sessionStorage.setItem('medaura_cinematic_seen_v1','1')}catch(e){}
-  if(seen||window.matchMedia('(prefers-reduced-motion: reduce)').matches){intro.remove();return;}
-  const finish=()=>{if(intro.isConnected)intro.remove()};
-  intro.addEventListener('animationend',e=>{if(e.target===intro)finish()});
-  document.getElementById('skip-intro')?.addEventListener('click',finish);
-  window.setTimeout(finish,4300);
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){intro.remove();return;}
+  let finished=false;
+  const finish=()=>{if(finished)return;finished=true;intro.remove();};
+  intro.addEventListener('animationend',e=>{if(e.target===intro)finish();});
+  document.getElementById('skip-intro')?.addEventListener('click',()=>{intro.classList.add('intro-skipped');window.setTimeout(finish,260);});
+  window.setTimeout(finish,5000);
 })();
 
-document.getElementById('skip-intro')?.addEventListener('click',()=>document.getElementById('intro').classList.add('intro-skipped'));
 const D=window.MEDAURA,L=D.links,$=s=>document.querySelector(s);
 function setupImpact(){const el=$('#impact-count'),cap=$('#impact-caption');if(!el)return;const raw=D.impact&&D.impact.studentsReached;const label=(D.impact&&D.impact.impactLabel)||'طالب وطالبة استفادوا من أنشطة MEDAURA';if(raw===null||raw===undefined||raw===''||!Number.isFinite(Number(raw))||Number(raw)<0){el.textContent='أضف الرقم';el.classList.add('impact-unset');cap.textContent='عدد الطلاب المستفيدين — عدّله في content.js بعد اعتماد الرقم';return}el.classList.remove('impact-unset');cap.textContent=label;const target=Math.floor(Number(raw));const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const start=performance.now();const duration=reduce?0:1450;function tick(now){const t=duration?Math.min(1,(now-start)/duration):1;const eased=1-Math.pow(1-t,3);el.textContent=Math.round(target*eased).toLocaleString('en-US');if(t<1)requestAnimationFrame(tick)}requestAnimationFrame(tick)}
 

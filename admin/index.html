@@ -1,22 +1,612 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MEDAURA | لوحة الإدارة</title><link rel="icon" href="../logo.png"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet"><style>
-:root{font-family:'IBM Plex Sans Arabic',Tahoma,sans-serif;color:#163444;background:#f2f7f7}*{box-sizing:border-box}body{margin:0}header{background:#123349;color:white;padding:16px 5%;display:flex;align-items:center;justify-content:space-between;gap:15px}header a{color:#c4eee8}header img{width:42px;height:42px;object-fit:contain;vertical-align:middle}main{max-width:1100px;margin:35px auto;padding:0 18px}section,.panel{background:white;border:1px solid #d8e7e6;border-radius:17px;padding:25px;margin:18px 0;box-shadow:0 8px 26px #1233490a}h1,h2{margin:0 0 15px}h1{font-size:1.55rem}h2{font-size:1.15rem}label{display:block;font-weight:700;margin:10px 0 5px}input,textarea,select{width:100%;border:1px solid #b9d0d1;border-radius:9px;padding:11px;font:inherit;background:#fff;color:#183846}textarea{min-height:100px}button{background:#0b5961;color:#fff;border:0;border-radius:9px;padding:11px 18px;font:inherit;cursor:pointer}button.secondary{background:#e7f2f1;color:#0b5961}button.danger{background:#a52d3a}button:disabled{opacity:.55;cursor:wait}.row{display:flex;gap:12px;flex-wrap:wrap}.row>*{flex:1;min-width:180px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.toolbar button[aria-pressed=true]{background:#123349}.item{padding:14px;border:1px solid #d8e7e6;border-radius:12px;margin:10px 0;display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap}.item small{color:#54717a}.item button{margin:2px}.muted{color:#5e757b}.msg{padding:12px;border-radius:10px;background:#e9f5f3;white-space:pre-wrap}.msg.error{background:#fff0f0;color:#8e2734}[hidden]{display:none!important}#login{max-width:470px;margin:60px auto}#preview{max-width:190px;max-height:130px;object-fit:cover;margin:8px 0;border-radius:8px}.chip{display:inline-block;padding:2px 9px;background:#e4f3f1;border-radius:50px;font-size:.8rem}footer{text-align:center;padding:30px;color:#61777c}@media(max-width:600px){section{padding:17px}.item{display:block}}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MEDAURA | فريق طبي للتعليم الطبي</title>
+<meta name="description" content="MEDAURA فريق طبي جامعي يقدّم دورات وورشات في التعليم الطبي.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#0B5961;--navy:#142B43;--acc:#36A6A0;--mist:#F1F7F7;--ink:#20323A;--mute:#586B71;--line:#D9E6E7;--r:14px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;display:flex;flex-direction:column;min-height:100vh;font:400 16px/1.8 "IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,system-ui,sans-serif;color:var(--ink);background:#fff}
+h1,h2,h3{color:var(--navy);line-height:1.4;margin:0 0 .5em;font-weight:700}h1{font-size:clamp(1.9rem,5vw,3rem)}h2{font-size:1.5rem}h3{font-size:1.1rem}
+main{flex:1}a{color:var(--teal)}p>a:only-child,.tl{display:inline-block;padding:10px 0}:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.skip{position:absolute;inset-inline-start:8px;top:-60px;background:var(--teal);color:#fff;padding:8px 14px;z-index:9}.skip:focus{top:8px}
+.wrap{max-width:1080px;margin:auto;padding:0 20px}
+header{position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:5;box-shadow:0 4px 18px rgba(20,43,67,.035)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 20px;max-width:1080px;margin:auto}
+.bar img{height:58px;width:auto;max-width:190px;display:block;object-fit:contain;transition:transform .25s ease}.bar>a:hover img{transform:translateY(-2px)}
+nav{display:flex;flex-wrap:wrap;gap:2px 4px}nav a{padding:6px 10px;border-radius:6px;text-decoration:none;color:var(--navy);font-size:.92rem;font-weight:500}
+nav a:hover{background:var(--mist)}nav a[aria-current=page]{background:var(--teal);color:#fff}
+#mt{display:none;font:inherit;border:1px solid var(--line);background:#fff;border-radius:6px;padding:6px 12px}
+@media(min-width:721px) and (max-width:1000px){.bar{flex-wrap:wrap}nav{order:3;width:100%;justify-content:center;padding-bottom:6px}}
+@media(max-width:720px){#mt{display:block}nav{display:none;position:absolute;inset-inline:0;top:100%;background:#fff;border-bottom:1px solid var(--line);padding:8px 16px;flex-direction:column}nav.on{display:flex}}
+section{padding:52px 0}.alt{background:var(--mist)}.ph1{background:var(--teal);color:#fff;padding:40px 0 34px;position:relative;overflow:hidden}.ph1 h1{color:#fff;margin:0 0 6px}.ph1 .lead{color:#CFE8E6;margin:0}.ph1:after{content:'';position:absolute;inset-inline-end:-40px;bottom:-60px;width:180px;height:180px;border:3px solid var(--acc);border-radius:999px 999px 0 0;opacity:.55}
+.hero{background:radial-gradient(ellipse at 78% 15%,rgba(54,166,160,.18),transparent 38%),linear-gradient(135deg,#0B5961 0%,#123E50 100%);color:#fff;padding:56px 0 0;overflow:hidden;position:relative;isolation:isolate}
+.hero .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:end}
+.hero h1{color:#fff}.hero p{color:#CFE8E6;max-width:34ch}
+.arch{width:min(330px,100%);min-height:300px;aspect-ratio:4/4.5;border-radius:180px 180px 20px 20px;overflow:hidden;justify-self:center;margin-bottom:0;background:linear-gradient(145deg,#fff 0%,#F0F8F7 100%);display:flex;align-items:center;justify-content:center;padding:24px;box-shadow:0 24px 60px rgba(0,0,0,.13);border:1px solid rgba(255,255,255,.6);animation:logoFloat 5s ease-in-out infinite}
+.hero-logo{display:block;width:100%;max-width:290px;height:auto;object-fit:contain;filter:drop-shadow(0 5px 12px rgba(20,43,67,.07))}.thread{position:absolute;inset-inline-end:0;top:10px;width:46%;opacity:.6;pointer-events:none;z-index:0}.hero .wrap>div{position:relative;z-index:1}
+@media(max-width:700px){.hero{padding-top:38px}.hero .wrap{grid-template-columns:1fr;gap:26px}.arch{width:230px;min-height:230px;padding:20px}.hero-logo{max-width:205px}.thread{display:none}.bar img{height:50px;max-width:155px}}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 28px}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:700;border:2px solid var(--teal);background:var(--teal);color:#fff}
+.btn.w{background:#fff;color:var(--teal);border-color:#fff}.btn.o{background:transparent;color:inherit;border-color:currentColor}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{position:relative;display:block;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;text-decoration:none;color:inherit;transition:border-color .22s,transform .22s,box-shadow .22s;box-shadow:0 5px 18px rgba(20,43,67,.025)}
+.card:hover{border-color:var(--acc);transform:translateY(-3px);box-shadow:0 12px 28px rgba(20,43,67,.08)}
+.ph{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;height:100%;object-fit:cover;background:#E3EEEE;color:var(--teal);font-size:.85rem;padding:12px}
+.card .ph{height:150px}
+.chip{position:absolute;top:10px;inset-inline-start:10px;background:var(--navy);color:#fff;font-size:.8rem;padding:2px 12px;border-radius:99px}
+.s-open{background:var(--teal)}.s-done{background:var(--mute)}
+.cb{padding:14px 16px}.cat{color:var(--acc);font-weight:700}
+.meta{list-style:none;padding:0;margin:0 0 10px;display:flex;flex-wrap:wrap;gap:2px 14px;color:var(--mute);font-size:.88rem}
+.cf{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:8px;font-size:.9rem}.cf b{color:var(--teal)}
+.smp{position:absolute;top:10px;inset-inline-end:10px;font-style:normal;background:#fff;color:var(--mute);border:1px dashed var(--mute);font-size:.75rem;padding:0 8px;border-radius:99px}
+.empty{border:2px dashed var(--line);border-radius:var(--r);padding:28px;text-align:center;color:var(--mute);background:#fff}
+.fl{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}.fl button{font:inherit;border:1px solid var(--line);background:#fff;border-radius:99px;padding:4px 16px;cursor:pointer}
+.fl button[aria-pressed=true]{background:var(--teal);color:#fff;border-color:var(--teal)}
+input[type=search]{font:inherit;width:100%;max-width:420px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;margin-bottom:18px}
+.row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px}@media(max-width:700px){.two{grid-template-columns:1fr}}
+.box{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.lead{color:var(--mute);max-width:60ch}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+footer{background:var(--navy);color:#CBD7DD;padding:28px 0;font-size:.9rem}footer a{color:#fff}
+.dt{display:grid;grid-template-columns:1fr 1fr;gap:28px}.dt .ph{height:260px;border-radius:var(--r)}@media(max-width:700px){.dt{grid-template-columns:1fr}}
+@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes introIn{0%{opacity:0;transform:translateY(12px) scale(.96)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes introOut{to{opacity:0;visibility:hidden;pointer-events:none}}
+#intro{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:linear-gradient(145deg,#fff 0%,#F1F7F7 100%);animation:introOut .65s ease 1.45s forwards}
+#intro .intro-inner{display:flex;flex-direction:column;align-items:center;gap:18px;padding:28px;animation:introIn .8s cubic-bezier(.2,.75,.25,1) both}
+#intro img{display:block;width:min(68vw,300px);height:auto;max-height:44vh;object-fit:contain}
+#intro .intro-mark{width:44px;height:3px;border-radius:99px;background:var(--acc);transform-origin:center;animation:markPulse 1s ease-in-out infinite alternate}
+@keyframes markPulse{from{transform:scaleX(.45);opacity:.55}to{transform:scaleX(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}#intro{display:none!important}}
 
-.admin-menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:9px;margin:20px 0}.admin-menu button{text-align:right;background:#eaf3f2;color:#164a52;border:1px solid #d3e4e1;min-height:51px}.admin-menu button[aria-pressed="true"]{background:#0b5961;color:white}.admin-menu button.admin-sub{background:#f5f8f8}.admin-menu button:focus-visible{outline:3px solid #2a9d9a;outline-offset:2px}.v5-group{padding:16px 0;border-bottom:1px solid #dce9e7}.v5-group h3{margin:0 0 9px;color:#0b5961}.v5-actions{position:sticky;bottom:0;padding:15px 0;background:white;border-top:1px solid #dce9e7;display:flex;gap:10px}.v5-hint{font-size:.85rem;color:#54717a;margin:4px 0 10px}.v5-resource{border:1px solid #d8e7e6;border-radius:12px;padding:15px;margin:12px 0}.v5-resource .row>*{min-width:130px}@media(max-width:650px){.admin-menu{grid-template-columns:1fr 1fr}.admin-menu button{font-size:.83rem;padding:9px}}
-</style></head><body><header><div><img src="../logo.png" alt="MEDAURA"> <strong>MEDAURA · Admin</strong></div><a href="../">العودة للموقع ↗</a></header><main>
-<section id="login"><h1>تسجيل دخول الإدارة</h1><p class="muted">الحسابات المصرّح لها فقط يمكنها إدارة المحتوى.</p><form id="login-form"><label for="email">البريد الإلكتروني</label><input id="email" type="email" autocomplete="username" required><label for="password">كلمة المرور</label><input id="password" type="password" autocomplete="current-password" required><p><button type="submit">دخول آمن</button></p></form></section>
-<div id="dashboard" hidden><section><div class="row"><div><h1>لوحة إدارة MEDAURA</h1><p id="who" class="muted"></p></div><div style="text-align:left"><button id="logout" class="secondary">تسجيل خروج</button></div></div><div class="admin-layout"><nav class="admin-menu" aria-label="أقسام الموقع">
-<button type="button" id="v5-home-tab" class="secondary">⌂ الرئيسية</button>
-<button type="button" id="v5-about-tab" class="secondary">◉ من نحن</button>
-<button type="button" id="v2-team-tab" class="secondary admin-sub">↳ أعضاء الفريق</button>
-<button type="button" data-tab="courses" aria-pressed="true">▣ الدورات والورشات</button>
-<button type="button" id="v2-work-tab" class="secondary">▤ أعمالنا</button>
-<button type="button" id="v5-resources-tab" class="secondary">▥ المكتبة الطبية</button>
-<button type="button" id="v5-join-tab" class="secondary">⊕ انضم إلى MEDAURA</button>
-<button type="button" id="v5-contact-tab" class="secondary">✉ تواصل معنا</button>
-<button type="button" id="media-users-tab" hidden>♙ إدارة الإعلاميين</button>
-<button type="button" id="activity-tab" hidden>◷ سجل النشاط</button>
-<button type="button" id="v5-settings-tab" class="secondary">⚙ الإعدادات العامة</button>
-</nav></div><p class="muted">المحتوى بحالة «مسودة» لن يظهر للزوار. التعديلات تُحفظ مباشرة في قاعدة البيانات. اختر القسم المطابق لصفحة الموقع، ثم عدّل محتواه.</p></section>
-<section id="v2-panel" hidden></section><div id="legacy-panels"><section><h2 id="form-title">إضافة دورة</h2><form id="entry-form"><input type="hidden" id="entry-id"><label for="title">العنوان *</label><input id="title" maxlength="180" required><label for="description">الوصف</label><textarea id="description" maxlength="5000"></textarea><div class="row"><div><label for="location">المكان / طريقة الانعقاد</label><input id="location" maxlength="180"></div><div id="instructor-wrap"><label for="instructor">المحاضر</label><input id="instructor" maxlength="180"></div></div><div class="row"><div><label for="date">التاريخ والوقت</label><input id="date" type="datetime-local"></div><div><label for="status">الحالة</label><select id="status"></select></div></div><label for="registration">رابط التسجيل (اختياري)</label><input id="registration" type="url" placeholder="https://..."><label for="image">صورة JPG / PNG / WebP (حتى 20 MB)</label><input id="image" type="file" accept="image/jpeg,image/png,image/webp"><img id="preview" alt="معاينة الصورة" hidden><div class="toolbar"><button id="save" type="submit">حفظ</button><button id="clear" type="button" class="secondary">إلغاء التعديل / جديد</button></div></form></section>
-<section><h2 id="list-title">الدورات المسجلة</h2><div id="entries">جارٍ التحميل...</div></section></div></div><p id="message" role="status" aria-live="polite" hidden></p></main><footer>MEDAURA · Learn. Apply. Save Lives.</footer>
-<script src="../supabase-config.js"></script><script type="module" src="admin.js"></script><script type="module" src="v2.js"></script><script type="module" src="work.js"></script><script type="module" src="v5.js"></script><script type="module" src="media-admin.js"></script></body></html>
+/* Premium finishing touches: quiet motion, layered depth, and clear navigation */
+html{scroll-padding-top:90px}
+body{overflow-x:hidden}
+#scroll-progress{position:fixed;top:0;right:0;width:0;height:3px;background:linear-gradient(90deg,#36A6A0,#B7E8DF);z-index:1200;box-shadow:0 0 12px rgba(54,166,160,.45);transition:width .08s linear}
+header{transition:box-shadow .25s ease,background .25s ease}
+header.scrolled{box-shadow:0 8px 28px rgba(20,43,67,.10);background:rgba(255,255,255,.97)}
+.hero{min-height:390px}
+.hero:before{content:"";position:absolute;inset:-30% auto auto -12%;width:380px;height:380px;border:1px solid rgba(207,232,230,.15);border-radius:50%;box-shadow:0 0 0 34px rgba(207,232,230,.035),0 0 0 70px rgba(207,232,230,.025);pointer-events:none;animation:orbitBreath 9s ease-in-out infinite}
+.hero:after{content:"";position:absolute;left:12%;bottom:15%;width:7px;height:7px;border-radius:50%;background:#B7E8DF;box-shadow:0 0 0 7px rgba(183,232,223,.10),0 0 24px rgba(183,232,223,.35);animation:dotPulse 3s ease-in-out infinite}
+.hero .wrap{padding-bottom:0}
+.btn{position:relative;overflow:hidden;isolation:isolate;transition:transform .22s ease,box-shadow .22s ease,background .22s ease}
+.btn:before{content:"";position:absolute;top:-80%;bottom:-80%;left:-45%;width:24%;background:rgba(255,255,255,.25);transform:rotate(22deg) translateX(-220%);transition:transform .65s ease;z-index:-1}
+.btn:hover{transform:translateY(-2px);box-shadow:0 9px 22px rgba(11,89,97,.20)}.btn:hover:before{transform:rotate(22deg) translateX(650%)}
+.card{transform:translateY(0);transition:border-color .25s,transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 38px rgba(20,43,67,.11)}
+section .wrap>h2{letter-spacing:-.02em}
+section .wrap>h2:after{content:"";display:block;width:42px;height:3px;background:var(--acc);border-radius:9px;margin-top:9px}
+.box{transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}.box:hover{border-color:rgba(54,166,160,.55);box-shadow:0 12px 30px rgba(20,43,67,.055)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.2,1)}.reveal.in-view{opacity:1;transform:translateY(0)}
+#back-top{position:fixed;bottom:22px;inset-inline-end:22px;width:44px;height:44px;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:20px;cursor:pointer;z-index:20;box-shadow:0 8px 24px rgba(20,43,67,.2);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .25s,transform .25s,visibility .25s,background .25s}
+#back-top.show{opacity:1;visibility:visible;transform:translateY(0)}#back-top:hover{background:var(--teal);transform:translateY(-3px)}
+#intro{background:radial-gradient(ellipse at center, #fff 0%, #F1F7F7 68%, #E6F2F1 100%)}#intro:after{content:"";position:absolute;width:min(80vw,390px);aspect-ratio:1;border:1px solid rgba(54,166,160,.16);border-radius:50%;animation:introRing 2.2s ease-out infinite;pointer-events:none}#intro .intro-inner{position:relative;z-index:1}#intro img{animation:logoFloat 4.5s ease-in-out infinite}
+@keyframes orbitBreath{0%,100%{transform:translate(0,0) scale(1);opacity:.8}50%{transform:translate(14px,10px) scale(1.04);opacity:.45}}
+@keyframes dotPulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.25);opacity:1}}
+@keyframes introRing{0%{transform:scale(.72);opacity:0}35%{opacity:.8}100%{transform:scale(1.12);opacity:0}}
+@media(max-width:700px){.hero{min-height:0}.hero:before{width:240px;height:240px;left:-35%}.hero:after{left:8%;bottom:34%}#back-top{bottom:14px;inset-inline-end:14px;width:40px;height:40px}}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}#back-top{transition:none}}
+
+/* MEDAURA signature language: THE LEARNING PULSE */
+:root{--pulse:#9AE4D6;--pulse-ink:#092E3A;--pulse-glow:rgba(154,228,214,.23)}
+.hero{background:radial-gradient(ellipse at 78% 15%,rgba(54,166,160,.22),transparent 38%),linear-gradient(125deg,#082F3B 0%,#0B5961 57%,#123E50 100%)}
+.hero .wrap{align-items:center;min-height:400px}
+.hero-kicker{display:inline-flex;align-items:center;gap:9px;padding:5px 12px;border:1px solid rgba(183,232,223,.26);border-radius:99px;background:rgba(255,255,255,.055);backdrop-filter:blur(8px)}
+.hero-kicker:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--pulse);box-shadow:0 0 0 4px rgba(154,228,214,.12),0 0 16px var(--pulse);animation:signal 2s ease-in-out infinite}
+.arch{position:relative;isolation:isolate;border-radius:48% 48% 24px 24px;box-shadow:0 28px 80px rgba(0,0,0,.23),inset 0 0 0 1px #fff;background:linear-gradient(145deg,#fff,#eaf6f4)}
+.arch:before,.arch:after{content:"";position:absolute;inset:-17px;border:1px solid rgba(183,232,223,.48);border-radius:48% 48% 28px 28px;z-index:-1;animation:frameBreath 6s ease-in-out infinite}
+.arch:after{inset:-32px;border-color:rgba(183,232,223,.18);animation-delay:-3s}
+.hero-logo{position:relative;z-index:2;animation:logoReveal 1.15s cubic-bezier(.2,.8,.2,1) both;}
+.pulse-orbit{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.pulse-orbit circle.track{fill:none;stroke:rgba(183,232,223,.2);stroke-width:1;stroke-dasharray:3 8}
+.pulse-orbit .satellite{fill:#B7E8DF;filter:drop-shadow(0 0 5px #9AE4D6);transform-origin:50% 50%;animation:orbitSpin 16s linear infinite}
+.impact-section{position:relative;overflow:hidden;background:#F4F9F8;padding:62px 0}
+.impact-section:before{content:"";position:absolute;width:390px;height:390px;border:1px solid rgba(11,89,97,.08);border-radius:50%;inset-inline-start:-160px;top:-220px;box-shadow:0 0 0 28px rgba(11,89,97,.025),0 0 0 58px rgba(11,89,97,.018);pointer-events:none}
+.impact-panel{position:relative;display:grid;grid-template-columns:1fr auto;align-items:center;gap:28px;padding:clamp(22px,4vw,42px);border-radius:24px;color:#fff;background:linear-gradient(120deg,#092F3B,#0B5961 72%,#145563);overflow:hidden;box-shadow:0 24px 60px rgba(9,47,59,.13)}
+.impact-panel:after{content:"";position:absolute;width:280px;height:280px;border:1px solid rgba(183,232,223,.17);border-radius:50%;inset-inline-end:-80px;top:-140px;box-shadow:0 0 0 25px rgba(183,232,223,.035),0 0 0 55px rgba(183,232,223,.025);pointer-events:none}
+.impact-copy,.impact-figure{position:relative;z-index:1}.impact-eyebrow{display:flex;align-items:center;gap:9px;color:#B7E8DF;font-size:.78rem;font-weight:700;letter-spacing:.13em}.impact-eyebrow:before{content:"";height:1px;width:26px;background:#9AE4D6}.impact-panel h2{color:#fff;font-size:clamp(1.45rem,3vw,2.2rem);margin:9px 0}.impact-panel p{color:#D0E8E6;max-width:46ch;margin:0}.impact-number{font-size:clamp(2.8rem,7vw,5.3rem);line-height:1.08;font-weight:700;letter-spacing:-.055em;color:#fff;font-variant-numeric:tabular-nums;text-shadow:0 0 28px rgba(154,228,214,.15)}.impact-number:after{content:"+";font-size:.45em;color:#9AE4D6;margin-inline-start:5px}.impact-caption{display:block;color:#B7E8DF;font-size:.9rem;margin-top:8px}.impact-figure{width:140px;height:140px;display:grid;place-items:center;border:1px solid rgba(183,232,223,.24);border-radius:50%;background:rgba(255,255,255,.035)}.impact-figure svg{width:105px;height:105px;overflow:visible}.impact-figure .orbit{fill:none;stroke:rgba(183,232,223,.32);stroke-width:1.3;stroke-dasharray:2 5;transform-origin:50% 50%;animation:orbitSpin 24s linear infinite}.impact-figure .core{fill:#9AE4D6;filter:drop-shadow(0 0 9px rgba(154,228,214,.7));animation:corePulse 3s ease-in-out infinite}.impact-figure .node{fill:#fff;animation:signal 2.4s ease-in-out infinite}.impact-unset{font-size:1.05rem;letter-spacing:0;color:#fff;text-shadow:none}.impact-unset:after{content:""}
+@keyframes signal{0%,100%{opacity:.65;transform:scale(1)}50%{opacity:1;transform:scale(1.14)}}
+@keyframes frameBreath{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.025);opacity:.3}}
+@keyframes orbitSpin{to{transform:rotate(360deg)}}
+@keyframes logoReveal{from{opacity:0;transform:translateY(10px) scale(.96);filter:blur(3px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes corePulse{0%,100%{r:9;opacity:.85}50%{r:12;opacity:1}}
+@media(max-width:700px){.hero .wrap{min-height:0}.arch{margin:8px auto 24px}.impact-panel{grid-template-columns:1fr;gap:22px}.impact-figure{width:100px;height:100px;grid-row:1}.impact-figure svg{width:76px;height:76px}.impact-number{font-size:3.5rem}}
+@media(prefers-reduced-motion:reduce){.hero-kicker:before,.arch:before,.arch:after,.hero-logo,.pulse-orbit .satellite,.impact-figure .orbit,.impact-figure .core,.impact-figure .node{animation:none!important}}
+
+
+/* SIGNATURE EXPERIENCE — MEDAURA's own visual language */
+:root{--signature:#0a3642;--mint:#a5eadb;--paper:#f7fbfa;--gold:#d8c69b}
+.hero{background:radial-gradient(circle at 72% 40%,rgba(90,198,181,.19),transparent 26%),linear-gradient(125deg,#071f2b 0%,#0a4652 56%,#0c6670 100%)}
+.hero:after{background:var(--mint);box-shadow:0 0 0 8px rgba(165,234,219,.10),0 0 32px rgba(165,234,219,.6)}
+.hero h1{max-width:13ch;letter-spacing:-.035em}
+.hero h1 em{font-style:normal;color:var(--mint);position:relative;white-space:nowrap}
+.hero h1 em:after{content:"";position:absolute;inset-inline:0;bottom:-5px;height:2px;background:linear-gradient(90deg,transparent,var(--mint),transparent);transform:scaleX(0);transform-origin:center;animation:signatureUnderline 1s .7s ease forwards}
+.hero .arch{background:radial-gradient(circle at 50% 45%,#fff 0%,#effaf7 67%,#d9efeb 100%);border:1px solid rgba(255,255,255,.8)}
+.hero-kicker{letter-spacing:.08em!important}
+.signature-section{padding:76px 0;background:#071f2b;color:#eaf7f5;position:relative;overflow:hidden}
+.signature-section:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(165,234,219,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(165,234,219,.035) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent);pointer-events:none}
+.signature-section .wrap{position:relative}
+.signature-heading{display:flex;justify-content:space-between;align-items:end;gap:22px;margin-bottom:30px}
+.signature-heading h2{color:#fff;font-size:clamp(1.7rem,4vw,2.65rem);max-width:16ch;margin:0}
+.signature-heading p{color:#a9c7c9;max-width:34ch;margin:0}
+.constellation{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding:35px 0 12px}
+.constellation-line{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.constellation-line path{fill:none;stroke:rgba(165,234,219,.36);stroke-width:1.4;stroke-dasharray:5 8;animation:threadFlow 22s linear infinite}
+.constellation-link{position:relative;z-index:1;min-height:174px;padding:20px 17px;border-radius:18px;text-decoration:none;color:#eaf7f5;background:linear-gradient(150deg,rgba(255,255,255,.085),rgba(255,255,255,.025));border:1px solid rgba(165,234,219,.2);backdrop-filter:blur(10px);transition:transform .3s,border-color .3s,background .3s,box-shadow .3s}
+.constellation-link:hover,.constellation-link:focus-visible{transform:translateY(-7px);border-color:var(--mint);background:rgba(165,234,219,.09);box-shadow:0 18px 45px rgba(0,0,0,.2)}
+.constellation-icon{width:44px;height:44px;display:grid;place-items:center;border:1px solid rgba(165,234,219,.38);border-radius:14px;color:var(--mint);font-size:1.25rem;margin-bottom:23px;background:rgba(165,234,219,.06)}
+.constellation-link small{display:block;color:#91b7ba;letter-spacing:.12em;font-size:.68rem;margin-bottom:5px}
+.constellation-link strong{display:block;font-size:1.08rem;color:#fff}
+.constellation-link span:last-child{display:block;color:#b9d2d2;font-size:.85rem;margin-top:6px}
+.signature-endnote{display:flex;align-items:center;gap:12px;color:#8eb8bb;font-size:.84rem;margin-top:18px}
+.signature-endnote:before{content:"";width:34px;height:1px;background:var(--mint)}
+.path-section{background:var(--paper)}
+.path-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:30px;position:relative}
+.path-step{position:relative;padding:25px 26px 26px;border-top:1px solid var(--line)}
+.path-step:before{content:attr(data-step);display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#0a3642;color:var(--mint);font-weight:700;border:5px solid #e5f2ef;box-shadow:0 0 0 1px #b9d8d3;margin-bottom:18px}
+.path-step:not(:last-child):after{content:"";position:absolute;top:45px;inset-inline-end:-1px;width:1px;height:calc(100% - 65px);background:linear-gradient(var(--acc),transparent);opacity:.6}
+.path-step h3{font-size:1.15rem;margin-bottom:8px}
+.path-step p{color:var(--mute);margin:0;font-size:.95rem}
+.path-label{font-size:.72rem;color:var(--teal);font-weight:700;letter-spacing:.12em}
+.impact-number{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.impact-panel{border:1px solid rgba(183,232,223,.14)}
+footer{position:relative;overflow:hidden}
+footer:before{content:"M";position:absolute;inset-inline-end:2%;bottom:-.6em;font:700 13rem/1 Georgia,serif;color:rgba(255,255,255,.025);pointer-events:none}
+footer .wrap{position:relative}
+@keyframes signatureUnderline{to{transform:scaleX(1)}}
+@keyframes threadFlow{to{stroke-dashoffset:-260}}
+@media(max-width:760px){.signature-heading{display:block}.signature-heading p{margin-top:12px}.constellation{grid-template-columns:repeat(2,minmax(0,1fr));padding-top:15px}.constellation-line{opacity:.45}.constellation-link{min-height:155px;padding:16px}.constellation-icon{margin-bottom:15px}.path-grid{grid-template-columns:1fr}.path-step{padding:20px 18px}.path-step:not(:last-child):after{inset-inline-end:38px;top:62px;height:calc(100% - 50px)}}
+@media(max-width:420px){.constellation{grid-template-columns:1fr}.constellation-link{min-height:0}.constellation-icon{margin-bottom:10px}}
+@media(prefers-reduced-motion:reduce){.constellation-line path,.hero h1 em:after{animation:none!important}.constellation-link{transition:none}}
+
+
+/* MEDAURA MEDICAL IMMERSION — depth without visual noise */
+:root{--clinical:#dff4ef;--deep:#061e2a;--silver:#d8e9e8}
+#intro{perspective:1200px;background:radial-gradient(ellipse at 50% 44%,#fafffe 0%,#edf8f6 45%,#dcefeb 100%);overflow:hidden;isolation:isolate}
+#intro .intro-inner{position:relative;z-index:3;gap:14px;transform-style:preserve-3d;animation:medauraEnter 1.35s cubic-bezier(.2,.75,.2,1) both}
+#intro .intro-brand{font-size:.72rem;font-weight:700;letter-spacing:.28em;color:#0b5961;direction:ltr}
+#intro .intro-subtitle{font-size:.9rem;color:#5d777b;margin-top:-7px}
+#intro .intro-stage{position:absolute;width:min(82vw,440px);aspect-ratio:1;display:grid;place-items:center;transform-style:preserve-3d;pointer-events:none;z-index:1}
+#intro .intro-orbit{position:absolute;border:1px solid rgba(11,89,97,.17);border-radius:50%;inset:5%;transform:rotateX(68deg) rotateZ(-18deg);box-shadow:0 0 0 18px rgba(11,89,97,.025),0 0 0 40px rgba(11,89,97,.018);animation:medauraOrbit 10s linear infinite}
+#intro .intro-orbit.two{inset:16%;transform:rotateY(67deg) rotateX(12deg);border-color:rgba(54,166,160,.24);animation-duration:14s;animation-direction:reverse}
+#intro .intro-orbit.three{inset:27%;transform:rotateX(72deg) rotateZ(38deg);border-style:dashed;animation-duration:22s}
+#intro .intro-cross{position:absolute;left:16%;top:23%;width:24px;height:24px;opacity:.55;transform:translateZ(35px) rotate(-12deg)}
+#intro .intro-cross:before,#intro .intro-cross:after{content:"";position:absolute;background:#3a9d98;border-radius:3px;box-shadow:0 0 16px rgba(54,166,160,.25)}#intro .intro-cross:before{width:100%;height:6px;top:9px}#intro .intro-cross:after{height:100%;width:6px;left:9px}
+#intro .intro-ecg{position:absolute;left:0;right:0;bottom:22%;width:100%;height:60px;opacity:.5;overflow:visible}
+#intro .intro-ecg path{fill:none;stroke:#2d9691;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:520;stroke-dashoffset:520;animation:ecgDraw 1.5s .25s ease forwards}
+#intro img{position:relative;z-index:4;width:min(58vw,270px);max-height:36vh;filter:drop-shadow(0 22px 22px rgba(6,48,57,.12));animation:logo3dSettle 1.3s cubic-bezier(.2,.8,.2,1) both}
+#intro .intro-mark{width:64px;height:3px;background:linear-gradient(90deg,transparent,#36a6a0,#a5eadb,transparent);animation:markPulse 1.2s ease-in-out infinite alternate}
+#intro:before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 20%,rgba(255,255,255,.58) 48%,transparent 68%);transform:translateX(-100%);animation:introSheen 1.7s .2s ease forwards;z-index:2;pointer-events:none}
+#intro:after{content:"";position:absolute;width:min(86vw,500px);aspect-ratio:1;border:1px solid rgba(54,166,160,.16);border-radius:50%;animation:introRing 2.4s ease-out infinite;pointer-events:none}
+@keyframes medauraEnter{0%{opacity:0;transform:rotateX(12deg) translateY(18px) scale(.9)}65%{opacity:1;transform:rotateX(-2deg) translateY(0) scale(1.015)}100%{opacity:1;transform:rotateX(0) translateY(0) scale(1)}}
+@keyframes logo3dSettle{0%{opacity:0;transform:translateZ(-90px) rotateY(-14deg) scale(.82);filter:blur(5px)}70%{opacity:1;transform:translateZ(18px) rotateY(3deg) scale(1.025);filter:blur(0)}100%{opacity:1;transform:translateZ(0) rotateY(0) scale(1);filter:blur(0)}}
+@keyframes medauraOrbit{to{transform:rotateX(68deg) rotateZ(342deg)}}
+@keyframes ecgDraw{to{stroke-dashoffset:0}}
+@keyframes introSheen{to{transform:translateX(100%)}}
+/* student tool: a practical learning reflection card */
+.learning-lab{background:#fff;padding:64px 0}
+.lab-panel{display:grid;grid-template-columns:.85fr 1.15fr;gap:30px;padding:clamp(22px,4vw,38px);border:1px solid #dcebe8;border-radius:24px;background:linear-gradient(145deg,#fff,#f4faf8);box-shadow:0 18px 48px rgba(9,47,59,.055)}
+.lab-kicker{font-size:.72rem;letter-spacing:.12em;color:#0b7774;font-weight:700;direction:ltr;display:inline-block}
+.lab-panel h2{margin-top:8px;font-size:clamp(1.5rem,3vw,2.15rem)}
+.lab-panel p{color:var(--mute)}
+.lab-note{border-inline-start:3px solid #78c9bc;padding:8px 13px;background:#edf8f5;border-radius:0 10px 10px 0;font-size:.9rem;color:#31545a}
+.lab-form{display:grid;gap:13px}
+.lab-form label{display:grid;gap:6px;font-size:.9rem;font-weight:700;color:var(--navy)}
+.lab-form input,.lab-form textarea{width:100%;font:inherit;border:1px solid #d2e4e1;border-radius:10px;background:#fff;padding:11px 13px;color:var(--ink);outline-offset:2px}
+.lab-form textarea{min-height:76px;resize:vertical}
+.lab-form input:focus,.lab-form textarea:focus{border-color:#399e96;box-shadow:0 0 0 3px rgba(54,166,160,.11)}
+.lab-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.btn.soft{background:#fff;color:#0b5961;border-color:#c6e0dc}
+.lab-status{font-size:.85rem;color:#42666a;min-height:1.4em}
+@media(max-width:720px){.lab-panel{grid-template-columns:1fr;gap:16px}#intro .intro-stage{width:88vw}#intro .intro-ecg{bottom:19%}}
+@media(prefers-reduced-motion:reduce){#intro .intro-orbit,#intro .intro-ecg path,#intro .intro-inner,#intro img,#intro:before{animation:none!important}#intro .intro-ecg path{stroke-dashoffset:0}#intro{animation:introOut .25s ease .35s forwards}}
+
+
+/* === MEDAURA Signature Refinement: bespoke clinical editorial system === */
+:root{
+ --teal:#075963;--navy:#102c42;--acc:#319c96;--mist:#f0f7f6;--paper:#fbfdfc;
+ --line:#d7e6e4;--ink:#1b343c;--mute:#587078;--mint:#a5eadb;--deep:#071f2b;
+ --r:18px;
+}
+body{background:var(--paper)}
+.wrap{max-width:1160px}
+section{padding:clamp(46px,6vw,76px) 0}
+h1{letter-spacing:-.035em}
+h2{letter-spacing:-.025em}
+header{border-bottom-color:rgba(13,72,80,.1)}
+.bar{max-width:1160px;padding-block:10px}
+.bar img{height:66px;max-width:205px;filter:drop-shadow(0 3px 8px rgba(8,48,56,.06))}
+nav a{padding:8px 11px;border-radius:8px;transition:background .2s,color .2s,transform .2s}
+nav a:hover{transform:translateY(-1px)}
+.ph1{background:linear-gradient(112deg,#071f2b 0%,#0b5961 68%,#167b79 100%);padding:clamp(42px,6vw,68px) 0;isolation:isolate}
+.ph1:before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(circle at 82% 25%,rgba(165,234,219,.15),transparent 27%),linear-gradient(90deg,transparent 49.8%,rgba(255,255,255,.035) 50%,transparent 50.2%);pointer-events:none}
+.ph1:after{width:220px;height:220px;border-radius:50%;border:1px solid rgba(165,234,219,.28);bottom:-150px;inset-inline-end:8%;opacity:.9;box-shadow:0 0 0 22px rgba(165,234,219,.035),0 0 0 46px rgba(165,234,219,.025)}
+.ph1 h1{font-size:clamp(2rem,4.8vw,3.3rem);max-width:18ch}
+.ph1 .lead{color:#d1e9e5;max-width:55ch}
+.hero{padding-top:clamp(56px,8vw,96px);background:radial-gradient(ellipse at 77% 22%,rgba(107,211,194,.16),transparent 30%),linear-gradient(130deg,#071f2b 0%,#0b4552 53%,#0b5961 100%)}
+.hero .wrap{align-items:center;gap:clamp(28px,5vw,72px);grid-template-columns:1.08fr .92fr;padding-bottom:clamp(36px,5vw,58px)}
+.hero h1{font-size:clamp(2.45rem,5.6vw,4.25rem);line-height:1.2;max-width:12ch}
+.hero h1 em{font-style:normal;color:#a5eadb;position:relative;white-space:nowrap}
+.hero p:not(.hero-kicker){font-size:1.1rem;line-height:2;max-width:39ch;color:#d6e9e7}
+.hero-kicker{display:inline-flex;align-items:center;gap:10px}
+.hero-kicker:before{content:"";width:30px;height:1px;background:var(--mint)}
+.arch{width:min(100%,390px);aspect-ratio:1/1.04;min-height:0;border-radius:48% 48% 22px 22px;padding:30px;background:linear-gradient(150deg,#fbfffe,#e4f4f0);position:relative;isolation:isolate;box-shadow:0 30px 85px rgba(0,0,0,.22),inset 0 0 0 1px rgba(255,255,255,.9);animation:logoFloat 6s ease-in-out infinite}
+.arch:before{content:"";position:absolute;inset:12px;border:1px solid rgba(7,89,99,.14);border-radius:inherit;pointer-events:none}
+.hero-logo{width:100%;max-width:340px;filter:drop-shadow(0 9px 12px rgba(7,50,57,.12))}
+.btn{border-radius:10px;padding:12px 21px;transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(4,46,57,.16)}
+.btn.w{color:#073f49}.btn.o{border-color:rgba(255,255,255,.55)}
+.card{border-radius:18px;box-shadow:0 8px 25px rgba(12,51,60,.045)}
+.card .ph{height:180px}
+.card:hover{transform:translateY(-5px);box-shadow:0 18px 36px rgba(12,51,60,.11)}
+.cb{padding:19px}
+.cb h3{margin-top:7px}
+.meta{gap:6px 14px}
+.meta li{background:#f0f7f6;border-radius:6px;padding:1px 7px}
+.chip{font-size:.75rem;letter-spacing:.01em}
+.box{border-radius:18px;box-shadow:0 8px 24px rgba(12,51,60,.035);transition:transform .25s,border-color .25s,box-shadow .25s}
+.box:hover{border-color:#b6d9d4;box-shadow:0 13px 30px rgba(12,51,60,.07)}
+.empty{border-radius:18px;background:linear-gradient(135deg,#fff,#f6fbfa);border-color:#c9dfdc}
+.row{padding:18px 16px;border-radius:12px;transition:background .2s}
+.row:hover{background:#f1f8f6}
+input[type=search]{max-width:100%;margin-top:12px;background:#fbfefd;border-color:#c9dfdc}
+.fl button{padding:7px 17px;transition:background .2s,border-color .2s,transform .2s}
+.fl button:hover{transform:translateY(-1px)}
+.dt .ph{height:320px;border:1px solid var(--line);box-shadow:0 15px 38px rgba(12,51,60,.08)}
+footer{background:linear-gradient(115deg,#071f2b,#103f4c);padding:38px 0}
+footer:after{content:"";display:block;width:100%;height:2px;position:absolute;top:0;inset-inline-start:0;background:linear-gradient(90deg,transparent,#4fb5a8,#a5eadb,transparent);opacity:.8}
+#back-top{width:46px;height:46px;border-radius:14px;box-shadow:0 10px 26px rgba(7,54,64,.18)}
+/* Intro: the logo is revealed like a drawn signature; the ECG traces beneath it. */
+#intro{background:radial-gradient(ellipse at 50% 38%,#ffffff 0%,#f1faf8 47%,#e3f3ef 100%);animation:introExit .8s cubic-bezier(.7,0,.2,1) 4.05s forwards;overflow:hidden;isolation:isolate}
+#intro .intro-backdrop{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+#intro .intro-orbit{position:absolute;display:block;border:1px solid rgba(7,89,99,.13);border-radius:50%;width:min(82vw,650px);aspect-ratio:1;box-shadow:0 0 0 30px rgba(7,89,99,.018),0 0 0 72px rgba(7,89,99,.012)}
+#intro .intro-orbit-a{transform:rotateX(67deg) rotateZ(-25deg);animation:signatureOrbit 16s linear infinite}
+#intro .intro-orbit-b{width:min(62vw,480px);border-color:rgba(49,156,150,.19);transform:rotateY(62deg) rotateX(15deg);animation:signatureOrbit 22s linear infinite reverse}
+#intro .intro-orbit-c{width:min(42vw,320px);border-style:dashed;border-color:rgba(7,89,99,.16);animation:signatureOrbit 30s linear infinite}
+#intro .intro-cross{position:absolute;width:24px;height:24px;top:22%;inset-inline-end:23%;opacity:.6}
+#intro .intro-cross:before,#intro .intro-cross:after{content:"";position:absolute;background:#3a9d98;border-radius:3px;box-shadow:0 0 13px rgba(54,166,160,.24)}
+#intro .intro-cross:before{width:100%;height:5px;top:9px}
+#intro .intro-cross:after{height:100%;width:5px;left:9px}
+#intro .intro-composition{position:relative;z-index:3;width:min(88vw,590px);display:flex;flex-direction:column;align-items:center;transform-style:preserve-3d;text-align:center}
+#intro .intro-logo-wrap{width:min(77vw,440px);position:relative;isolation:isolate;perspective:1000px}
+#intro .intro-logo-wrap img{display:block;width:100%;height:auto;max-height:43vh;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 17px 18px rgba(7,49,57,.14));clip-path:inset(0 100% 0 0);animation:logoSignatureDraw 1.7s cubic-bezier(.65,0,.25,1) .18s forwards,logoDepth 1.7s cubic-bezier(.2,.8,.2,1) .18s both}
+#intro .logo-draw-glow{position:absolute;z-index:3;top:0;bottom:0;left:0;width:5px;background:linear-gradient(180deg,transparent,#39a69b 20%,#b8f2e4 50%,#39a69b 80%,transparent);filter:blur(3px);box-shadow:0 0 20px rgba(49,156,150,.4);opacity:0;animation:drawBeam 1.7s cubic-bezier(.65,0,.25,1) .18s forwards;pointer-events:none}
+#intro .intro-ecg{width:min(86vw,560px);height:auto;margin-top:clamp(16px,3vh,28px);overflow:visible}
+#intro .intro-ecg .ecg-base{fill:none;stroke:rgba(7,89,99,.12);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+#intro .intro-ecg .ecg-trace{fill:none;stroke:#188d88;stroke-width:3.1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1120;stroke-dashoffset:1120;filter:drop-shadow(0 0 5px rgba(49,156,150,.3));animation:ecgSignature 1.3s ease 1.25s forwards}
+#intro .intro-wordmark{display:flex;flex-direction:column;align-items:center;gap:0;margin-top:8px;opacity:0;transform:translateY(8px);animation:wordmarkIn .7s ease 1.85s forwards}
+#intro .intro-wordmark span{font:700 clamp(1.1rem,3vw,1.45rem)/1.2 Arial,sans-serif;letter-spacing:.3em;color:#0a4550;direction:ltr;margin-inline-start:.3em}
+#intro .intro-wordmark small{font:500 .64rem/1.7 Arial,sans-serif;letter-spacing:.34em;color:#628084;direction:ltr;margin-inline-start:.34em}
+#intro .intro-tagline{margin:12px 0 0;color:#41676c;font-size:clamp(.9rem,2vw,1rem);opacity:0;animation:wordmarkIn .7s ease 2.1s forwards}
+#intro .intro-bottomline{position:absolute;z-index:3;bottom:5.5%;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:13px;color:#7b9a9a;font:500 .58rem Arial,sans-serif;letter-spacing:.17em;direction:ltr;opacity:0;animation:wordmarkIn .65s ease 2.35s forwards}
+#intro .intro-bottomline span{height:1px;width:min(8vw,60px);background:#9fcac4}
+@keyframes logoSignatureDraw{0%{clip-path:inset(0 100% 0 0);opacity:.25;filter:blur(3px) drop-shadow(0 17px 18px rgba(7,49,57,.14))}65%{opacity:1}100%{clip-path:inset(0 0 0 0);opacity:1;filter:blur(0) drop-shadow(0 17px 18px rgba(7,49,57,.14))}}
+@keyframes drawBeam{0%{left:0;opacity:0}8%{opacity:1}90%{opacity:1}100%{left:100%;opacity:0}}
+@keyframes ecgSignature{to{stroke-dashoffset:0}}
+@keyframes wordmarkIn{to{opacity:1;transform:translateY(0)}}
+@keyframes signatureOrbit{to{transform:rotateX(67deg) rotateZ(335deg)}}
+@keyframes introExit{to{opacity:0;visibility:hidden;pointer-events:none}}
+/* Make internal pages feel designed, not like repeated plain templates. */
+#app section:not(.hero){position:relative}
+#app .ph1+.section-intro{padding-top:28px}
+#app .ph1+.section-intro .wrap{display:flex;justify-content:space-between;align-items:end;gap:28px}
+#app .ph1+.section-intro h2{max-width:20ch}
+#app .course-toolbar{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:22px;padding:18px;border:1px solid var(--line);background:#fff;border-radius:16px}
+#app .course-toolbar .fl{margin:0}
+#app .course-toolbar .toolbar-note{color:var(--mute);font-size:.88rem}
+#app .course-toolbar input{margin:0;max-width:320px}
+#app .course-detail-panel{padding:clamp(22px,4vw,38px);border:1px solid var(--line);border-radius:22px;background:#fff;box-shadow:0 18px 45px rgba(9,47,59,.055)}
+#app .course-detail-panel h1{font-size:clamp(2rem,4vw,3.2rem)}
+#app .course-detail-panel .course-detail-top{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+#app .event-intro{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:24px}
+#app .resource-empty-note{margin-top:14px;font-size:.88rem;color:var(--mute)}
+@media(max-width:720px){
+ .bar img{height:56px}
+ .hero{padding-top:48px}
+ .hero .wrap{grid-template-columns:1fr;gap:30px}
+ .hero .wrap>div:first-child{order:1}
+ .hero .arch{order:0;width:min(74vw,290px);margin:0 auto 8px}
+ #intro .intro-composition{transform:translateY(-1vh)}
+ #intro .intro-logo-wrap{width:min(82vw,380px)}
+ #intro .intro-ecg{width:min(86vw,440px)}
+ #intro .intro-bottomline{font-size:.48rem;letter-spacing:.1em}
+}
+@media(max-height:700px){#intro .intro-logo-wrap{width:min(58vw,340px)}#intro .intro-ecg{width:min(72vw,440px);margin-top:8px}#intro .intro-tagline{margin-top:5px}}
+@media(prefers-reduced-motion:reduce){
+ #intro{animation:introExit .25s ease .2s forwards!important}
+ #intro .intro-logo-wrap img,#intro .logo-draw-glow,#intro .intro-ecg .ecg-trace,#intro .intro-wordmark,#intro .intro-tagline,#intro .intro-bottomline,#intro .intro-orbit{animation:none!important}
+ #intro .intro-logo-wrap img{clip-path:none;opacity:1}
+ #intro .intro-ecg .ecg-trace{stroke-dashoffset:0}
+}
+
+
+.about-manifesto{padding:clamp(26px,5vw,52px);margin-bottom:26px;border-radius:24px;background:linear-gradient(120deg,#edf8f5,#fff);border:1px solid #d9ebe7;position:relative;overflow:hidden}
+.about-manifesto:after{content:"M";position:absolute;inset-inline-end:3%;bottom:-.52em;font:700 14rem/1 Georgia,serif;color:rgba(7,89,99,.045);pointer-events:none}
+.about-manifesto h2{position:relative;z-index:1;font-size:clamp(1.6rem,3.8vw,2.6rem);max-width:24ch;margin-top:12px}
+.about-manifesto p{position:relative;z-index:1}
+.about-principles{gap:16px}
+.principle-card{padding:24px;position:relative;overflow:hidden;border-top:3px solid #54b6aa}
+.principle-card h3{margin-top:14px}
+.principle-card small{color:#6c8588;font-size:.78rem}
+.join-card{display:flex;flex-direction:column;align-items:flex-start;min-height:260px;background:linear-gradient(145deg,#fff,#f5faf9)}
+.join-card .btn{margin-top:auto}
+.resource-row{align-items:center;gap:18px}
+.resource-row>span:first-child{min-width:0}
+.resource-row a{font-weight:700;text-decoration:none;white-space:nowrap}
+.resource-row a:hover{text-decoration:underline}
+@media(max-width:600px){.resource-row{align-items:flex-start;flex-direction:column}.resource-row a{white-space:normal}.join-card{min-height:0}}
+
+
+/* Sequential letter-by-letter SVG outline drawing — not an image wipe. */
+#intro .intro-letter-stage{width:min(88vw,650px);display:flex;flex-direction:column;align-items:center;gap:2px;direction:ltr}
+#intro .intro-letter-stage svg{display:block;width:100%;height:auto;overflow:visible}
+#intro .signature-letter{font-family:Arial,Helvetica,sans-serif;font-size:115px;font-weight:800;letter-spacing:0;fill:transparent;stroke:#0b5961;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:650;stroke-dashoffset:650;paint-order:stroke fill;animation:letterOutline .43s ease-out calc(.15s + var(--i)*.29s) forwards,letterFill .35s ease calc(.55s + var(--i)*.29s) forwards}
+#intro .signature-sub{font:600 clamp(.65rem,1.8vw,.85rem)/1.3 Arial,sans-serif;letter-spacing:.43em;color:#4c7e80;opacity:0;animation:wordmarkIn .4s ease 2.45s forwards}
+#intro .intro-ecg .ecg-trace{animation:ecgSignature 1s ease 2.28s forwards}
+#intro .intro-tagline{direction:ltr;font:600 clamp(1rem,2.8vw,1.35rem)/1.5 Arial,sans-serif;letter-spacing:.08em;color:#0a4550;margin-top:12px;animation:wordmarkIn .5s ease 2.75s forwards}
+#intro .intro-tagline span{color:#38a6a0;margin-inline:6px}
+#intro .intro-bottomline{animation-delay:3s}
+@keyframes letterOutline{to{stroke-dashoffset:0}}
+@keyframes letterFill{to{fill:#0b5961;stroke:#0b5961}}
+.hero h1{font-family:Arial,Helvetica,sans-serif;direction:ltr;text-align:right;max-width:none;line-height:1.16;font-size:clamp(2.5rem,5.3vw,4.4rem)}
+.hero h1 .hero-save{color:#b7e8df}
+.hero .hero-arabic{font-size:1.03rem;color:#b7e8df;margin-top:18px}
+.hero-identity{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;position:relative;z-index:2}
+.hero-identity .hero-logo{max-width:340px;width:min(100%,340px)}
+.hero-identity-line{font:700 clamp(.7rem,1.3vw,.85rem)/1.5 Arial,sans-serif;letter-spacing:.12em;color:#0b5961;text-align:center;white-space:nowrap}
+.hero-identity-line span{color:#2d9691;margin-inline:3px}
+@media(max-width:700px){.hero h1{text-align:center;font-size:clamp(2.3rem,9vw,3.5rem)}.hero-identity-line{font-size:.68rem;letter-spacing:.07em}.hero-identity .hero-logo{max-width:235px}}
+@media(prefers-reduced-motion:reduce){#intro .signature-letter{animation:none!important;fill:#0b5961;stroke-dashoffset:0}#intro .signature-sub{animation:none!important;opacity:1}}
+
+/* MEDAURA 3D cinematic intro — logo stays visible while letters are traced. */
+#intro{animation:medIntroExit .85s cubic-bezier(.76,0,.2,1) 5.6s both!important;perspective:1100px}
+#intro .intro-composition{transform-style:preserve-3d;display:flex;flex-direction:column;align-items:center;gap:0;width:min(92vw,740px);animation:medStageArrival 1.35s cubic-bezier(.15,.75,.25,1) both,medStageFloat 4s ease-in-out 1.4s infinite alternate}
+#intro .intro-logo-3d{position:relative;width:min(38vw,240px);height:min(27vw,160px);min-height:90px;display:grid;place-items:center;transform-style:preserve-3d;animation:medLogoArrival 1.45s cubic-bezier(.18,.85,.22,1) both}
+#intro .intro-real-logo{width:100%;height:100%;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 16px 16px rgba(11,89,97,.17));animation:medLogoBreath 3.6s ease-in-out 1.5s infinite alternate!important}
+#intro .intro-logo-halo{position:absolute;width:76%;aspect-ratio:1;border:1px solid rgba(31,146,140,.24);border-radius:50%;box-shadow:0 0 0 16px rgba(46,168,155,.04),0 0 0 37px rgba(46,168,155,.025),0 0 45px rgba(55,176,164,.12);transform:translateZ(-55px) rotateX(68deg);animation:medHaloSpin 5.2s linear infinite}
+#intro .intro-letter-stage{width:min(82vw,550px);margin-top:-7px;transform:translateZ(42px)}
+#intro .signature-letter{stroke-dasharray:650;stroke-dashoffset:650;animation:letterOutline .42s ease-out calc(1.1s + var(--i)*.35s) forwards,letterFill .32s ease calc(1.42s + var(--i)*.35s) forwards}
+#intro .signature-sub{animation:wordmarkIn .5s ease 4.05s forwards}
+#intro .intro-ecg{width:min(80vw,570px);margin-top:-5px;transform:translateZ(22px)}
+#intro .intro-ecg .ecg-trace{animation:ecgSignature 1.05s ease 3.8s forwards}
+#intro .intro-tagline{opacity:0;animation:wordmarkIn .55s ease 4.6s forwards}
+#intro .intro-bottomline{opacity:0;animation:wordmarkIn .5s ease 4.95s forwards}
+#intro .intro-orbit-a{animation-duration:8s!important}#intro .intro-orbit-b{animation-duration:11s!important}#intro .intro-orbit-c{animation-duration:14s!important}
+#intro #skip-intro{position:absolute;top:20px;inset-inline-end:22px;z-index:30;border:1px solid rgba(11,89,97,.22);background:rgba(255,255,255,.65);color:#0b5961;border-radius:100px;padding:9px 16px;cursor:pointer;font:600 13px Arial,sans-serif;backdrop-filter:blur(8px)}
+#intro #skip-intro:hover{background:white}
+#intro.intro-skipped{animation:medIntroExit .35s ease forwards!important}
+@keyframes medStageArrival{0%{opacity:0;transform:rotateX(29deg) rotateY(-22deg) translate3d(0,90px,-180px) scale(.68);filter:blur(10px)}65%{opacity:1;filter:blur(0)}100%{opacity:1;transform:rotateX(0) rotateY(0) translate3d(0,0,0) scale(1)}}
+@keyframes medStageFloat{from{transform:translateY(0) rotateY(-2deg)}to{transform:translateY(-8px) rotateY(2deg)}}
+@keyframes medLogoArrival{0%{opacity:0;transform:translateZ(-180px) rotateY(-72deg) rotateX(28deg) scale(.6)}70%{opacity:1;transform:translateZ(50px) rotateY(9deg) rotateX(-5deg) scale(1.05)}100%{opacity:1;transform:translateZ(40px) rotateY(0) rotateX(0) scale(1)}}
+@keyframes medLogoBreath{from{transform:translateY(0) scale(1)}to{transform:translateY(-5px) scale(1.035)}}
+@keyframes medHaloSpin{from{transform:translateZ(-55px) rotateX(68deg) rotateZ(0)}to{transform:translateZ(-55px) rotateX(68deg) rotateZ(360deg)}}
+@keyframes medIntroExit{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;pointer-events:none}}
+@media(max-width:700px){#intro .intro-logo-3d{width:min(56vw,215px);height:135px}#intro .intro-composition{width:95vw}#intro .intro-letter-stage{width:92vw}#intro .intro-tagline{font-size:clamp(.9rem,4vw,1.1rem)}}
+@media(prefers-reduced-motion:reduce){#intro{display:none!important}}
+
+/* FAST INTRO: compact kinetic 3D sequence */
+#intro{animation:medIntroExit .42s ease 2.85s forwards!important}
+#intro .intro-composition{animation:medStageArrival .65s cubic-bezier(.15,.8,.2,1) both,medStageFloat 2s ease-in-out .7s infinite alternate!important}
+#intro .intro-logo-3d{animation:medLogoArrival .68s cubic-bezier(.18,.85,.22,1) both!important}
+#intro .signature-letter{animation:letterOutline .22s ease-out calc(.38s + var(--i)*.19s) forwards,letterFill .2s ease calc(.56s + var(--i)*.19s) forwards!important}
+#intro .signature-sub{animation:wordmarkIn .3s ease 1.85s forwards!important}
+#intro .intro-ecg .ecg-trace{animation:ecgSignature .65s ease 1.5s forwards!important}
+#intro .intro-tagline{animation:wordmarkIn .32s ease 1.92s forwards!important}
+#intro .intro-bottomline{animation:wordmarkIn .3s ease 2.12s forwards!important}
+#intro .intro-orbit-a{animation-duration:3.4s!important}#intro .intro-orbit-b{animation-duration:4.1s!important}#intro .intro-orbit-c{animation-duration:5s!important}
+#intro.intro-skipped{animation:medIntroExit .25s ease forwards!important}
+.lab-panel{grid-template-columns:1fr!important;gap:24px!important}
+.lab-head{display:flex;justify-content:space-between;gap:24px;align-items:center;flex-wrap:wrap}
+.lab-head h2{max-width:unset!important}
+.lab-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px!important}
+.lab-form label{display:flex;flex-direction:column;gap:8px;font-weight:700;color:#12424a}
+.lab-form .wide,.lab-form .lab-actions{grid-column:1/-1}
+.lab-form input,.lab-form textarea,.lab-form select{width:100%;border:1px solid #c9dedb;border-radius:12px;padding:13px;background:#fff;font:inherit;color:#123d44}
+.lab-form textarea{min-height:90px;resize:vertical}
+.lab-subtitle{color:#55777a;margin:5px 0 0;font-size:.95rem}
+.lab-levels{display:flex;gap:8px;flex-wrap:wrap}
+.lab-levels label{display:inline-flex;flex-direction:row;align-items:center;gap:6px;border:1px solid #c9dedb;border-radius:12px;padding:9px 12px;background:#fff;cursor:pointer;font-size:.88rem}
+.lab-levels input{width:auto}
+.lab-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
+.lab-widget{background:#fff;border:1px solid #d3e6e2;border-radius:18px;padding:19px;min-width:0}
+.lab-widget h3{font-size:1.1rem;margin:0 0 12px;color:#0b5961}
+.lab-widget p{color:#526f75}
+.lab-reviews{display:flex;gap:9px;flex-wrap:wrap}
+.lab-review{border:1px solid #b9d8d2;background:#f0f8f6;border-radius:12px;padding:10px 13px;color:#0b5961;font-weight:700;cursor:pointer}
+.lab-review.done{background:#0b5961;color:white}
+.lab-entry{padding:11px 0;border-bottom:1px solid #e1ece9;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lab-entry:last-child{border-bottom:0}
+.lab-entry strong{display:block;color:#173f46}
+.lab-entry small{color:#69888a}
+.lab-entry button{border:1px solid #c3dcd6;background:white;border-radius:9px;padding:7px 10px;cursor:pointer;color:#0b5961}
+.lab-tool-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.lab-tool-actions button{border:1px solid #b8d9d2;border-radius:11px;padding:10px 13px;background:#fff;color:#075963;cursor:pointer;font-weight:700}
+.lab-tool-actions button.primary{background:#075963;color:white}
+.lab-empty{color:#607d80;font-size:.9rem}
+@media(max-width:740px){.lab-form,.lab-results{grid-template-columns:1fr}.lab-form .wide,.lab-form .lab-actions{grid-column:auto}}
+@media(prefers-reduced-motion:reduce){#intro{display:none!important}}
+
+
+/* MEDAURA Our Work */
+.work-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:24px;margin:28px 0 60px}
+.work-card{display:block;background:white;border:1px solid #d8e9e5;border-radius:20px;overflow:hidden;text-decoration:none;color:#173943;box-shadow:0 12px 30px #062e3b0d;transition:transform .2s,box-shadow .2s}
+.work-card:hover{transform:translateY(-4px);box-shadow:0 16px 35px #062e3b22}.work-cover{width:100%;aspect-ratio:16/10;object-fit:cover;background:linear-gradient(135deg,#0e5260,#d4eae5);display:block}.work-card-body{padding:20px}.work-card h2{font-size:1.2rem;margin:7px 0}.work-card small,.work-meta{color:#607c81}.work-card p{margin:8px 0 0;line-height:1.8}.work-article{max-width:860px;margin:auto;padding:35px 0 70px}.work-article .work-cover{border-radius:20px;max-height:480px}.work-article h1{font-size:clamp(1.8rem,4vw,3rem);margin:18px 0 12px}.work-article .work-block{margin:24px 0}.work-article .work-block h2{margin:0 0 12px}.work-article .work-block p{line-height:2;white-space:pre-line}.work-article figure{margin:26px 0}.work-article figure img{width:100%;border-radius:16px;max-height:650px;object-fit:contain;background:#eaf2f1}.work-article figcaption{color:#607c81;text-align:center;margin-top:8px}.work-video{position:relative;aspect-ratio:16/9;width:100%;border-radius:16px;overflow:hidden;background:#102f40}.work-video iframe,.work-video video{width:100%;height:100%;border:0}.work-back{display:inline-block;margin-bottom:18px;color:#0b5961;font-weight:700}
+
+/* V4: letter spacing only, preserve intro choreography */
+#intro .signature-sub{letter-spacing:.12em!important;word-spacing:.12em!important}
+#intro .intro-tagline{letter-spacing:.015em!important}
+#intro .intro-bottomline{letter-spacing:.035em!important}
+/* Entry to the existing secured admin login. */
+nav a.admin-entry{border:1px solid var(--teal);color:var(--teal);font-weight:700;margin-inline-start:6px;white-space:nowrap}
+nav a.admin-entry:hover,nav a.admin-entry:focus-visible{background:var(--teal);color:#fff}
+/* Show full team portraits without cropping */
+.card img.ph.team-member-photo{display:block;width:100%;height:auto;object-fit:contain;padding:0;background:#E3EEEE}
+
+/* MEDAURA — refined brand-matched cinematic entrance. */
+#intro{background:radial-gradient(ellipse at 50% 46%,#fff 0%,#f1f8f7 56%,#dcecea 100%)!important;color:#00323b!important;isolation:isolate;animation:medRefinedExit .7s cubic-bezier(.65,0,.2,1) 3.4s forwards!important}
+#intro::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 28%,rgba(15,76,85,.065) 50%,transparent 72%);background-size:240% 100%;animation:medRefinedSweep 3.2s ease both}
+#intro .intro-backdrop{opacity:.3!important;filter:none!important}
+#intro .intro-orbit{border-color:rgba(15,76,85,.19)!important}
+#intro .intro-composition{animation:medRefinedStage .95s cubic-bezier(.2,.75,.25,1) both!important;filter:none!important;transform:none}
+#intro .intro-logo-3d{animation:medRefinedLogo 1.25s cubic-bezier(.16,.8,.2,1) .55s both!important}
+#intro .intro-real-logo{filter:drop-shadow(0 12px 16px rgba(15,76,85,.13))!important;animation:none!important;opacity:1!important}
+#intro .intro-logo-halo{border-color:rgba(15,76,85,.18)!important;box-shadow:0 0 60px rgba(15,76,85,.08)!important}
+#intro .signature-letter{animation:medRefinedLetter .5s ease-out calc(1.25s + var(--i)*.075s) both!important;fill:#00323b!important;stroke:#0f4c55!important;stroke-width:.5px!important}
+#intro .signature-sub{color:#0f4c55!important;animation:medRefinedFade .6s ease 1.9s both!important}
+#intro .intro-tagline{color:#245d64!important;animation:medRefinedFade .65s ease 2s both!important}
+#intro .intro-tagline span{color:#167e7c!important}
+#intro .intro-ecg{opacity:1!important;animation:medRefinedFade .5s ease .15s both!important;filter:drop-shadow(0 0 5px rgba(15,76,85,.12))!important}
+#intro .ecg-base{opacity:.14!important;stroke:#0f4c55!important}
+#intro .ecg-trace{stroke:#0f7778!important;stroke-width:3px!important;stroke-dasharray:1800!important;stroke-dashoffset:1800;animation:medRefinedTrace 2s ease-in-out .15s forwards!important}
+#intro .intro-bottomline{color:#37666c!important;opacity:.85!important}
+#intro #skip-intro{color:#0f4c55!important;background:rgba(255,255,255,.72)!important;border:1px solid rgba(15,76,85,.27)!important;z-index:5!important}
+#intro #skip-intro:hover{background:#fff!important}
+#intro.intro-skipped{animation:medRefinedExit .22s ease forwards!important}
+@keyframes medRefinedSweep{from{background-position:130% 0}to{background-position:-120% 0}}
+@keyframes medRefinedStage{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes medRefinedLogo{from{opacity:0;transform:translateY(22px) scale(.87);filter:blur(5px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes medRefinedLetter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes medRefinedFade{from{opacity:0}to{opacity:1}}
+@keyframes medRefinedTrace{from{stroke-dashoffset:1800}to{stroke-dashoffset:0}}
+@keyframes medRefinedExit{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;pointer-events:none}}
+@media(prefers-reduced-motion:reduce){#intro{display:none!important}}
+
+</style>
+</head>
+<body>
+<div id="scroll-progress" aria-hidden="true"></div>
+<div id="intro" aria-hidden="true">
+  <div class="intro-backdrop" aria-hidden="true">
+    <span class="intro-orbit intro-orbit-a"></span>
+    <span class="intro-orbit intro-orbit-b"></span>
+    <span class="intro-orbit intro-orbit-c"></span>
+    <span class="intro-cross"></span>
+  </div>
+  <div class="intro-composition intro-3d-stage"><div class="intro-logo-3d"><span class="intro-logo-halo"></span><img src="logo.png" alt="" class="intro-real-logo"></div>
+    <div class="intro-letter-stage" role="img" aria-label="MEDAURA — Learn. Apply. Save Lives."><svg viewBox="0 0 820 180" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><text class="signature-letter" x="65" y="128" style="--i:0">M</text><text class="signature-letter" x="164" y="128" style="--i:1">E</text><text class="signature-letter" x="263" y="128" style="--i:2">D</text><text class="signature-letter" x="362" y="128" style="--i:3">A</text><text class="signature-letter" x="461" y="128" style="--i:4">U</text><text class="signature-letter" x="560" y="128" style="--i:5">R</text><text class="signature-letter" x="659" y="128" style="--i:6">A</text></svg><span class="signature-sub">MEDICAL TEAM</span></div>
+    <svg class="intro-ecg" viewBox="0 0 900 110" role="presentation" aria-hidden="true">
+      <path class="ecg-base" d="M8 58H220L250 58L276 47L302 67L341 13L380 94L411 58H510L535 58L558 49L582 64L613 32L641 58H892"/>
+      <path class="ecg-trace" d="M8 58H220L250 58L276 47L302 67L341 13L380 94L411 58H510L535 58L558 49L582 64L613 32L641 58H892"/>
+    </svg>
+    <p class="intro-tagline" dir="ltr">Learn <span>·</span> Apply <span>·</span> Save Lives</p>
+  </div>
+  <button type="button" id="skip-intro" aria-label="تخطي المقدمة">تخطي المقدمة ↗</button>
+  <div class="intro-bottomline"><span></span><small>MEDICAL EDUCATION · CLINICAL SKILLS · SHARED KNOWLEDGE</small><span></span></div>
+</div>
+<a class="skip" href="#app" onclick="event.preventDefault();document.getElementById('app').focus()">انتقل إلى المحتوى</a>
+<header><div class="bar">
+<a href="#/" aria-label="MEDAURA الرئيسية"><img src="logo.png" alt="شعار MEDAURA Medical Team"></a>
+<button id="mt" aria-expanded="false" aria-controls="nv">القائمة</button>
+<nav id="nv" aria-label="التنقل الرئيسي">
+<a href="#/" data-p="">الرئيسية</a><a href="#/about" data-p="about">من نحن</a><a href="#/courses" data-p="courses">الدورات والورشات</a><a href="#/work" data-p="work">أعمالنا</a><a href="#/resources" data-p="resources">المكتبة الطبية</a><a href="#/join" data-p="join">انضم إلى <bdi>MEDAURA</bdi></a><a href="#/contact" data-p="contact">تواصل معنا</a><a href="admin/" class="admin-entry" aria-label="تسجيل دخول إدارة MEDAURA">تسجيل الدخول ↗</a>
+</nav></div></header>
+<main id="app" tabindex="-1"></main>
+<footer><div class="wrap" id="ft"></div></footer>
+<button id="back-top" type="button" aria-label="العودة إلى أعلى الصفحة" title="العودة إلى الأعلى">↑</button>
+<script src="content.js"></script>
+<script src="supabase-config.js"></script>
+<script src="public-data.js" defer></script>
+<script src="work-public.js" defer></script>
+<script>
+
+// Replay the intro on every page load, including refresh. No session storage.
+(function(){
+  const intro=document.getElementById('intro');
+  if(!intro)return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){intro.remove();return;}
+  let finished=false;
+  const finish=()=>{if(finished)return;finished=true;intro.remove();};
+  intro.addEventListener('animationend',e=>{if(e.target===intro)finish();});
+  document.getElementById('skip-intro')?.addEventListener('click',()=>{intro.classList.add('intro-skipped');window.setTimeout(finish,260);});
+  window.setTimeout(finish,5000);
+})();
+
+const D=window.MEDAURA,L=D.links,$=s=>document.querySelector(s);
+function setupImpact(){const el=$('#impact-count'),cap=$('#impact-caption');if(!el)return;const raw=D.impact&&D.impact.studentsReached;const label=(D.impact&&D.impact.impactLabel)||'طالب وطالبة استفادوا من أنشطة MEDAURA';if(raw===null||raw===undefined||raw===''||!Number.isFinite(Number(raw))||Number(raw)<0){el.textContent='أضف الرقم';el.classList.add('impact-unset');cap.textContent='عدد الطلاب المستفيدين — عدّله في content.js بعد اعتماد الرقم';return}el.classList.remove('impact-unset');cap.textContent=label;const target=Math.floor(Number(raw));const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const start=performance.now();const duration=reduce?0:1450;function tick(now){const t=duration?Math.min(1,(now-start)/duration):1;const eased=1-Math.pow(1-t,3);el.textContent=Math.round(target*eased).toLocaleString('en-US');if(t<1)requestAnimationFrame(tick)}requestAnimationFrame(tick)}
+
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ST={open:'مفتوح للتسجيل',upcoming:'قريباً',done:'مكتملة',completed:'مكتملة'};
+const fmt=d=>{try{return new Date(d).toLocaleDateString('ar-u-nu-latn',{year:'numeric',month:'long',day:'numeric'})}catch(e){return d}};
+const safe=u=>/^https?:\/\//.test(u||'')?u:'';
+const ph=(f,a)=>f?`<img class="ph" src="${esc(/^https:\/\//.test(f)?f:"photos/"+f)}" alt="${esc(a)}" loading="lazy">`:`<div class="ph" role="img" aria-label="${esc(a)}">صورة حقيقية من أنشطتنا (مكان مؤقت)</div>`;
+const empty=(t,s)=>`<div class="empty"><b>${t}</b><br>${s||''}</div>`;
+const smp=x=>x.sample?'<i class="smp">مثال تجريبي</i>':'';
+const card=c=>`<a class="card" href="#/course/${esc(c.id)}">${ph(c.photo,c.title)}<span class="chip s-${esc(c.status)}">${ST[c.status]||''}</span>${smp(c)}<div class="cb"><span class="cat">${esc(c.cat)}</span><h3>${esc(c.title)}</h3><ul class="meta"><li>المستوى: ${esc(c.level)}</li><li>${esc(c.duration)}</li><li>${esc(c.format)}</li></ul><div class="cf"><span>${esc(c.instructor)}</span><b>التفاصيل والتسجيل</b></div></div></a>`;
+const ecard=e=>`<a class="card" href="#/event/${esc(e.id)}">${ph(e.photos&&e.photos[0],e.title)}${smp(e)}<div class="cb"><span class="cat">${fmt(e.date)}</span><h3>${esc(e.title)}</h3><p class="lead">${esc(e.summary)}</p></div></a>`;
+const grid=(a,f,m)=>a.length?`<div class="grid">${a.map(f).join('')}</div>`:empty(m,'سيظهر المحتوى هنا فور إضافته من ملف المحتوى.');
+const link=(u,t,c='btn')=>safe(u)?`<a class="${c}" href="${esc(u)}" target="_blank" rel="noopener">${t}</a>`:`<span class="lead">${t}: الرابط لم يُضف بعد.</span>`;
+const head=(t,s)=>`<section class="ph1"><div class="wrap"><h1>${t}</h1><p class="lead">${s||''}</p></div></section>`;
+const V={
+'':()=>{const up=D.courses.filter(c=>c.status!=='done').slice(0,3);
+return `<section class="hero"><div class="wrap" style="position:relative"><div><p class="hero-kicker" style="font-size:.78rem;letter-spacing:.12em;color:#B7E8DF;font-weight:700;margin:0 0 10px">MEDAURA · MEDICAL EDUCATION</p><h1>Learn. <em>Apply.</em><br><span class="hero-save">Save Lives.</span></h1><p class="hero-arabic">${esc(D.site?.heroSubtitle||'نتعلّم المعرفة، نطبّق المهارة، ونصنع فرقًا.')}</p><p>فريق طبي جامعي يقدّم دورات وورشات في التعليم الطبي.</p><div class="btns"><a class="btn w" href="#/courses">استكشف الدورات</a><a class="btn o" href="#/about">تعرّف على <bdi>MEDAURA</bdi></a></div></div><div class="arch"><svg class="pulse-orbit" viewBox="0 0 330 370" aria-hidden="true"><circle class="track" cx="165" cy="175" r="145"/><circle class="track" cx="165" cy="175" r="126"/><circle class="satellite" cx="165" cy="30" r="4"/><circle class="satellite" cx="310" cy="175" r="3" style="animation-direction:reverse;animation-duration:21s"/></svg><div class="hero-identity"><img class="hero-logo" src="logo.png" alt="شعار MEDAURA Medical Team"><div class="hero-identity-line" dir="ltr">LEARN <span>·</span> APPLY <span>·</span> SAVE LIVES</div></div></div>
+<svg class="thread" viewBox="0 0 400 120" aria-hidden="true"><path d="M395 118C360 30 290 10 240 60S120 100 5 30" fill="none" stroke="#2A9D9A" stroke-width="3" stroke-linecap="round"/><circle cx="5" cy="30" r="6" fill="#2A9D9A"/></svg></div></section>
+<section class="impact-section" aria-labelledby="impact-title"><div class="wrap"><div class="impact-panel"><div class="impact-copy"><span class="impact-eyebrow">MEDAURA · LEARNING PULSE</span><h2 id="impact-title">كل مهارة بتفتح بابًا جديدًا.</h2><p>نؤمن أن التعليم الطبي الأقوى يجمع بين الفهم، والتجربة، والتعلّم المستمر.</p><div class="impact-number impact-unset" id="impact-count" aria-live="polite">أضف الرقم</div><span class="impact-caption" id="impact-caption">عدد الطلاب المستفيدين — قابل للتعديل من content.js</span></div><div class="impact-figure" aria-hidden="true"><svg viewBox="0 0 120 120"><circle class="orbit" cx="60" cy="60" r="42"/><circle class="orbit" cx="60" cy="60" r="28" style="animation-direction:reverse;animation-duration:17s"/><path d="M18 62 C32 62 32 35 46 35 S61 86 76 86 S91 55 103 55" fill="none" stroke="#9AE4D6" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 5"><animate attributeName="stroke-dashoffset" values="32;0" dur="3s" repeatCount="indefinite"/></path><circle class="core" cx="60" cy="60" r="9"/><circle class="node" cx="18" cy="62" r="3"/><circle class="node" cx="103" cy="55" r="3" style="animation-delay:.7s"/></svg></div></div></div></section>
+<section class="signature-section" aria-labelledby="constellation-title"><div class="wrap">
+<div class="signature-heading"><div><span class="impact-eyebrow">THE MEDAURA CONSTELLATION</span><h2 id="constellation-title">كل طريق للتعلّم، إله نقطة بداية.</h2></div><p>مساحة واحدة تجمع فرص التعلّم، التجارب، المعرفة، والطلاب اللي بدهم يتعلّموا ويطوّروا مهاراتهم.</p></div>
+<div class="constellation">
+<svg class="constellation-line" viewBox="0 0 1000 250" preserveAspectRatio="none" aria-hidden="true"><path d="M80 165 C170 10 315 10 390 145 S620 245 690 115 S850 25 940 140"/></svg>
+<a class="constellation-link" href="#/courses"><span class="constellation-icon" aria-hidden="true">✳</span><small>01 / LEARN</small><strong>تعلّم</strong><span>اكتشف الدورات والورشات</span></a>
+<a class="constellation-link" href="#/work"><span class="constellation-icon" aria-hidden="true">↗</span><small>02 / EXPERIENCE</small><strong>شاهد أعمالنا</strong><span>تعرّف على الدورات والورشات السابقة</span></a>
+<a class="constellation-link" href="#/resources"><span class="constellation-icon" aria-hidden="true">⌘</span><small>03 / EXPLORE</small><strong>استكشف</strong><span>ارجع للمكتبة الطبية</span></a>
+<a class="constellation-link" href="#/join"><span class="constellation-icon" aria-hidden="true">◎</span><small>04 / CONTRIBUTE</small><strong>ساهم في التعلّم</strong><span>كن جزءًا من الرحلة</span></a>
+</div><div class="signature-endnote">MEDAURA · نتعلّم. نتدرّب. نرتقي.</div>
+</div></section>
+<section class="path-section"><div class="wrap"><span class="path-label">A LEARNING JOURNEY</span><h2>${esc(D.site?.homePathHeading||'من أول سؤال، لخطوة واثقة.')}</h2><p class="lead">${esc(D.site?.homePathDescription||'رحلة بسيطة تساعد الزائر يعرف وين يبدأ وكيف يكمل.')}</p><div class="path-grid"><article class="path-step" data-step="01"><h3>اكتشف ما يناسبك</h3><p>ابدأ من الدورات والورشات حسب اهتمامك ومستواك.</p></article><article class="path-step" data-step="02"><h3>تعلّم وجرّب</h3><p>تابع تفاصيل النشاط، أهدافه، وطريقة المشاركة فيه.</p></article><article class="path-step" data-step="03"><h3>طبّق ما تعلّمت</h3><p>استكشف الموارد أو انضم للمساهمة في أنشطة الفريق.</p></article></div></div></section>
+<section class="learning-lab" aria-labelledby="lab-title"><div class="wrap"><div class="lab-panel"><div class="lab-head"><div><span class="lab-kicker">MEDAURA · LEARNING LAB</span><h2 id="lab-title">اتعلّم. استرجع. ثبّت المعلومة.</h2><p class="lab-subtitle">مساحة لتنظيم المحاضرات واختبار استرجاعك وجدولة المراجعات — بدون حساب أو إنترنت.</p></div><div class="lab-note">بياناتك محفوظة على هذا المتصفح فقط. صدّر نسخة احتياطية حتى ما تضيع إذا تغيّر الجهاز.</div></div><form class="lab-form" id="learning-card"><label>اسم المحاضرة<input name="topic" required maxlength="100" placeholder="مثال: Cardiac Action Potential"></label><label>المادة<input name="subject" maxlength="70" placeholder="مثال: Physiology"></label><label class="wide">استرجع من ذاكرتك: شو أهم ثلاث أفكار؟<textarea name="learned" maxlength="1200" placeholder="سكر السلايدات واكتب اللي بتتذكره..." required></textarea></label><label class="wide">وين لسه في نقطة ضعف أو سؤال؟<textarea name="next" maxlength="700" placeholder="شو بدك تراجع أو تفهم أكثر؟"></textarea></label><div class="wide"><strong>قدرتك على شرح المحاضرة بدون سلايدات</strong><div class="lab-levels"><label><input type="radio" name="confidence" value="needs-work"> محتاج أراجع الأساسيات</label><label><input type="radio" name="confidence" value="developing" checked> فاهم بس بنسى التفاصيل</label><label><input type="radio" name="confidence" value="confident"> بقدر أشرحها</label></div></div><div class="lab-actions"><button class="btn" type="submit">احفظ الجلسة وأنشئ المراجعات</button><button class="btn soft" type="reset">تفريغ الحقول</button></div><p class="lab-status wide" id="lab-status" aria-live="polite">نظام المراجعة المقترح: 1، 3، 7، 14، 30 يومًا.</p></form><div class="lab-results"><div class="lab-widget"><h3>مراجعاتك القادمة</h3><div id="lab-upcoming" class="lab-empty">أضف أول محاضرة لتظهر المراجعات.</div></div><div class="lab-widget"><h3>محاضراتي المحفوظة <span id="lab-count"></span></h3><div id="lab-sessions" class="lab-empty">ما في محاضرات محفوظة بعد.</div><div class="lab-tool-actions"><button type="button" id="lab-export" class="primary">تصدير نسخة احتياطية</button><button type="button" id="lab-import">استيراد نسخة</button><button type="button" id="lab-print">طباعة الملخص / PDF</button><input type="file" id="lab-import-file" accept="application/json,.json" hidden></div></div></div></div></div></section>
+<section><div class="wrap"><h2>${esc(D.site?.homeCoursesHeading||'دورات وورشات قادمة')}</h2>${grid(up,card,'لا توجد دورات قادمة حالياً')}<p><a href="#/courses">عرض كل الدورات</a></p></div></section>
+<section class="alt"><div class="wrap two"><div><h2>رسالتنا</h2><p class="lead">${esc(D.site?.mission||'نص الرسالة والرؤية يُضاف بعد اعتماده من الفريق.')}</p></div><div><h2>${esc(D.site?.homeWorkHeading||'من أعمالنا')}</h2><p class="lead">${esc(D.site?.homeWorkDescription||'استكشف توثيق دوراتنا وورشاتنا السابقة.')}</p><a class="btn" href="#/work">عرض أعمالنا</a></div></div></section>
+<section><div class="wrap"><div class="box" style="text-align:center;padding:28px"><h2>${esc(D.site?.homeJoinHeading||'كن جزءاً من الفريق')}</h2><p class="lead" style="margin:0 auto 16px">${esc(D.site?.homeJoinDescription||'تطوّع، أو قدّم كمحاضر، أو اقترح شراكة.')}</p><a class="btn" href="#/join">انضم الآن</a></div></div></section>`},
+about:()=>head('من نحن',esc(D.site?.aboutSubtitle||'MEDAURA مساحة طلابية للتعليم الطبي، وبناء المهارات، وتبادل المعرفة.'))+`<section><div class="wrap"><div class="about-manifesto"><span class="path-label">WHAT GUIDES US</span><h2>${esc(D.site?.aboutHeading||'نتعلّم معًا، ونبني بيئة تشجّع على السؤال والتجربة.')}</h2><p class="lead">${esc(D.site?.aboutIntro||'تُستكمل التفاصيل الرسمية للرؤية والرسالة بعد اعتمادها من الفريق؛ هذه الصفحة جاهزة لتستوعبها دون تغيير التصميم.')}</p></div><div class="two about-principles">${[['الرؤية',D.site?.vision||'المكان الذي يبدأ فيه الفضول العلمي ويتحوّل إلى تعلّم مستمر.'],['الرسالة',D.site?.mission||'توفير فرص تعليمية منظّمة تساعد الطلاب على بناء المعرفة والمهارات.'],['قيمنا',D.site?.values||'التعاون، المسؤولية، احترام المعرفة، والتعلّم المستمر.'],['منهجنا التعليمي',D.site?.educationalMethod||'أهداف واضحة، شرح منظّم، وتطبيق يناسب مستوى المتعلّم.']].map((x,i)=>`<article class="box principle-card"><span class="path-label">0${i+1} / MEDAURA</span><h3>${esc(x[0])}</h3><p class="lead">${esc(x[1])}</p><small>صياغة مبدئية قابلة للتعديل واعتماد الفريق</small></article>`).join('')}</div></div></section><section class="alt"><div class="wrap"><div class="signature-heading"><div><span class="path-label">THE PEOPLE BEHIND THE WORK</span><h2>الفريق</h2></div><p class="lead">${esc(D.site?.teamIntro||'تُضاف أسماء الأعضاء وأدوارهم وصورهم بعد موافقتهم واعتماد المعلومات.')}</p></div>${D.team?.length?`<div class="grid">${D.team.map(m=>`<article class="card">${m.photo_url&&safe(m.photo_url)?`<img class="ph team-member-photo" src="${esc(m.photo_url)}" alt="${esc(m.name)}" loading="lazy">`:''}<div class="cb"><h3>${esc(m.name)}</h3><p>${esc(m.position)}</p><p class="lead">${esc(m.bio)}</p></div></article>`).join('')}</div>`:empty('مساحة أعضاء MEDAURA','سيظهر أعضاء الفريق بعد نشرهم من لوحة الإدارة.')}</div></section>`,
+courses:()=>head('الدورات والورشات',esc(D.site?.coursesIntro||'تعلّم عملي منظّم؛ اختر ما يناسب مستواك واهتمامك.'))+`<section><div class="wrap"><div class="course-toolbar"><div><strong>استكشف البرامج التعليمية</strong><div class="toolbar-note">صفِّ حسب حالة التسجيل أو ابحث باسم الدورة أو المجال.</div></div><input id="course-q" type="search" placeholder="ابحث عن دورة أو موضوع" aria-label="ابحث عن دورة أو موضوع"><div class="fl" role="group" aria-label="تصفية حسب الحالة">${[['all','كل الدورات'],['open','التسجيل مفتوح'],['upcoming','قريباً'],['done','أرشيف الدورات']].map((x,i)=>`<button data-f="${x[0]}" aria-pressed="${i==0}">${x[1]}</button>`).join('')}</div></div><div id="cg"></div></div></section>`,
+resources:()=>head('المكتبة الطبية',esc(D.site?.resourcesIntro||'مصادر تساعدك تراجع، تفهم، وتوسّع معرفتك.'))+`<section><div class="wrap"><div class="course-toolbar"><div><strong>ابحث في المعرفة</strong><div class="toolbar-note">ابحث باسم المورد أو تصنيفه للوصول للمادة المطلوبة.</div></div><input id="q" type="search" placeholder="ابحث عن ملف أو موضوع..." aria-label="ابحث في المكتبة"></div><div id="rl"></div><p class="resource-empty-note">تُضاف الموارد المعتمدة من الفريق فقط، مع احترام حقوق أصحابها.</p></div></section>`,
+join:()=>head('انضم إلى MEDAURA',D.site?.joinIntro||'ساهم في التعليم الطبي من خلال التطوّع أو التدريب أو الشراكات.')+`<section><div class="wrap"><div class="signature-heading"><div><span class="path-label">GROW WITH US</span><h2>${esc(D.site?.joinHeading||'كل شخص يضيف زاوية جديدة للمعرفة.')}</h2></div><p class="lead">${esc(D.site?.joinDescription||'اختر طريقة المشاركة المناسبة لك، وسنضيف تفاصيل التواصل بعد اعتمادها.')}</p></div><div class="grid">${[['تطوّع مع الفريق','ساعد في تنظيم الدورات والورشات وبناء تجربة تعليمية أفضل.','تطوّع','volunteer'],['قدّم طلب عضوية','ساهم بأفكارك ووقتك ومهاراتك ضمن عمل الفريق.','العضوية','membership'],['شارك كمحاضر','شارك معرفة تتقنها وساعد زملاءك على التعلّم.','التدريب','trainer'],['اقترح شراكة','افتح مجالًا لتعاون تعليمي مع جهة أو مبادرة.','الشراكات','partner']].map((x,i)=>`<article class="box join-card"><span class="constellation-icon">${['✳','◎','↗','⌘'][i]}</span><span class="path-label">0${i+1} / ${x[2]}</span><h3>${esc(D.site?.['join_'+x[3]+'_title']||x[0])}</h3><p class="lead">${esc(D.site?.['join_'+x[3]+'_description']||x[1])}</p>${link(D.site?.['join_'+x[3]+'_url']||(i===3?L.partnerForm:L.joinForm),esc(D.site?.['join_'+x[3]+'_button']||'ابدأ من هنا'))}</article>`).join('')}</div></div></section>`,
+contact:()=>head('تواصل معنا',esc(D.site?.contactIntro||'قنوات التواصل الرسمية للفريق.'))+(Object.values(L).some(Boolean)?'':`<section><div class="wrap">${empty('بيانات التواصل الرسمية قيد الإعداد','ستظهر هنا بعد اعتمادها: البريد، الحسابات، ونماذج التواصل والشراكة.')}</div></section>`)+(Object.values(L).some(Boolean)?`<section><div class="wrap two"><div class="box"><h2>${esc(D.site?.contactChannelsHeading||'التواصل')}</h2>${[['البريد',L.email&&`<a class="ltr" href="mailto:${esc(L.email)}">${esc(L.email)}</a>`],['إنستغرام',L.instagram&&link(L.instagram,'الحساب','')],['تيليغرام',L.telegram&&link(L.telegram,'القناة','')]].map(x=>x[1]?`<p>${x[0]}: ${x[1]}</p>`:`<p class="lead">${x[0]}: لم يُضف بعد.</p>`).join('')}</div><div class="box"><h2>${esc(D.site?.contactPartnerHeading||'رسالة أو شراكة')}</h2>${link(L.contactForm,'أرسل رسالة')}<p></p>${link(L.partnerForm,'نموذج الشراكات')}</div></div></section>`:''),
+course:id=>{const c=D.courses.find(x=>x.id===id);if(!c)return head('الدورة غير موجودة','<a href="#/courses">العودة إلى الدورات</a>');
+return `<section><div class="wrap dt"><div>${ph(c.photo,c.title)}</div><div class="course-detail-panel"><div class="course-detail-top"><span class="chip s-${esc(c.status)}" style="position:static;display:inline-block">${ST[c.status]||''}</span> ${smp(c)}<span class="path-label">${esc(c.cat)}</span></div><h1>${esc(c.title)}</h1><ul class="meta"><li>المستوى: ${esc(c.level)}</li><li>${esc(c.duration)}</li><li>${esc(c.format)}</li></ul><p><strong>المحاضر:</strong> ${esc(c.instructor)}</p><p class="lead">${esc(c.summary)}</p><h3>ماذا ستتعلّم؟</h3><ul>${(c.goals||[]).map(g=>`<li>${esc(g)}</li>`).join('')}</ul>${c.status==='open'?link(c.register,'سجّل في الدورة'):'<p class="lead">التسجيل غير متاح حالياً.</p>'}<p><a class="tl" href="#/courses">العودة إلى الدورات</a></p></div></div></section>`},
+};
+
+// Our Work: published activity stories and media.
+const workVideo=u=>{try{const x=new URL(u);let id='';if(['youtube.com','www.youtube.com','m.youtube.com','youtube-nocookie.com','www.youtube-nocookie.com'].includes(x.hostname)){id=x.searchParams.get('v')||((x.pathname.match(/^\/(?:shorts|embed)\/([\w-]{11})/)||[])[1])||''}else if(x.hostname==='youtu.be')id=x.pathname.slice(1).split('/')[0];if(id&&/^[\w-]{11}$/.test(id))return `<div class="work-video"><iframe src="https://www.youtube-nocookie.com/embed/${id}" title="فيديو MEDAURA" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;if(x.protocol==='https:'&&/\.mp4(?:$|\?)/i.test(x.pathname))return `<div class="work-video"><video controls preload="metadata" src="${esc(x.href)}"></video></div>`}catch(e){}return `<p>رابط الفيديو غير مدعوم. استخدم رابط YouTube أو ملف MP4 مباشر عبر HTTPS.</p>`};
+V.work=()=>head('أعمالنا','نوثّق رحلتنا في التعليم الطبي: الدورات والورشات واللحظات التي صنعت فرقًا.')+`<section><div class="wrap"><span class="path-label">MEDAURA · OUR WORK</span>${D.work?.length?`<div class="work-grid">${D.work.map(w=>`<a class="work-card" href="#/work-post/${encodeURIComponent(w.id)}">${w.cover_url&&safe(w.cover_url)?`<img class="work-cover" src="${esc(w.cover_url)}" alt="${esc(w.title)}" loading="lazy">`:`<div class="work-cover"></div>`}<div class="work-card-body"><small>${esc(w.activity_date?fmt(w.activity_date):'MEDAURA TEAM')}</small><h2>${esc(w.title)}</h2><p>${esc(w.excerpt||'اقرأ تفاصيل النشاط وشاهد التوثيق')}</p><span class="cat">اقرأ القصة ←</span></div></a>`).join('')}</div>`:empty('أعمال MEDAURA','ستظهر الدورات والورشات السابقة بعد نشرها من لوحة الإدارة.')}</div></section>`;
+V['work-post']=id=>{const w=(D.work||[]).find(x=>x.id===id);if(!w)return head('العمل غير متاح','هذا النشاط غير منشور أو الرابط غير صحيح.')+`<section><div class="wrap"><a href="#/work">العودة إلى أعمالنا ←</a></div></section>`;return `<section><div class="wrap"><article class="work-article"><a class="work-back" href="#/work">← العودة إلى أعمالنا</a>${w.cover_url&&safe(w.cover_url)?`<img class="work-cover" src="${esc(w.cover_url)}" alt="${esc(w.title)}">`:''}<h1>${esc(w.title)}</h1><p class="work-meta">${esc(w.activity_date?fmt(w.activity_date):'')} ${w.location?' · '+esc(w.location):''}</p>${w.excerpt?`<p class="lead">${esc(w.excerpt)}</p>`:''}${(Array.isArray(w.blocks)?w.blocks:[]).map(b=>{if(b.type==='heading')return `<div class="work-block"><h2>${esc(b.text)}</h2></div>`;if(b.type==='text')return `<div class="work-block"><p>${esc(b.text)}</p></div>`;if(b.type==='image'&&safe(b.url))return `<figure><img src="${esc(b.url)}" alt="${esc(b.caption||w.title)}" loading="lazy">${b.caption?`<figcaption>${esc(b.caption)}</figcaption>`:''}</figure>`;if(b.type==='video')return `<div class="work-block">${workVideo(b.url)}${b.caption?`<p class="work-meta">${esc(b.caption)}</p>`:''}</div>`;return ''}).join('')}</article></div></section>`};
+
+function paint(){const h=location.hash.replace(/^#\/?/,''),[p,id]=h.split('/'),v=(p==='events'||p==='event')?V['']:(V[p]||V['']);$('#app').innerHTML=v(id);
+const cur=p==='course'?'courses':p==='event'?'events':p||'';document.querySelectorAll('nav a').forEach(a=>{a.dataset.p===cur?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});
+$('#nv').classList.remove('on');document.title=(($('#app h1')||{}).textContent||'الرئيسية')+' | MEDAURA';window.scrollTo(0,0);
+if(p==='courses'){let filter='all',query='';const draw=()=>{$('#cg').innerHTML=grid(D.courses.filter(c=>(filter==='all'||c.status===filter)&&((c.title+' '+c.cat+' '+c.level+' '+c.summary).toLocaleLowerCase().includes(query.toLocaleLowerCase()))),card,'ما لقينا دورات مطابقة — جرّب كلمة ثانية أو غيّر التصنيف.');};draw();
+document.querySelectorAll('.fl button').forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll('.fl button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw()});const cq=$('#course-q');if(cq)cq.oninput=e=>{query=e.target.value.trim();draw()}}
+if(p==='resources'){const draw=t=>{const q=t.toLocaleLowerCase();const r=D.resources.filter(x=>(x.title+' '+x.cat+' '+x.type).toLocaleLowerCase().includes(q));$('#rl').innerHTML=r.length?r.map(x=>`<div class="row resource-row"><span><b>${esc(x.title)}</b> ${smp(x)}<br><small class="lead">${esc(x.cat)} · ${esc(x.type||'مورد تعليمي')}</small></span>${safe(x.url)?`<a href="${esc(x.url)}" target="_blank" rel="noopener">فتح المورد ↗</a>`:'<span class="lead">الرابط لم يُضف بعد</span>'}</div>`).join(''):empty('ما لقينا نتائج مطابقة','جرّب كلمة ثانية أو تصنيفًا مختلفًا.')};draw('');$('#q').oninput=e=>draw(e.target.value.trim())}}
+$('#mt').onclick=()=>{const o=$('#nv').classList.toggle('on');$('#mt').setAttribute('aria-expanded',o)};
+$('#ft').innerHTML='<p><bdi>MEDAURA Medical Team</bdi> <span style="color:#9AE4D6">· نتعلّم. نتدرّب. نرتقي.</span></p><p>© جميع الحقوق محفوظة.</p>';
+const progress=$('#scroll-progress'),topBtn=$('#back-top'),header=document.querySelector('header');
+function onScroll(){const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?scrollY/max*100:0)+'%';topBtn.classList.toggle('show',scrollY>420);header.classList.toggle('scrolled',scrollY>8)}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));
+function revealSections(){const nodes=document.querySelectorAll('#app section:not(.hero),#app .card,#app .box');if(!('IntersectionObserver' in window)){nodes.forEach(n=>n.classList.add('in-view'));return}const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -24px 0px'});nodes.forEach((n,i)=>{if(!n.classList.contains('reveal')){n.classList.add('reveal');n.style.transitionDelay=(Math.min(i%4,3)*65)+'ms'}io.observe(n)})}
+const observer=new MutationObserver(()=>revealSections());observer.observe($('#app'),{childList:true,subtree:true});
+addEventListener('hashchange',()=>{paint();revealSections();setupImpact()});window.MEDAURA_REFRESH=()=>{paint();revealSections();setupImpact()};paint();revealSections();setupImpact();
+// Learning Lab: all data remains on this browser; no network requests.
+const LAB_KEY='medaura-learning-lab-v1',LAB_DAYS=[1,3,7,14,30];
+function labLoad(){try{const v=JSON.parse(localStorage.getItem(LAB_KEY)||'[]');return Array.isArray(v)?v.filter(x=>x&&typeof x==='object').slice(0,300):[]}catch{return []}}
+let labEntries=labLoad();
+function labSave(){try{localStorage.setItem(LAB_KEY,JSON.stringify(labEntries));return true}catch{$('#lab-status').textContent='تعذّر الحفظ على هذا المتصفح. جرّب تصدير نسخة احتياطية.';return false}}
+function labDate(day){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+day);return d.toISOString().slice(0,10)}
+function labFormat(iso){return new Date(iso+'T12:00:00').toLocaleDateString('ar',{year:'numeric',month:'short',day:'numeric'})}
+function labRender(){const sessions=$('#lab-sessions'),upcoming=$('#lab-upcoming');if(!sessions||!upcoming)return;$('#lab-count').textContent='('+labEntries.length+')';sessions.innerHTML=labEntries.length?labEntries.slice().reverse().slice(0,8).map(x=>`<div class="lab-entry"><div><strong>${esc(x.topic)}</strong><small>${esc(x.subject||'بدون مادة')} · ${esc(x.created.slice(0,10))}</small></div><button type="button" data-lab-delete="${esc(x.id)}">حذف</button></div>`).join(''):'ما في محاضرات محفوظة بعد.';const tasks=labEntries.flatMap(x=>LAB_DAYS.map(day=>({x,day,date:x.reviews?.[day]?.date||x.created.slice(0,10),done:!!x.reviews?.[day]?.done}))).filter(t=>!t.done).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,10);upcoming.innerHTML=tasks.length?tasks.map(t=>`<div class="lab-entry"><div><strong>${esc(t.x.topic)}</strong><small>مراجعة اليوم ${t.day} · ${labFormat(t.date)}${t.date<labDate(0)?' · متأخرة':''}</small></div><button type="button" data-lab-done="${esc(t.x.id)}" data-day="${t.day}">أنجزت</button></div>`).join(''):'كل المراجعات منجزة، أو ما في جلسات بعد.'}
+function labDownload(filename,contents,type){const blob=new Blob([contents],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+document.addEventListener('submit',e=>{if(e.target.id!=='learning-card')return;e.preventDefault();const f=new FormData(e.target),v=k=>String(f.get(k)||'').trim(),topic=v('topic');if(!topic)return;const created=new Date().toISOString(),reviews={};LAB_DAYS.forEach(day=>{const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+day);reviews[day]={date:[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-'),done:false}});labEntries.push({id:Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8),topic,subject:v('subject'),learned:v('learned'),next:v('next'),confidence:v('confidence'),created,reviews});if(labEntries.length>300)labEntries=labEntries.slice(-300);if(labSave()){$('#lab-status').textContent='تم حفظ الجلسة وإنشاء خمس مراجعات. ممتاز!';e.target.reset()}labRender()});
+document.addEventListener('click',e=>{const done=e.target.closest('[data-lab-done]'),del=e.target.closest('[data-lab-delete]');if(done){const x=labEntries.find(v=>v.id===done.dataset.labDone),r=x?.reviews?.[done.dataset.day];if(r){r.done=true;labSave();labRender()}}if(del){if(!confirm('حذف هذه الجلسة ومراجعاتها؟'))return;labEntries=labEntries.filter(v=>v.id!==del.dataset.labDelete);labSave();labRender()}});
+$('#lab-export')?.addEventListener('click',()=>labDownload('medaura-learning-lab-backup.json',JSON.stringify({app:'MEDAURA Learning Lab',version:1,entries:labEntries},null,2),'application/json'));
+$('#lab-import')?.addEventListener('click',()=>$('#lab-import-file').click());
+$('#lab-import-file')?.addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{if(file.size>2000000)throw Error('الملف كبير');const obj=JSON.parse(await file.text());if(obj.app!=='MEDAURA Learning Lab'||!Array.isArray(obj.entries))throw Error('صيغة الملف غير صحيحة');const safe=obj.entries.slice(0,300).filter(x=>typeof x.id==='string'&&typeof x.topic==='string'&&typeof x.created==='string'&&x.reviews&&typeof x.reviews==='object').map(x=>({id:x.id.slice(0,80),topic:x.topic.slice(0,100),subject:String(x.subject||'').slice(0,70),learned:String(x.learned||'').slice(0,1200),next:String(x.next||'').slice(0,700),confidence:String(x.confidence||''),created:x.created.slice(0,30),reviews:Object.fromEntries(LAB_DAYS.map(day=>[day,{date:/^\d{4}-\d{2}-\d{2}$/.test(String(x.reviews[day]?.date||''))?x.reviews[day].date:labDate(day),done:x.reviews[day]?.done===true}]))}));if(!confirm('استبدال الجلسات الحالية بالنسخة المستوردة؟'))return;labEntries=safe;labSave();labRender();$('#lab-status').textContent='تم استيراد النسخة الاحتياطية.'}catch(err){$('#lab-status').textContent='تعذر الاستيراد: '+err.message}finally{e.target.value=''}});
+$('#lab-print')?.addEventListener('click',()=>{const w=window.open('','_blank');if(!w){$('#lab-status').textContent='اسمح بالنوافذ المنبثقة لطباعة الملخص.';return}const rows=labEntries.map(x=>`<article><h2>${esc(x.topic)}</h2><p>${esc(x.subject||'')} · ${esc(x.created.slice(0,10))}</p><h3>استرجاعي</h3><p>${esc(x.learned)}</p><h3>نقاط تحتاج مراجعة</h3><p>${esc(x.next)}</p><p>المراجعات: ${LAB_DAYS.map(d=>d+' يوم '+(x.reviews?.[d]?.done?'✓':'○')).join(' · ')}</p></article>`).join('');w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>MEDAURA Learning Lab</title><style>body{font:16px/1.8 Arial,sans-serif;max-width:820px;margin:35px auto;color:#143c43;padding:20px}article{border:1px solid #cbded9;border-radius:12px;padding:18px;margin:15px 0;break-inside:avoid}h1{color:#075963}p{white-space:pre-wrap}@media print{body{margin:0}}</style><h1>MEDAURA · Learning Lab</h1><p>Learn. Apply. Save Lives.</p>${rows||'<p>لا توجد جلسات محفوظة.</p>'}<script>window.onload=()=>window.print()<\/script></html>`);w.document.close()});
+labRender();
+</script>
+</body>
+</html>
