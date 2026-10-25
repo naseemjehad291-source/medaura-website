@@ -586,6 +586,15 @@ html[lang="en"] .language-morph{direction:ltr}
 :where(main section:not(.hero):not(.ph1):not(.signature-section)) .card h3 {color:#142B43;}
 /* Preserve intentionally light headings on dark panels. */
 .impact-panel h2,.signature-section h2,.hero h1,.ph1 h1 {color:#fff;}
+
+/* MEDAURA: readable section headings on light backgrounds */
+main section:not(.signature-section):not(.hero):not(.ph1) .signature-heading h2 {
+  color: #142B43 !important;
+  text-shadow: none;
+}
+main section:not(.signature-section):not(.hero):not(.ph1) .signature-heading p {
+  color: #385566;
+}
 </style>
 </head>
 <body class="medaura-intro-running">
