@@ -1,12 +1,13 @@
 *{box-sizing:border-box}body{margin:0;background:#eef5f5;color:#173747;font-family:Arial,"IBM Plex Sans Arabic",sans-serif}header{background:#123349;color:white;padding:18px 5%;display:flex;justify-content:space-between;align-items:center}header a{color:#d5f8f2}main{max-width:1050px;margin:24px auto;padding:0 15px}.card{background:white;padding:23px;border:1px solid #d7e6e5;border-radius:16px;margin:15px 0}h1,h2{margin:0 0 12px}input,select{width:100%;padding:12px;border:1px solid #bbd3d4;border-radius:8px;font:inherit}button{border:0;background:#075f68;color:white;border-radius:9px;padding:11px 17px;cursor:pointer;font:inherit}button:disabled{opacity:.55}.muted{color:#637980}.error{color:#a5283d}.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.row>*{flex:1}.item{border:1px solid #cddfdf;padding:15px;border-radius:12px;margin:10px 0}.secondary{background:#e4f1f1;color:#123b44}[hidden]{display:none!important}
-/* MEDAURA official certificate artwork; dynamic fields align to reference layout. */
+/* Approved MEDAURA print artwork: no pre-filled names, dates or QR codes. */
 #certificate-stage{position:fixed;left:-20000px;top:0;width:1491px;height:1055px;direction:ltr}
-.cert-template{position:relative;width:1491px;height:1055px;overflow:hidden;background:#fafaf9 url('./certificate-template.jpg') center/100% 100% no-repeat;color:#0c3545;text-align:center;font-family:Georgia,serif}
+.cert-template{position:relative;width:1491px;height:1055px;overflow:hidden;background:#fcfdfc url('./certificate-template-print.png') center/100% 100% no-repeat;color:#062c40;text-align:center;font-family:Georgia,serif}
 .cert-template>div{position:absolute;box-sizing:border-box;z-index:1}
-.cert-dynamic-name{left:385px;top:475px;width:735px;height:101px;display:flex;align-items:center;justify-content:center;font:italic 67px 'URW Chancery L','Brush Script MT','Segoe Script',Georgia,serif;line-height:1.05;overflow-wrap:anywhere;color:#092e3c}
-.cert-dynamic-name.cert-arabic{font-family:'Noto Naskh Arabic','Amiri','Traditional Arabic',serif;font-style:normal;font-size:65px;direction:rtl}
-.cert-dynamic-course{left:475px;top:632px;width:545px;height:61px;display:flex;align-items:center;justify-content:center;font:bold 47px Georgia,'Times New Roman',serif;color:#092f42;overflow-wrap:anywhere}
-.cert-dynamic-date{left:303px;top:845px;width:205px;height:39px;display:flex;align-items:center;justify-content:center;font:17px Georgia,serif;color:#092f42;white-space:nowrap}
-.cert-dynamic-qr{left:1104px;top:800px;width:96px;height:96px;background:white;padding:2px;display:flex;align-items:center;justify-content:center}
-.cert-dynamic-qr canvas,.cert-dynamic-qr img{width:91px!important;height:91px!important}
-.cert-dynamic-id{left:1068px;top:911px;width:173px;font:bold 15px Georgia,serif;color:#092f42;white-space:nowrap}
+.cert-dynamic-name{left:350px;top:466px;width:790px;height:98px;display:flex;align-items:center;justify-content:center;font:italic 67px 'URW Chancery L','Brush Script MT','Segoe Script',Georgia,serif;line-height:1.1;overflow-wrap:anywhere;color:#062c40}
+.cert-dynamic-name.cert-arabic{font-family:'Noto Naskh Arabic','Amiri','Traditional Arabic',Tahoma,serif;font-style:normal;font-size:63px;direction:rtl}
+.cert-dynamic-course{left:420px;top:650px;width:650px;height:62px;display:flex;align-items:center;justify-content:center;font:bold 44px Georgia,'Times New Roman',serif;color:#062c40;overflow-wrap:anywhere}
+.cert-dynamic-date{left:275px;top:833px;width:240px;height:43px;display:flex;align-items:center;justify-content:center;font:19px Georgia,serif;color:#062c40;white-space:nowrap}
+.cert-dynamic-qr{left:1162px;top:784px;width:149px;height:149px;background:white;padding:4px;display:flex;align-items:center;justify-content:center}
+.cert-dynamic-qr canvas,.cert-dynamic-qr img{width:141px!important;height:141px!important}
+.cert-dynamic-id{left:1122px;top:947px;width:228px;font:bold 16px Georgia,serif;color:#062c40;white-space:nowrap}
+.cert-dynamic-qr-label{left:1122px;top:972px;width:228px;font:13px Georgia,serif;color:#062c40}

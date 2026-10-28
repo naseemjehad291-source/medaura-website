@@ -15,14 +15,15 @@ export async function downloadCertificate(c){
  const date=add('div','cert-dynamic-date',formatDate(c.issue_date));
  const qr=add('div','cert-dynamic-qr');
  add('div','cert-dynamic-id',certId(c));
+ add('div','cert-dynamic-qr-label','Verify Certificate');
  try{
-  new window.QRCode(qr,{text:verificationUrl(c),width:91,height:91,correctLevel:window.QRCode.CorrectLevel.M});
-  const background=new Image();background.src=new URL('./certificate-template.jpg',import.meta.url).href;
+  new window.QRCode(qr,{text:verificationUrl(c),width:141,height:141,correctLevel:window.QRCode.CorrectLevel.M});
+  const background=new Image();background.src=new URL('./certificate-template-print.png',import.meta.url).href;
   await background.decode();
   if(document.fonts?.ready)await document.fonts.ready;
-  const canvas=await window.html2canvas(el,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false});
+  const canvas=await window.html2canvas(el,{scale:3,backgroundColor:'#ffffff',useCORS:true,logging:false});
   const pdf=new window.jspdf.jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
-  pdf.addImage(canvas.toDataURL('image/jpeg',.97),'JPEG',0,0,297,210);
+  pdf.addImage(canvas.toDataURL('image/jpeg',.98),'JPEG',0,0,297,210);
   pdf.save(`${certId(c)}.pdf`);
  }finally{stage.remove()}
 }
