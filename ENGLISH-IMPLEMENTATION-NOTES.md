@@ -1,0 +1,1 @@
+Public pages have AR/EN controls, persistent preference and RTL/LTR switching. Admin files and database were not modified. Dynamic Arabic text authored by administrators, including form questions, requires approved English translations; unknown phrases remain Arabic. Test on staging before deploying.

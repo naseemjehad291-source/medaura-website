@@ -1,0 +1,207 @@
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MEDAURA | إدارة النماذج</title>
+<link rel="icon" href="../logo.png">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f7fa;color:#17374c;font-family:'IBM Plex Sans Arabic',sans-serif}
+header{background:#102b42;color:white;padding:19px 5%;display:flex;justify-content:space-between;align-items:center}
+header a{color:#bce9e7}
+main{max-width:1100px;margin:28px auto;padding:0 16px}
+.card{background:white;border:1px solid #dae6ed;border-radius:16px;padding:22px;margin:16px 0;box-shadow:0 6px 22px #102b4210}
+h1,h2,h3{margin:0 0 12px}
+.muted{color:#607c89}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.tile{border:1px solid #d7e5eb;border-radius:12px;padding:16px;background:#f9fbfd}
+.tile strong{display:block;font-size:1.3rem}
+label{display:block;font-weight:700;margin:12px 0 5px}
+input,textarea,select{font:inherit;width:100%;border:1px solid #bfd0d9;border-radius:9px;padding:10px;background:white;color:#17374c}
+textarea{min-height:75px}
+button{font:inherit;cursor:pointer;border:0;border-radius:9px;padding:10px 15px;background:#08636c;color:white}
+button.alt{background:#e6f1f3;color:#164d60}
+button.danger{background:#a53544}
+button:disabled{opacity:.5}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row>*{flex:1;min-width:130px}
+.field{border:1px solid #dae6ed;padding:14px;border-radius:12px;margin:10px 0}
+.field .actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.field .actions button{padding:7px 11px}
+.field .actions label{margin:0;font-weight:400}
+.status{padding:10px;background:#e9f4f4;border-radius:9px;white-space:pre-wrap}
+[hidden]{display:none!important}
+a{color:#08636c}
+.notification-controls{display:flex;align-items:center;gap:10px;margin:14px 0}
+.notification-controls input{width:auto}
+.notification-controls label{margin:0}
+.notification-note{font-size:.9rem}
+@media(max-width:650px){
+.card{padding:15px}
+.row>*{min-width:100%}
+}
+</style>
+</head>
+<body>
+<header>
+<strong>✦ MEDAURA · Forms</strong>
+<a href="index.html">العودة للوحة الإدارة</a>
+</header>
+
+<main>
+<section id="gate" class="card">
+جارٍ التحقق من صلاحية Super Admin...
+</section>
+
+<div id="app" hidden>
+  <div class="row">
+    <div>
+      <h1>إدارة النماذج</h1>
+      <p class="muted">
+        أنشئ النماذج، وانشرها، وراجع طلبات كل نموذج على حدة.
+      </p>
+    </div>
+    <div>
+      <button id="new">+ نموذج جديد</button>
+    </div>
+  </div>
+
+  <div id="notice" class="status" hidden role="status"></div>
+
+  <section class="grid" id="stats"></section>
+
+  <section id="notification-settings" class="card">
+    <h2>✉️ إعدادات إشعارات التسجيل</h2>
+    <p class="muted">
+      حدد البريد الذي يستقبل إشعارًا عند تسجيل طالب
+      في أي نموذج من MEDAURA.
+    </p>
+
+    <form id="notification-form">
+      <label for="notification-email">
+        البريد الإلكتروني لاستقبال الإشعارات
+      </label>
+
+      <input
+        id="notification-email"
+        type="email"
+        maxlength="254"
+        placeholder="example@gmail.com"
+        autocomplete="email"
+      >
+
+      <div class="notification-controls">
+        <input id="notification-enabled" type="checkbox">
+        <label for="notification-enabled">
+          تفعيل الإشعارات عند كل تسجيل جديد
+        </label>
+      </div>
+
+      <p class="muted notification-note">
+        تنبيه: تفعيل هذا الخيار يحفظ رغبتك في استقبال
+        الإشعارات، لكنه لا يرسل بريدًا حتى نكمل إعداد
+        خدمة الإرسال الآمنة.
+      </p>
+
+      <button type="submit" id="save-notification-email">
+        حفظ إعدادات الإشعارات
+      </button>
+    </form>
+
+    <p
+      id="notification-message"
+      class="status"
+      hidden
+      role="status"
+    ></p>
+  </section>
+
+  <section id="listing" class="card">
+    <h2>النماذج</h2>
+    <div id="list"></div>
+  </section>
+
+  <section id="editor" class="card" hidden>
+    <h2 id="editor-title">إنشاء نموذج</h2>
+
+    <form id="form-editor">
+      <div class="row">
+        <div>
+          <label>عنوان النموذج</label>
+          <input id="title" maxlength="180" required>
+        </div>
+        <div>
+          <label>القسم</label>
+          <select id="category">
+            <option value="courses">الدورات والورشات</option>
+            <option value="volunteer">التطوع والانضمام</option>
+            <option value="partnership">الشراكات</option>
+            <option value="survey">الاستبيانات</option>
+            <option value="contact">تواصل معنا</option>
+            <option value="other">نماذج أخرى</option>
+          </select>
+        </div>
+      </div>
+
+      <label>وصف النموذج</label>
+      <textarea id="description"></textarea>
+
+      <label>الرابط المختصر (إنجليزي وأرقام وشرطة)</label>
+      <input
+        id="slug"
+        pattern="[a-z0-9-]{3,80}"
+        required
+        placeholder="basic-ecg-registration"
+      >
+
+      <h3>الأسئلة</h3>
+      <div id="fields"></div>
+
+      <div class="row">
+        <select id="field-type">
+          <option value="text">نص قصير</option>
+          <option value="textarea">نص طويل</option>
+          <option value="phone">رقم هاتف</option>
+          <option value="email">بريد إلكتروني</option>
+          <option value="single">اختيار واحد</option>
+          <option value="multiple">اختيارات متعددة</option>
+          <option value="date">تاريخ</option>
+        </select>
+        <button type="button" id="add-field">
+          + إضافة سؤال
+        </button>
+      </div>
+
+      <label>الحالة</label>
+      <select id="status">
+        <option value="draft">مسودة</option>
+        <option value="published">منشور</option>
+        <option value="closed">مغلق</option>
+      </select>
+
+      <p class="row">
+        <button type="submit">حفظ النموذج</button>
+        <button type="button" id="cancel" class="alt">
+          إلغاء
+        </button>
+      </p>
+    </form>
+  </section>
+
+  <section id="responses" class="card" hidden>
+    <h2 id="response-title">الطلبات</h2>
+    <p class="muted">بيانات المسجلين خاصة بالسوبر أدمن.</p>
+    <button id="export" class="alt">تصدير CSV</button>
+    <div id="response-list"></div>
+    <button id="close-responses" class="alt">إغلاق</button>
+  </section>
+</div>
+</main>
+
+<script src="../supabase-config.js"></script>
+<script type="module" src="forms.js"></script>
+</body>
+</html>

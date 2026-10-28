@@ -1,0 +1,1 @@
+Targeted repair: redirect translator from admin login to translations.html; avoid hiding sign-in before role validation; remove inactive automatic translation code. No changes to media, certificates, forms or database. Production testing required.

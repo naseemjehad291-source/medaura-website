@@ -7,7 +7,7 @@
 <meta name="description" content="MEDAURA فريق طبي جامعي يقدّم دورات وورشات في التعليم الطبي.">
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--teal:#0B5961;--navy:#142B43;--acc:#36A6A0;--mist:#F1F7F7;--ink:#20323A;--mute:#586B71;--line:#D9E6E7;--r:14px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
@@ -445,9 +445,159 @@ footer:after{content:"";display:block;width:100%;height:2px;position:absolute;to
 /* Entry to the existing secured admin login. */
 nav a.admin-entry{border:1px solid var(--teal);color:var(--teal);font-weight:700;margin-inline-start:6px;white-space:nowrap}
 nav a.admin-entry:hover,nav a.admin-entry:focus-visible{background:var(--teal);color:#fff}
+/* Show full team portraits without cropping */
+.card img.ph.team-member-photo{display:block;width:100%;height:auto;object-fit:contain;padding:0;background:#E3EEEE}
+
+/* MEDAURA — refined brand-matched cinematic entrance. */
+#intro{background:radial-gradient(ellipse at 50% 46%,#fff 0%,#f1f8f7 56%,#dcecea 100%)!important;color:#00323b!important;isolation:isolate;animation:medRefinedExit .7s cubic-bezier(.65,0,.2,1) 3.4s forwards!important}
+#intro::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 28%,rgba(15,76,85,.065) 50%,transparent 72%);background-size:240% 100%;animation:medRefinedSweep 3.2s ease both}
+#intro .intro-backdrop{opacity:.3!important;filter:none!important}
+#intro .intro-orbit{border-color:rgba(15,76,85,.19)!important}
+#intro .intro-composition{animation:medRefinedStage .95s cubic-bezier(.2,.75,.25,1) both!important;filter:none!important;transform:none}
+#intro .intro-logo-3d{animation:medRefinedLogo 1.25s cubic-bezier(.16,.8,.2,1) .55s both!important}
+#intro .intro-real-logo{filter:drop-shadow(0 12px 16px rgba(15,76,85,.13))!important;animation:none!important;opacity:1!important}
+#intro .intro-logo-halo{border-color:rgba(15,76,85,.18)!important;box-shadow:0 0 60px rgba(15,76,85,.08)!important}
+#intro .signature-letter{animation:medRefinedLetter .5s ease-out calc(1.25s + var(--i)*.075s) both!important;fill:#00323b!important;stroke:#0f4c55!important;stroke-width:.5px!important}
+#intro .signature-sub{color:#0f4c55!important;animation:medRefinedFade .6s ease 1.9s both!important}
+#intro .intro-tagline{color:#245d64!important;animation:medRefinedFade .65s ease 2s both!important}
+#intro .intro-tagline span{color:#167e7c!important}
+#intro .intro-ecg{opacity:1!important;animation:medRefinedFade .5s ease .15s both!important;filter:drop-shadow(0 0 5px rgba(15,76,85,.12))!important}
+#intro .ecg-base{opacity:.14!important;stroke:#0f4c55!important}
+#intro .ecg-trace{stroke:#0f7778!important;stroke-width:3px!important;stroke-dasharray:1800!important;stroke-dashoffset:1800;animation:medRefinedTrace 2s ease-in-out .15s forwards!important}
+#intro .intro-bottomline{color:#37666c!important;opacity:.85!important}
+#intro #skip-intro{color:#0f4c55!important;background:rgba(255,255,255,.72)!important;border:1px solid rgba(15,76,85,.27)!important;z-index:5!important}
+#intro #skip-intro:hover{background:#fff!important}
+#intro.intro-skipped{animation:medRefinedExit .22s ease forwards!important}
+@keyframes medRefinedSweep{from{background-position:130% 0}to{background-position:-120% 0}}
+@keyframes medRefinedStage{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes medRefinedLogo{from{opacity:0;transform:translateY(22px) scale(.87);filter:blur(5px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes medRefinedLetter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes medRefinedFade{from{opacity:0}to{opacity:1}}
+@keyframes medRefinedTrace{from{stroke-dashoffset:1800}to{stroke-dashoffset:0}}
+@keyframes medRefinedExit{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;pointer-events:none}}
+@media(prefers-reduced-motion:reduce){#intro{display:none!important}}
+
+
+/* MEDAURA typography refinement: modern type and mathematically even tracking. */
+#intro .signature-word{font-family:"Outfit",Arial,sans-serif!important;font-size:112px!important;font-weight:700!important;letter-spacing:0!important;animation:medRefinedLetter .85s cubic-bezier(.2,.7,.2,1) 1.25s both!important}
+#intro .signature-sub{font-family:"Outfit",Arial,sans-serif!important;font-weight:600!important;letter-spacing:.22em!important}
+#intro .intro-tagline{font-family:"Outfit",Arial,sans-serif!important;font-weight:500!important;letter-spacing:.015em!important}
+#intro .intro-bottomline{font-family:"Outfit",Arial,sans-serif!important;letter-spacing:.06em!important}
+.hero h1{font-family:"Outfit",Arial,sans-serif!important;font-weight:700!important;letter-spacing:-.025em!important}
+
+/* MEDAURA: seamless handoff from cinematic intro to page. */
+body.medaura-intro-running > header,
+body.medaura-intro-running > main#app,
+body.medaura-intro-running > footer {opacity:0;}
+body.medaura-intro-running > header {transform:translateY(18px);}
+body.medaura-intro-running > main#app {transform:translateY(30px);}
+body.medaura-intro-running > footer {transform:translateY(22px);}
+body.medaura-intro-reveal > header {animation:medPageRise .85s cubic-bezier(.18,.75,.22,1) both;}
+body.medaura-intro-reveal > main#app {animation:medPageRise 1s cubic-bezier(.18,.75,.22,1) .12s both;}
+body.medaura-intro-reveal > footer {animation:medPageRise .9s cubic-bezier(.18,.75,.22,1) .22s both;}
+body.medaura-intro-reveal #app .hero-kicker {animation:medPageItem .75s cubic-bezier(.2,.8,.2,1) .3s both;}
+body.medaura-intro-reveal #app .hero h1 {animation:medPageItem .85s cubic-bezier(.2,.8,.2,1) .4s both;}
+body.medaura-intro-reveal #app .hero p:not(.hero-kicker) {animation:medPageItem .85s cubic-bezier(.2,.8,.2,1) .5s both;}
+body.medaura-intro-reveal #app .hero .arch {animation:medPageItem 1s cubic-bezier(.2,.8,.2,1) .38s both;}
+@keyframes medPageRise {from {opacity:0;transform:translateY(30px);filter:blur(5px)}to {opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes medPageItem {from {opacity:0;transform:translateY(20px)}to {opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){body.medaura-intro-running > header,body.medaura-intro-running > main#app,body.medaura-intro-running > footer{opacity:1;transform:none}body.medaura-intro-reveal > header,body.medaura-intro-reveal > main#app,body.medaura-intro-reveal > footer,body.medaura-intro-reveal #app .hero-kicker,body.medaura-intro-reveal #app .hero h1,body.medaura-intro-reveal #app .hero p,body.medaura-intro-reveal #app .hero .arch{animation:none!important}}
+/* ECG performance: animate the path without costly SVG glow repaints */
+#intro .intro-ecg, #intro .intro-ecg .ecg-trace { filter:none!important; }
+#intro .intro-ecg .ecg-trace { stroke-dasharray:1800!important; stroke-dashoffset:1800; animation:medRefinedTrace 1.45s cubic-bezier(.42,0,.25,1) .12s forwards!important; }
+@media (prefers-reduced-motion:reduce) { #intro .intro-ecg .ecg-trace {animation:none!important;stroke-dashoffset:0!important;} }
+
+/* MEDAURA — focused visual refinements; public website only. */
+#intro .intro-ecg {
+  display:block!important;
+  width:min(82vw,560px)!important;
+  max-width:560px!important;
+  margin:0 auto!important;
+  align-self:center!important;
+  left:auto!important;
+  right:auto!important;
+  transform:none!important;
+}
+#intro .intro-bottomline {
+  width:100%;
+  box-sizing:border-box;
+  padding-inline:14px;
+  gap:10px;
+  text-align:center;
+}
+#intro .intro-bottomline small {
+  display:block;
+  white-space:nowrap;
+  font-family:"Outfit",Arial,sans-serif;
+  font-size:clamp(.58rem,1.7vw,.8rem);
+  letter-spacing:clamp(.015em,.15vw,.1em);
+}
+#intro .intro-bottomline span { flex:0 1 48px; min-width:0; }
+.instagram-handle {
+  color:#0f3445!important;
+  font-family:"Outfit",Arial,sans-serif;
+  font-weight:650;
+  direction:ltr;
+  unicode-bidi:isolate;
+  text-decoration:none;
+  display:inline-block;
+}
+.instagram-handle:hover { color:#0f7778!important; text-decoration:underline; }
+.hero-identity .hero-logo {
+  animation:medauraHeroFloat 5.5s ease-in-out infinite!important;
+  transform-origin:center center;
+  will-change:transform;
+  transition:filter .3s ease;
+}
+.hero-identity .hero-logo:hover { filter:drop-shadow(0 10px 18px rgba(15,76,85,.22)); }
+@keyframes medauraHeroFloat {
+  0%,100% {transform:translate3d(0,0,0) scale(1)}
+  50% {transform:translate3d(0,-7px,0) scale(1.012)}
+}
+@media (prefers-reduced-motion:reduce) {
+  .hero-identity .hero-logo {animation:none!important;will-change:auto;}
+}
+
+/* MEDAURA hero label — balanced, single-line typography */
+.hero .hero-kicker{display:inline-flex!important;white-space:nowrap!important;flex-wrap:nowrap!important;max-width:100%;font-family:"Outfit",Arial,sans-serif!important;font-size:clamp(.57rem,1.65vw,.78rem)!important;letter-spacing:.025em!important;gap:clamp(4px,1vw,9px)!important;padding:6px clamp(7px,1.4vw,12px)!important;direction:ltr!important;unicode-bidi:isolate!important;}
+.hero .hero-kicker::before{flex:0 0 clamp(8px,2vw,22px)!important;width:clamp(8px,2vw,22px)!important;}
+@media(max-width:380px){.hero .hero-kicker{font-size:.56rem!important;letter-spacing:0!important;gap:4px!important;padding-inline:6px!important;}}
+
+/* MEDAURA Language Morph — public website only */
+.language-morph{display:flex;align-items:center;gap:3px;border:1px solid rgba(60,161,151,.55);border-radius:99px;background:linear-gradient(125deg,#123745,#0e2836);padding:4px;box-shadow:0 7px 20px rgba(10,44,54,.13);direction:ltr;flex-shrink:0;position:relative;isolation:isolate}
+.language-morph button{font:600 12px Outfit,'IBM Plex Sans Arabic',sans-serif;border:0;border-radius:99px;background:transparent;color:#c3e0dd;padding:8px 12px;cursor:pointer;transition:background .35s,color .35s,transform .35s;white-space:nowrap}
+.language-morph button[aria-pressed="true"]{background:#d6f0ea;color:#113d43;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.language-morph button:focus-visible{outline:2px solid #2a9d9a;outline-offset:3px}
+.language-morph .language-pulse{font-size:15px;color:#67cbbb;line-height:1}
+body.language-changing #app,body.language-changing #ft{opacity:.35;transform:translateY(7px);transition:opacity .23s ease,transform .23s ease}
+#app,#ft{transition:opacity .34s ease,transform .34s ease}
+html[lang="en"] body{direction:ltr;text-align:left}
+html[lang="en"] #app,html[lang="en"] footer{direction:ltr;text-align:left}
+html[lang="en"] .language-morph{direction:ltr}
+@media(max-width:780px){.language-morph{margin:6px auto;padding:3px}.language-morph button{padding:7px 10px}}
+@media(prefers-reduced-motion:reduce){.language-morph button,#app,#ft{transition:none!important}body.language-changing #app,body.language-changing #ft{opacity:1;transform:none}}
+
+/* Readable secondary headings on light surfaces — MEDAURA */
+:where(main section:not(.hero):not(.ph1):not(.signature-section)) .wrap > h2,
+:where(main section:not(.hero):not(.ph1):not(.signature-section)) .wrap > h3,
+:where(main section:not(.hero):not(.ph1):not(.signature-section)) .box h2,
+:where(main section:not(.hero):not(.ph1):not(.signature-section)) .box h3,
+:where(main section:not(.hero):not(.ph1):not(.signature-section)) .card h2,
+:where(main section:not(.hero):not(.ph1):not(.signature-section)) .card h3 {color:#142B43;}
+/* Preserve intentionally light headings on dark panels. */
+.impact-panel h2,.signature-section h2,.hero h1,.ph1 h1 {color:#fff;}
+
+/* MEDAURA: readable section headings on light backgrounds */
+main section:not(.signature-section):not(.hero):not(.ph1) .signature-heading h2 {
+  color: #142B43 !important;
+  text-shadow: none;
+}
+main section:not(.signature-section):not(.hero):not(.ph1) .signature-heading p {
+  color: #385566;
+}
 </style>
 </head>
-<body>
+<body class="medaura-intro-running">
 <div id="scroll-progress" aria-hidden="true"></div>
 <div id="intro" aria-hidden="true">
   <div class="intro-backdrop" aria-hidden="true">
@@ -457,15 +607,15 @@ nav a.admin-entry:hover,nav a.admin-entry:focus-visible{background:var(--teal);c
     <span class="intro-cross"></span>
   </div>
   <div class="intro-composition intro-3d-stage"><div class="intro-logo-3d"><span class="intro-logo-halo"></span><img src="logo.png" alt="" class="intro-real-logo"></div>
-    <div class="intro-letter-stage" role="img" aria-label="MEDAURA — Learn. Apply. Save Lives."><svg viewBox="0 0 820 180" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><text class="signature-letter" x="65" y="128" style="--i:0">M</text><text class="signature-letter" x="164" y="128" style="--i:1">E</text><text class="signature-letter" x="263" y="128" style="--i:2">D</text><text class="signature-letter" x="362" y="128" style="--i:3">A</text><text class="signature-letter" x="461" y="128" style="--i:4">U</text><text class="signature-letter" x="560" y="128" style="--i:5">R</text><text class="signature-letter" x="659" y="128" style="--i:6">A</text></svg><span class="signature-sub">MEDICAL TEAM</span></div>
+    <div class="intro-letter-stage" role="img" aria-label="MEDAURA — Learn. Apply. Save Lives."><svg viewBox="0 0 820 180" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><text class="signature-letter signature-word" x="410" y="128" text-anchor="middle" textLength="684" lengthAdjust="spacing">MEDAURA</text></svg><span class="signature-sub">MEDICAL TEAM</span></div>
     <svg class="intro-ecg" viewBox="0 0 900 110" role="presentation" aria-hidden="true">
-      <path class="ecg-base" d="M8 58H220L250 58L276 47L302 67L341 13L380 94L411 58H510L535 58L558 49L582 64L613 32L641 58H892"/>
-      <path class="ecg-trace" d="M8 58H220L250 58L276 47L302 67L341 13L380 94L411 58H510L535 58L558 49L582 64L613 32L641 58H892"/>
+      <path class="ecg-base" d="M8 58H325L355 58L379 48L405 68L448 10L491 99L519 58H892"/>
+      <path class="ecg-trace" d="M8 58H325L355 58L379 48L405 68L448 10L491 99L519 58H892"/>
     </svg>
     <p class="intro-tagline" dir="ltr">Learn <span>·</span> Apply <span>·</span> Save Lives</p>
   </div>
   <button type="button" id="skip-intro" aria-label="تخطي المقدمة">تخطي المقدمة ↗</button>
-  <div class="intro-bottomline"><span></span><small>MEDICAL EDUCATION · CLINICAL SKILLS · SHARED KNOWLEDGE</small><span></span></div>
+  <div class="intro-bottomline"><span></span><small>MEDICAL EDUCATIONAL TEAM</small><span></span></div>
 </div>
 <a class="skip" href="#app" onclick="event.preventDefault();document.getElementById('app').focus()">انتقل إلى المحتوى</a>
 <header><div class="bar">
@@ -473,16 +623,29 @@ nav a.admin-entry:hover,nav a.admin-entry:focus-visible{background:var(--teal);c
 <button id="mt" aria-expanded="false" aria-controls="nv">القائمة</button>
 <nav id="nv" aria-label="التنقل الرئيسي">
 <a href="#/" data-p="">الرئيسية</a><a href="#/about" data-p="about">من نحن</a><a href="#/courses" data-p="courses">الدورات والورشات</a><a href="#/work" data-p="work">أعمالنا</a><a href="#/resources" data-p="resources">المكتبة الطبية</a><a href="#/join" data-p="join">انضم إلى <bdi>MEDAURA</bdi></a><a href="#/contact" data-p="contact">تواصل معنا</a><a href="admin/" class="admin-entry" aria-label="تسجيل دخول إدارة MEDAURA">تسجيل الدخول ↗</a>
-</nav></div></header>
+</nav><div class="language-morph" role="group" aria-label="Website language"><button id="lang-ar" type="button" aria-pressed="true">عربي</button><span class="language-pulse" aria-hidden="true">⌁</span><button id="lang-en" type="button" aria-pressed="false">EN</button></div></div></header>
 <main id="app" tabindex="-1"></main>
 <footer><div class="wrap" id="ft"></div></footer>
 <button id="back-top" type="button" aria-label="العودة إلى أعلى الصفحة" title="العودة إلى الأعلى">↑</button>
 <script src="content.js"></script>
+<script src="language.js" defer></script>
 <script src="supabase-config.js"></script>
 <script src="public-data.js" defer></script>
 <script src="work-public.js" defer></script>
 <script>
-document.getElementById('skip-intro')?.addEventListener('click',()=>document.getElementById('intro').classList.add('intro-skipped'));
+
+// Replay the intro on every page load, including refresh. No session storage.
+(function(){
+  const intro=document.getElementById('intro');
+  if(!intro)return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){intro.remove();document.body.classList.remove('medaura-intro-running');return;}
+  let finished=false;
+  const finish=()=>{if(finished)return;finished=true;intro.remove();document.body.classList.remove('medaura-intro-running');document.body.classList.add('medaura-intro-reveal');window.setTimeout(()=>document.body.classList.remove('medaura-intro-reveal'),2000);};
+  intro.addEventListener('animationend',e=>{if(e.target===intro)finish();});
+  document.getElementById('skip-intro')?.addEventListener('click',()=>{intro.classList.add('intro-skipped');window.setTimeout(finish,260);});
+  window.setTimeout(finish,5000);
+})();
+
 const D=window.MEDAURA,L=D.links,$=s=>document.querySelector(s);
 function setupImpact(){const el=$('#impact-count'),cap=$('#impact-caption');if(!el)return;const raw=D.impact&&D.impact.studentsReached;const label=(D.impact&&D.impact.impactLabel)||'طالب وطالبة استفادوا من أنشطة MEDAURA';if(raw===null||raw===undefined||raw===''||!Number.isFinite(Number(raw))||Number(raw)<0){el.textContent='أضف الرقم';el.classList.add('impact-unset');cap.textContent='عدد الطلاب المستفيدين — عدّله في content.js بعد اعتماد الرقم';return}el.classList.remove('impact-unset');cap.textContent=label;const target=Math.floor(Number(raw));const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const start=performance.now();const duration=reduce?0:1450;function tick(now){const t=duration?Math.min(1,(now-start)/duration):1;const eased=1-Math.pow(1-t,3);el.textContent=Math.round(target*eased).toLocaleString('en-US');if(t<1)requestAnimationFrame(tick)}requestAnimationFrame(tick)}
 
@@ -500,7 +663,7 @@ const link=(u,t,c='btn')=>safe(u)?`<a class="${c}" href="${esc(u)}" target="_bla
 const head=(t,s)=>`<section class="ph1"><div class="wrap"><h1>${t}</h1><p class="lead">${s||''}</p></div></section>`;
 const V={
 '':()=>{const up=D.courses.filter(c=>c.status!=='done').slice(0,3);
-return `<section class="hero"><div class="wrap" style="position:relative"><div><p class="hero-kicker" style="font-size:.78rem;letter-spacing:.12em;color:#B7E8DF;font-weight:700;margin:0 0 10px">MEDAURA · MEDICAL EDUCATION</p><h1>Learn. <em>Apply.</em><br><span class="hero-save">Save Lives.</span></h1><p class="hero-arabic">${esc(D.site?.heroSubtitle||'نتعلّم المعرفة، نطبّق المهارة، ونصنع فرقًا.')}</p><p>فريق طبي جامعي يقدّم دورات وورشات في التعليم الطبي.</p><div class="btns"><a class="btn w" href="#/courses">استكشف الدورات</a><a class="btn o" href="#/about">تعرّف على <bdi>MEDAURA</bdi></a></div></div><div class="arch"><svg class="pulse-orbit" viewBox="0 0 330 370" aria-hidden="true"><circle class="track" cx="165" cy="175" r="145"/><circle class="track" cx="165" cy="175" r="126"/><circle class="satellite" cx="165" cy="30" r="4"/><circle class="satellite" cx="310" cy="175" r="3" style="animation-direction:reverse;animation-duration:21s"/></svg><div class="hero-identity"><img class="hero-logo" src="logo.png" alt="شعار MEDAURA Medical Team"><div class="hero-identity-line" dir="ltr">LEARN <span>·</span> APPLY <span>·</span> SAVE LIVES</div></div></div>
+return `<section class="hero"><div class="wrap" style="position:relative"><div><p class="hero-kicker" style="color:#B7E8DF;font-weight:700;margin:0 0 10px">MEDAURA · MEDICAL EDUCATION</p><h1>Learn. <em>Apply.</em><br><span class="hero-save">Save Lives.</span></h1><p class="hero-arabic">${esc(D.site?.heroSubtitle||'نتعلّم المعرفة، نطبّق المهارة، ونصنع فرقًا.')}</p><p>فريق طبي جامعي يقدّم دورات وورشات في التعليم الطبي.</p><div class="btns"><a class="btn w" href="#/courses">استكشف الدورات</a><a class="btn o" href="#/about">تعرّف على <bdi>MEDAURA</bdi></a></div></div><div class="arch"><svg class="pulse-orbit" viewBox="0 0 330 370" aria-hidden="true"><circle class="track" cx="165" cy="175" r="145"/><circle class="track" cx="165" cy="175" r="126"/><circle class="satellite" cx="165" cy="30" r="4"/><circle class="satellite" cx="310" cy="175" r="3" style="animation-direction:reverse;animation-duration:21s"/></svg><div class="hero-identity"><img class="hero-logo" src="logo.png" alt="شعار MEDAURA Medical Team"><div class="hero-identity-line" dir="ltr">LEARN <span>·</span> APPLY <span>·</span> SAVE LIVES</div></div></div>
 <svg class="thread" viewBox="0 0 400 120" aria-hidden="true"><path d="M395 118C360 30 290 10 240 60S120 100 5 30" fill="none" stroke="#2A9D9A" stroke-width="3" stroke-linecap="round"/><circle cx="5" cy="30" r="6" fill="#2A9D9A"/></svg></div></section>
 <section class="impact-section" aria-labelledby="impact-title"><div class="wrap"><div class="impact-panel"><div class="impact-copy"><span class="impact-eyebrow">MEDAURA · LEARNING PULSE</span><h2 id="impact-title">كل مهارة بتفتح بابًا جديدًا.</h2><p>نؤمن أن التعليم الطبي الأقوى يجمع بين الفهم، والتجربة، والتعلّم المستمر.</p><div class="impact-number impact-unset" id="impact-count" aria-live="polite">أضف الرقم</div><span class="impact-caption" id="impact-caption">عدد الطلاب المستفيدين — قابل للتعديل من content.js</span></div><div class="impact-figure" aria-hidden="true"><svg viewBox="0 0 120 120"><circle class="orbit" cx="60" cy="60" r="42"/><circle class="orbit" cx="60" cy="60" r="28" style="animation-direction:reverse;animation-duration:17s"/><path d="M18 62 C32 62 32 35 46 35 S61 86 76 86 S91 55 103 55" fill="none" stroke="#9AE4D6" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 5"><animate attributeName="stroke-dashoffset" values="32;0" dur="3s" repeatCount="indefinite"/></path><circle class="core" cx="60" cy="60" r="9"/><circle class="node" cx="18" cy="62" r="3"/><circle class="node" cx="103" cy="55" r="3" style="animation-delay:.7s"/></svg></div></div></div></section>
 <section class="signature-section" aria-labelledby="constellation-title"><div class="wrap">
@@ -514,15 +677,15 @@ return `<section class="hero"><div class="wrap" style="position:relative"><div><
 </div><div class="signature-endnote">MEDAURA · نتعلّم. نتدرّب. نرتقي.</div>
 </div></section>
 <section class="path-section"><div class="wrap"><span class="path-label">A LEARNING JOURNEY</span><h2>${esc(D.site?.homePathHeading||'من أول سؤال، لخطوة واثقة.')}</h2><p class="lead">${esc(D.site?.homePathDescription||'رحلة بسيطة تساعد الزائر يعرف وين يبدأ وكيف يكمل.')}</p><div class="path-grid"><article class="path-step" data-step="01"><h3>اكتشف ما يناسبك</h3><p>ابدأ من الدورات والورشات حسب اهتمامك ومستواك.</p></article><article class="path-step" data-step="02"><h3>تعلّم وجرّب</h3><p>تابع تفاصيل النشاط، أهدافه، وطريقة المشاركة فيه.</p></article><article class="path-step" data-step="03"><h3>طبّق ما تعلّمت</h3><p>استكشف الموارد أو انضم للمساهمة في أنشطة الفريق.</p></article></div></div></section>
-<section class="learning-lab" aria-labelledby="lab-title"><div class="wrap"><div class="lab-panel"><div class="lab-head"><div><span class="lab-kicker">MEDAURA · LEARNING LAB</span><h2 id="lab-title">اتعلّم. استرجع. ثبّت المعلومة.</h2><p class="lab-subtitle">مساحة لتنظيم المحاضرات واختبار استرجاعك وجدولة المراجعات — بدون حساب أو إنترنت.</p></div><div class="lab-note">بياناتك محفوظة على هذا المتصفح فقط. صدّر نسخة احتياطية حتى ما تضيع إذا تغيّر الجهاز.</div></div><form class="lab-form" id="learning-card"><label>اسم المحاضرة<input name="topic" required maxlength="100" placeholder="مثال: Cardiac Action Potential"></label><label>المادة<input name="subject" maxlength="70" placeholder="مثال: Physiology"></label><label class="wide">استرجع من ذاكرتك: شو أهم ثلاث أفكار؟<textarea name="learned" maxlength="1200" placeholder="سكر السلايدات واكتب اللي بتتذكره..." required></textarea></label><label class="wide">وين لسه في نقطة ضعف أو سؤال؟<textarea name="next" maxlength="700" placeholder="شو بدك تراجع أو تفهم أكثر؟"></textarea></label><div class="wide"><strong>قدرتك على شرح المحاضرة بدون سلايدات</strong><div class="lab-levels"><label><input type="radio" name="confidence" value="needs-work"> محتاج أراجع الأساسيات</label><label><input type="radio" name="confidence" value="developing" checked> فاهم بس بنسى التفاصيل</label><label><input type="radio" name="confidence" value="confident"> بقدر أشرحها</label></div></div><div class="lab-actions"><button class="btn" type="submit">احفظ الجلسة وأنشئ المراجعات</button><button class="btn soft" type="reset">تفريغ الحقول</button></div><p class="lab-status wide" id="lab-status" aria-live="polite">نظام المراجعة المقترح: 1، 3، 7، 14، 30 يومًا.</p></form><div class="lab-results"><div class="lab-widget"><h3>مراجعاتك القادمة</h3><div id="lab-upcoming" class="lab-empty">أضف أول محاضرة لتظهر المراجعات.</div></div><div class="lab-widget"><h3>محاضراتي المحفوظة <span id="lab-count"></span></h3><div id="lab-sessions" class="lab-empty">ما في محاضرات محفوظة بعد.</div><div class="lab-tool-actions"><button type="button" id="lab-export" class="primary">تصدير نسخة احتياطية</button><button type="button" id="lab-import">استيراد نسخة</button><button type="button" id="lab-print">طباعة الملخص / PDF</button><input type="file" id="lab-import-file" accept="application/json,.json" hidden></div></div></div></div></div></section>
+
 <section><div class="wrap"><h2>${esc(D.site?.homeCoursesHeading||'دورات وورشات قادمة')}</h2>${grid(up,card,'لا توجد دورات قادمة حالياً')}<p><a href="#/courses">عرض كل الدورات</a></p></div></section>
 <section class="alt"><div class="wrap two"><div><h2>رسالتنا</h2><p class="lead">${esc(D.site?.mission||'نص الرسالة والرؤية يُضاف بعد اعتماده من الفريق.')}</p></div><div><h2>${esc(D.site?.homeWorkHeading||'من أعمالنا')}</h2><p class="lead">${esc(D.site?.homeWorkDescription||'استكشف توثيق دوراتنا وورشاتنا السابقة.')}</p><a class="btn" href="#/work">عرض أعمالنا</a></div></div></section>
 <section><div class="wrap"><div class="box" style="text-align:center;padding:28px"><h2>${esc(D.site?.homeJoinHeading||'كن جزءاً من الفريق')}</h2><p class="lead" style="margin:0 auto 16px">${esc(D.site?.homeJoinDescription||'تطوّع، أو قدّم كمحاضر، أو اقترح شراكة.')}</p><a class="btn" href="#/join">انضم الآن</a></div></div></section>`},
-about:()=>head('من نحن',esc(D.site?.aboutSubtitle||'MEDAURA مساحة طلابية للتعليم الطبي، وبناء المهارات، وتبادل المعرفة.'))+`<section><div class="wrap"><div class="about-manifesto"><span class="path-label">WHAT GUIDES US</span><h2>${esc(D.site?.aboutHeading||'نتعلّم معًا، ونبني بيئة تشجّع على السؤال والتجربة.')}</h2><p class="lead">${esc(D.site?.aboutIntro||'تُستكمل التفاصيل الرسمية للرؤية والرسالة بعد اعتمادها من الفريق؛ هذه الصفحة جاهزة لتستوعبها دون تغيير التصميم.')}</p></div><div class="two about-principles">${[['الرؤية',D.site?.vision||'المكان الذي يبدأ فيه الفضول العلمي ويتحوّل إلى تعلّم مستمر.'],['الرسالة',D.site?.mission||'توفير فرص تعليمية منظّمة تساعد الطلاب على بناء المعرفة والمهارات.'],['قيمنا',D.site?.values||'التعاون، المسؤولية، احترام المعرفة، والتعلّم المستمر.'],['منهجنا التعليمي',D.site?.educationalMethod||'أهداف واضحة، شرح منظّم، وتطبيق يناسب مستوى المتعلّم.']].map((x,i)=>`<article class="box principle-card"><span class="path-label">0${i+1} / MEDAURA</span><h3>${esc(x[0])}</h3><p class="lead">${esc(x[1])}</p><small>صياغة مبدئية قابلة للتعديل واعتماد الفريق</small></article>`).join('')}</div></div></section><section class="alt"><div class="wrap"><div class="signature-heading"><div><span class="path-label">THE PEOPLE BEHIND THE WORK</span><h2>الفريق</h2></div><p class="lead">${esc(D.site?.teamIntro||'تُضاف أسماء الأعضاء وأدوارهم وصورهم بعد موافقتهم واعتماد المعلومات.')}</p></div>${D.team?.length?`<div class="grid">${D.team.map(m=>`<article class="card">${m.photo_url&&safe(m.photo_url)?`<img class="ph" src="${esc(m.photo_url)}" alt="${esc(m.name)}" loading="lazy">`:''}<div class="cb"><h3>${esc(m.name)}</h3><p>${esc(m.position)}</p><p class="lead">${esc(m.bio)}</p></div></article>`).join('')}</div>`:empty('مساحة أعضاء MEDAURA','سيظهر أعضاء الفريق بعد نشرهم من لوحة الإدارة.')}</div></section>`,
+about:()=>head('من نحن',esc(D.site?.aboutSubtitle||'MEDAURA مساحة طلابية للتعليم الطبي، وبناء المهارات، وتبادل المعرفة.'))+`<section><div class="wrap"><div class="about-manifesto"><span class="path-label">WHAT GUIDES US</span><h2>${esc(D.site?.aboutHeading||'نتعلّم معًا، ونبني بيئة تشجّع على السؤال والتجربة.')}</h2><p class="lead">${esc(D.site?.aboutIntro||'تُستكمل التفاصيل الرسمية للرؤية والرسالة بعد اعتمادها من الفريق؛ هذه الصفحة جاهزة لتستوعبها دون تغيير التصميم.')}</p></div><div class="two about-principles">${[['الرؤية',D.site?.vision||'المكان الذي يبدأ فيه الفضول العلمي ويتحوّل إلى تعلّم مستمر.'],['الرسالة',D.site?.mission||'توفير فرص تعليمية منظّمة تساعد الطلاب على بناء المعرفة والمهارات.'],['قيمنا',D.site?.values||'التعاون، المسؤولية، احترام المعرفة، والتعلّم المستمر.'],['منهجنا التعليمي',D.site?.educationalMethod||'أهداف واضحة، شرح منظّم، وتطبيق يناسب مستوى المتعلّم.']].map((x,i)=>`<article class="box principle-card"><span class="path-label">0${i+1} / MEDAURA</span><h3>${esc(x[0])}</h3><p class="lead">${esc(x[1])}</p><small>صياغة مبدئية قابلة للتعديل واعتماد الفريق</small></article>`).join('')}</div></div></section><section class="alt"><div class="wrap"><div class="signature-heading"><div><span class="path-label">THE PEOPLE BEHIND THE WORK</span><h2>الفريق</h2></div><p class="lead">${esc(D.site?.teamIntro||'تُضاف أسماء الأعضاء وأدوارهم وصورهم بعد موافقتهم واعتماد المعلومات.')}</p></div>${D.team?.length?`<div class="grid">${D.team.map(m=>`<article class="card">${m.photo_url&&safe(m.photo_url)?`<img class="ph team-member-photo" src="${esc(m.photo_url)}" alt="${esc(m.name)}" loading="lazy">`:''}<div class="cb"><h3>${esc(m.name)}</h3><p>${esc(m.position)}</p><p class="lead">${esc(m.bio)}</p></div></article>`).join('')}</div>`:empty('مساحة أعضاء MEDAURA','سيظهر أعضاء الفريق بعد نشرهم من لوحة الإدارة.')}</div></section>`,
 courses:()=>head('الدورات والورشات',esc(D.site?.coursesIntro||'تعلّم عملي منظّم؛ اختر ما يناسب مستواك واهتمامك.'))+`<section><div class="wrap"><div class="course-toolbar"><div><strong>استكشف البرامج التعليمية</strong><div class="toolbar-note">صفِّ حسب حالة التسجيل أو ابحث باسم الدورة أو المجال.</div></div><input id="course-q" type="search" placeholder="ابحث عن دورة أو موضوع" aria-label="ابحث عن دورة أو موضوع"><div class="fl" role="group" aria-label="تصفية حسب الحالة">${[['all','كل الدورات'],['open','التسجيل مفتوح'],['upcoming','قريباً'],['done','أرشيف الدورات']].map((x,i)=>`<button data-f="${x[0]}" aria-pressed="${i==0}">${x[1]}</button>`).join('')}</div></div><div id="cg"></div></div></section>`,
 resources:()=>head('المكتبة الطبية',esc(D.site?.resourcesIntro||'مصادر تساعدك تراجع، تفهم، وتوسّع معرفتك.'))+`<section><div class="wrap"><div class="course-toolbar"><div><strong>ابحث في المعرفة</strong><div class="toolbar-note">ابحث باسم المورد أو تصنيفه للوصول للمادة المطلوبة.</div></div><input id="q" type="search" placeholder="ابحث عن ملف أو موضوع..." aria-label="ابحث في المكتبة"></div><div id="rl"></div><p class="resource-empty-note">تُضاف الموارد المعتمدة من الفريق فقط، مع احترام حقوق أصحابها.</p></div></section>`,
 join:()=>head('انضم إلى MEDAURA',D.site?.joinIntro||'ساهم في التعليم الطبي من خلال التطوّع أو التدريب أو الشراكات.')+`<section><div class="wrap"><div class="signature-heading"><div><span class="path-label">GROW WITH US</span><h2>${esc(D.site?.joinHeading||'كل شخص يضيف زاوية جديدة للمعرفة.')}</h2></div><p class="lead">${esc(D.site?.joinDescription||'اختر طريقة المشاركة المناسبة لك، وسنضيف تفاصيل التواصل بعد اعتمادها.')}</p></div><div class="grid">${[['تطوّع مع الفريق','ساعد في تنظيم الدورات والورشات وبناء تجربة تعليمية أفضل.','تطوّع','volunteer'],['قدّم طلب عضوية','ساهم بأفكارك ووقتك ومهاراتك ضمن عمل الفريق.','العضوية','membership'],['شارك كمحاضر','شارك معرفة تتقنها وساعد زملاءك على التعلّم.','التدريب','trainer'],['اقترح شراكة','افتح مجالًا لتعاون تعليمي مع جهة أو مبادرة.','الشراكات','partner']].map((x,i)=>`<article class="box join-card"><span class="constellation-icon">${['✳','◎','↗','⌘'][i]}</span><span class="path-label">0${i+1} / ${x[2]}</span><h3>${esc(D.site?.['join_'+x[3]+'_title']||x[0])}</h3><p class="lead">${esc(D.site?.['join_'+x[3]+'_description']||x[1])}</p>${link(D.site?.['join_'+x[3]+'_url']||(i===3?L.partnerForm:L.joinForm),esc(D.site?.['join_'+x[3]+'_button']||'ابدأ من هنا'))}</article>`).join('')}</div></div></section>`,
-contact:()=>head('تواصل معنا',esc(D.site?.contactIntro||'قنوات التواصل الرسمية للفريق.'))+(Object.values(L).some(Boolean)?'':`<section><div class="wrap">${empty('بيانات التواصل الرسمية قيد الإعداد','ستظهر هنا بعد اعتمادها: البريد، الحسابات، ونماذج التواصل والشراكة.')}</div></section>`)+(Object.values(L).some(Boolean)?`<section><div class="wrap two"><div class="box"><h2>${esc(D.site?.contactChannelsHeading||'التواصل')}</h2>${[['البريد',L.email&&`<a class="ltr" href="mailto:${esc(L.email)}">${esc(L.email)}</a>`],['إنستغرام',L.instagram&&link(L.instagram,'الحساب','')],['تيليغرام',L.telegram&&link(L.telegram,'القناة','')]].map(x=>x[1]?`<p>${x[0]}: ${x[1]}</p>`:`<p class="lead">${x[0]}: لم يُضف بعد.</p>`).join('')}</div><div class="box"><h2>${esc(D.site?.contactPartnerHeading||'رسالة أو شراكة')}</h2>${link(L.contactForm,'أرسل رسالة')}<p></p>${link(L.partnerForm,'نموذج الشراكات')}</div></div></section>`:''),
+contact:()=>head('تواصل معنا',esc(D.site?.contactIntro||'قنوات التواصل الرسمية للفريق.'))+(Object.values(L).some(Boolean)?'':`<section><div class="wrap">${empty('بيانات التواصل الرسمية قيد الإعداد','ستظهر هنا بعد اعتمادها: البريد، الحسابات، ونماذج التواصل والشراكة.')}</div></section>`)+(Object.values(L).some(Boolean)?`<section><div class="wrap two"><div class="box"><h2>${esc(D.site?.contactChannelsHeading||'التواصل')}</h2>${[['البريد',L.email&&`<a class="ltr" href="mailto:${esc(L.email)}">${esc(L.email)}</a>`],['إنستغرام',L.instagram&&link(L.instagram,'@medaura.team','instagram-handle')],['تيليغرام',L.telegram&&link(L.telegram,'القناة','')]].map(x=>x[1]?`<p>${x[0]}: ${x[1]}</p>`:`<p class="lead">${x[0]}: لم يُضف بعد.</p>`).join('')}</div><div class="box"><h2>${esc(D.site?.contactPartnerHeading||'رسالة أو شراكة')}</h2>${link(L.contactForm,'أرسل رسالة')}<p></p>${link(L.partnerForm,'نموذج الشراكات')}</div></div></section>`:''),
 course:id=>{const c=D.courses.find(x=>x.id===id);if(!c)return head('الدورة غير موجودة','<a href="#/courses">العودة إلى الدورات</a>');
 return `<section><div class="wrap dt"><div>${ph(c.photo,c.title)}</div><div class="course-detail-panel"><div class="course-detail-top"><span class="chip s-${esc(c.status)}" style="position:static;display:inline-block">${ST[c.status]||''}</span> ${smp(c)}<span class="path-label">${esc(c.cat)}</span></div><h1>${esc(c.title)}</h1><ul class="meta"><li>المستوى: ${esc(c.level)}</li><li>${esc(c.duration)}</li><li>${esc(c.format)}</li></ul><p><strong>المحاضر:</strong> ${esc(c.instructor)}</p><p class="lead">${esc(c.summary)}</p><h3>ماذا ستتعلّم؟</h3><ul>${(c.goals||[]).map(g=>`<li>${esc(g)}</li>`).join('')}</ul>${c.status==='open'?link(c.register,'سجّل في الدورة'):'<p class="lead">التسجيل غير متاح حالياً.</p>'}<p><a class="tl" href="#/courses">العودة إلى الدورات</a></p></div></div></section>`},
 };
@@ -564,5 +727,6 @@ $('#lab-import-file')?.addEventListener('change',async e=>{const file=e.target.f
 $('#lab-print')?.addEventListener('click',()=>{const w=window.open('','_blank');if(!w){$('#lab-status').textContent='اسمح بالنوافذ المنبثقة لطباعة الملخص.';return}const rows=labEntries.map(x=>`<article><h2>${esc(x.topic)}</h2><p>${esc(x.subject||'')} · ${esc(x.created.slice(0,10))}</p><h3>استرجاعي</h3><p>${esc(x.learned)}</p><h3>نقاط تحتاج مراجعة</h3><p>${esc(x.next)}</p><p>المراجعات: ${LAB_DAYS.map(d=>d+' يوم '+(x.reviews?.[d]?.done?'✓':'○')).join(' · ')}</p></article>`).join('');w.document.write(`<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>MEDAURA Learning Lab</title><style>body{font:16px/1.8 Arial,sans-serif;max-width:820px;margin:35px auto;color:#143c43;padding:20px}article{border:1px solid #cbded9;border-radius:12px;padding:18px;margin:15px 0;break-inside:avoid}h1{color:#075963}p{white-space:pre-wrap}@media print{body{margin:0}}</style><h1>MEDAURA · Learning Lab</h1><p>Learn. Apply. Save Lives.</p>${rows||'<p>لا توجد جلسات محفوظة.</p>'}<script>window.onload=()=>window.print()<\/script></html>`);w.document.close()});
 labRender();
 </script>
+<a href="certificate.html" aria-label="استخراج شهاداتي" style="position:fixed;bottom:22px;left:18px;z-index:100;background:#075f68;color:white;padding:12px 18px;border-radius:28px;box-shadow:0 5px 18px #0018;text-decoration:none;font-family:inherit">🎓 استخراج شهاداتي</a>
 </body>
 </html>

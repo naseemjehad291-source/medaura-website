@@ -1,0 +1,1 @@
+MEDAURA certificate design update: only certificate.css, certificate-render.js and certificate-template-print.png added/changed. No SQL, no changes to issuance or lookup. Uses 300 DPI clean artwork with fixed institutional signature. Dynamic name/course/date/QR/id remain independent. Existing certificates are not re-issued. Test both Arabic and English names after deploying.
