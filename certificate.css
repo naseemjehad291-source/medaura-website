@@ -6,7 +6,7 @@
 .cert-dynamic-name{left:350px;top:466px;width:790px;height:98px;display:flex;align-items:center;justify-content:center;font:italic 67px 'URW Chancery L','Brush Script MT','Segoe Script',Georgia,serif;line-height:1.1;overflow-wrap:anywhere;color:#062c40}
 .cert-dynamic-name.cert-arabic{font-family:'Noto Naskh Arabic','Amiri','Traditional Arabic',Tahoma,serif;font-style:normal;font-size:63px;direction:rtl}
 .cert-dynamic-course{left:420px;top:650px;width:650px;height:62px;display:flex;align-items:center;justify-content:center;font:bold 44px Georgia,'Times New Roman',serif;color:#062c40;overflow-wrap:anywhere}
-.cert-dynamic-date{left:275px;top:833px;width:240px;height:43px;display:flex;align-items:center;justify-content:center;font:19px Georgia,serif;color:#062c40;white-space:nowrap}
+.cert-dynamic-date{left:275px;top:868px;width:240px;height:38px;display:flex;align-items:center;justify-content:center;font:19px Georgia,serif;color:#062c40;white-space:nowrap}
 .cert-dynamic-qr{left:1162px;top:784px;width:149px;height:149px;background:white;padding:4px;display:flex;align-items:center;justify-content:center}
 .cert-dynamic-qr canvas,.cert-dynamic-qr img{width:141px!important;height:141px!important}
 .cert-dynamic-id{left:1122px;top:947px;width:228px;font:bold 16px Georgia,serif;color:#062c40;white-space:nowrap}
