@@ -10,10 +10,10 @@ const fields={
 };
 const key=r=>[r.entity_type,r.entity_id,r.field_name].join('::');
 const say=t=>$('status').textContent=t;
-async function init(){const {data:{user:u}}=await db.auth.getUser();user=u;$('login').hidden=false;$('editor').hidden=true;if(!u){say('سجّل الدخول بحساب Translation Admin أو Super Admin.');return}
+async function init(){const {data:{user:u}}=await db.auth.getUser();user=u;$('editor').hidden=true;if(!u){window.location.replace('index.html');return}
 const [{data:role},{data:editor}]=await Promise.all([db.from('admin_roles').select('role').eq('user_id',u.id).maybeSingle(),db.from('medaura_translation_editors').select('user_id').eq('user_id',u.id).maybeSingle()]);
 if(role?.role!=='super_admin'&&!editor){say('هذا الحساب غير مخوّل للترجمة.');return}
-$('login').hidden=true;$('editor').hidden=false;await refresh();}
+$('editor').hidden=false;await refresh();}
 async function refresh(){say('جارٍ تحميل المحتوى...');const queries=[
  db.from('site_settings').select('key,value'),db.from('courses').select('id,title,description,instructor'),db.from('events').select('id,title,description'),db.from('team_members').select('id,name,position,bio'),db.from('medaura_content_localizations').select('*')];
 const results=await Promise.all(queries);if(results[0].error)throw results[0].error;
@@ -52,5 +52,4 @@ function render(){
  if(!count)box.append(el('p','empty','لا توجد نصوص مطابقة للبحث.'));
 }
 $('reload').onclick=()=>{drafts.clear();refresh().catch(e=>say(e.message))};$('search').oninput=render;
-$('sign-in').onclick=async()=>{const {error}=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)say(error.message);else init().catch(e=>say(e.message))};
-$('sign-out').onclick=async()=>{await db.auth.signOut();init()};init().catch(e=>say('تعذر فتح لوحة الترجمة: '+e.message));
+$('sign-out').onclick=async()=>{const btn=$('sign-out');btn.disabled=true;say('جارٍ تسجيل الخروج...');const {error}=await db.auth.signOut();if(error){btn.disabled=false;say('تعذر تسجيل الخروج: '+error.message);return;}window.location.replace('index.html');};init().catch(e=>say('تعذر فتح لوحة الترجمة: '+e.message));
