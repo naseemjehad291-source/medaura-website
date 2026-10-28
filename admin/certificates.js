@@ -1,3 +1,4 @@
+import {downloadCertificate,certId} from '../certificate-render.js';
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
 const cfg=window.MEDAURA_SUPABASE;
 const db=createClient(cfg.url,cfg.publishableKey);
@@ -22,6 +23,7 @@ async function loadCourses(){
  courses=data||[];
  $('courses-list').innerHTML=!courses.length?'لم تُضف دورات شهادات بعد.':'<div class="tablewrap"><table><thead><tr><th>الدورة</th><th>تاريخ الإصدار</th></tr></thead><tbody>'+courses.map(c=>`<tr><td>${escapeHTML(c.title)}</td><td>${escapeHTML(c.issue_date)}</td></tr>`).join('')+'</tbody></table></div>';
  $('certificate-course').innerHTML='<option value="">اختر الدورة...</option>'+courses.map(c=>`<option value="${escapeHTML(c.id)}">${escapeHTML(c.title)} — ${escapeHTML(c.issue_date)}</option>`).join('');
+ $('issued-course').innerHTML='<option value="">اختر دورة...</option>'+courses.map(c=>`<option value="${escapeHTML(c.id)}">${escapeHTML(c.title)}</option>`).join('');
 }
 $('course-form').addEventListener('submit',async e=>{
  e.preventDefault();const btn=$('save-course');btn.disabled=true;
@@ -106,7 +108,20 @@ $('issue-certificates').addEventListener('click',async()=>{
    else if(error.code==='23505')skipped++;
    else{errors.push(`${row.student_name}: ${error.message}`);if(errors.length>=5)break}
   }
+  await loadIssued();
   message('issue-status',`تم إصدار ${created} شهادة. شهادات موجودة مسبقًا: ${skipped}. أخطاء: ${errors.length}.${errors.length?'\n'+errors.join('\n'):''}${errors.length?'\nتوقف الإصدار عند الخطأ. راجع النتائج قبل المحاولة مجددًا.':''}`,errors.length>0);
  }catch(err){message('issue-status',err.message,true)}finally{btn.disabled=false}
 });
+async function loadIssued(){
+ const courseId=$('issued-course').value, list=$('issued-list');list.replaceChildren();if(!courseId)return;
+ list.textContent='جارٍ تحميل الشهادات...';
+ const {data,error}=await db.from('medaura_certificates').select('id,certificate_number,student_name,student_university_id,status').eq('course_id',courseId).order('certificate_number',{ascending:false}).limit(500);
+ if(error){list.textContent='تعذر التحميل: '+error.message;return}
+ list.replaceChildren();if(!data?.length){list.textContent='لا توجد شهادات في هذه الدورة.';return}
+ const course=courses.find(c=>c.id===courseId);
+ for(const c of data){const row=document.createElement('div');row.style.cssText='padding:12px;border-bottom:1px solid #ddd;display:flex;gap:12px;align-items:center;flex-wrap:wrap';
+ const txt=document.createElement('span');txt.style.flex='1';txt.textContent=`${c.student_name} — ${c.student_university_id} — ${certId({...c,issue_date:course.issue_date})} (${c.status})`;row.appendChild(txt);
+ if(c.status==='issued'){const b=document.createElement('button');b.textContent='تحميل PDF';b.onclick=async()=>{b.disabled=true;try{await downloadCertificate({...c,course_title:course.title,issue_date:course.issue_date})}catch(e){alert(e.message)}finally{b.disabled=false}};row.appendChild(b)}list.appendChild(row)}
+}
+$('issued-course').addEventListener('change',loadIssued);
 init();
