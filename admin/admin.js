@@ -110,6 +110,7 @@ async function check(){
 
   role=verifiedRole;
   $('forms-tab').hidden=verifiedRole!=='super_admin';
+  $('certificates-tab').hidden=verifiedRole!=='super_admin';
   const media=role==='media_admin';
 
   document.querySelectorAll('.admin-menu button').forEach(b=>{
