@@ -87,6 +87,19 @@ async function check(){
 
   const verifiedRole=result.data?.role;
 
+  // Translator accounts use a separate allowlist: route to restricted editor.
+  if(!verifiedRole && !result.error){
+    const {data:translator,error:translatorError}=await supabase
+      .from('medaura_translation_editors')
+      .select('user_id')
+      .eq('user_id',user.id)
+      .maybeSingle();
+    if(!translatorError && translator){
+      window.location.replace('translations.html');
+      return;
+    }
+  }
+
   if(
     result.error||
     !['super_admin','admin','media_admin'].includes(verifiedRole)

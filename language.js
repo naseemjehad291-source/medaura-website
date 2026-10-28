@@ -16,7 +16,6 @@ async function loadApproved(){
  if(!response.ok)return;for(const item of await response.json()){approved.set(normalized(item.source_ar),item.translation_en);if(item.edited_ar)arabicEdits.set(normalized(item.source_ar),item.edited_ar)}
  apply();}catch(e){console.warn('MEDAURA translation lookup unavailable',e)}
 }
-const autoEligible=()=>false;const queueAuto=()=>{};const autoCache=new Map();
 const textNodes=(root)=>{const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;const a=[];while(n=w.nextNode())a.push(n);return a};
 function translateNode(node){if(node.parentElement?.closest('script,style,svg,textarea,[contenteditable="true"],.language-morph,.intro-brand'))return;
  if(!originalText.has(node))originalText.set(node,node.nodeValue);
@@ -25,7 +24,7 @@ function translateNode(node){if(node.parentElement?.closest('script,style,svg,te
  if(!t&&current==='en'){
   const k=normalized(match[2]);const prefix={'المستوى:':'Level:','المحاضر:':'Instructor:','إنستغرام:':'Instagram:','البريد:':'Email:','تيليغرام:':'Telegram:'};
   for(const [ar,en] of Object.entries(prefix))if(k.startsWith(ar)){t=en+k.slice(ar.length);break}
- }if(!t&&autoEligible(node,normalized(match[2]))){const original=normalized(match[2]);t=autoCache.get(original);if(!t)queueAuto(original)}
+ }
  const replacement=current==='en'?(t||match[2]):(arabicEdits.get(normalized(match[2]))||match[2]);const next=match[1]+replacement+match[3];if(node.nodeValue!==next)node.nodeValue=next;
 }
 function translateAttrs(el){for(const attr of ['placeholder','aria-label','title','alt']){if(!el.hasAttribute(attr))continue;let stored=originalAttr.get(el);if(!stored){stored={};originalAttr.set(el,stored)}if(!(attr in stored))stored[attr]=el.getAttribute(attr);const t=translated(stored[attr]);const next=current==='en'?(t||stored[attr]):(arabicEdits.get(normalized(stored[attr]))||stored[attr]);if(el.getAttribute(attr)!==next)el.setAttribute(attr,next);}}
