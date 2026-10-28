@@ -8,6 +8,23 @@ const translated=s=>{const k=normalized(s);return PAGE_DICT[k]||EXTRA[k]||DICT[k
 let current=localStorage.getItem('medaura-public-language')==='en'?'en':'ar';
 const originalText=new WeakMap(),originalAttr=new WeakMap();
 const fieldLookup=()=>window.MEDAURA?.bilingualFields||{};
+// Public-content-only automatic translation fallback. No user-entered form values,
+// certificate holders' names, or private account data are sent to third parties.
+const AUTO_TRANSLATE_ALLOWED=/^(\/|\/index\.html)?$/.test(location.pathname.replace(/.*\/medaura-website-medaura-media-admin\//,'/'));
+const autoCache=new Map();const autoPending=new Set();let autoQueue=[],autoBusy=false;
+const isArabic=s=>/[\u0600-\u06ff]/.test(s);
+const autoEligible=(node,raw)=>AUTO_TRANSLATE_ALLOWED&&current==='en'&&raw.length>=3&&raw.length<=450&&isArabic(raw)&&!node.parentElement?.closest('input,select,option,textarea,script,style,svg,[contenteditable],.language-morph,.intro-brand,[data-no-translate]');
+async function drainAutoQueue(){if(autoBusy)return;autoBusy=true;while(autoQueue.length){const original=autoQueue.shift();try{
+ const endpoint='https://api.mymemory.translated.net/get?q='+encodeURIComponent(original)+'&langpair=ar%7Cen';
+ const response=await fetch(endpoint,{referrerPolicy:'no-referrer'});if(!response.ok)throw Error('translation unavailable');
+ const payload=await response.json();const result=String(payload?.responseData?.translatedText||'').trim();
+ if(result&&!isArabic(result)&&payload?.responseStatus===200)autoCache.set(original,result);
+ }catch(_e){/* Keep Arabic text if service is unavailable. */}
+ autoPending.delete(original);if(current==='en')apply();
+ await new Promise(resolve=>setTimeout(resolve,350));
+ }autoBusy=false;}
+function queueAuto(raw){if(autoPending.has(raw)||autoCache.has(raw))return;autoPending.add(raw);autoQueue.push(raw);drainAutoQueue();}
+
 const textNodes=(root)=>{const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;const a=[];while(n=w.nextNode())a.push(n);return a};
 function translateNode(node){if(node.parentElement?.closest('script,style,svg,textarea,[contenteditable="true"],.language-morph,.intro-brand'))return;
  if(!originalText.has(node))originalText.set(node,node.nodeValue);
@@ -16,7 +33,8 @@ function translateNode(node){if(node.parentElement?.closest('script,style,svg,te
  if(!t&&current==='en'){
   const k=normalized(match[2]);const prefix={'المستوى:':'Level:','المحاضر:':'Instructor:','إنستغرام:':'Instagram:','البريد:':'Email:','تيليغرام:':'Telegram:'};
   for(const [ar,en] of Object.entries(prefix))if(k.startsWith(ar)){t=en+k.slice(ar.length);break}
- }const next=current==='en'&&t?match[1]+t+match[3]:raw;if(node.nodeValue!==next)node.nodeValue=next;
+ }if(!t&&autoEligible(node,normalized(match[2]))){const original=normalized(match[2]);t=autoCache.get(original);if(!t)queueAuto(original)}
+ const next=current==='en'&&t?match[1]+t+match[3]:raw;if(node.nodeValue!==next)node.nodeValue=next;
 }
 function translateAttrs(el){for(const attr of ['placeholder','aria-label','title','alt']){if(!el.hasAttribute(attr))continue;let stored=originalAttr.get(el);if(!stored){stored={};originalAttr.set(el,stored)}if(!(attr in stored))stored[attr]=el.getAttribute(attr);const t=translated(stored[attr]);const next=current==='en'&&t?t:stored[attr];if(el.getAttribute(attr)!==next)el.setAttribute(attr,next);}}
 function apply(root=document){const target=root.nodeType===1?root:document.body;if(!target)return;for(const n of textNodes(target))translateNode(n);for(const el of [target,...target.querySelectorAll('*')])translateAttrs(el);
