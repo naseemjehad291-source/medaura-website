@@ -1,6 +1,6 @@
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
 const c=window.MEDAURA_SUPABASE,db=createClient(c.url,c.publishableKey),$=id=>document.getElementById(id);
-let user=null,rows=[],selected=null,localizations=new Map();
+let user=null,rows=[],localizations=new Map(),drafts=new Map(),saving=new Set();
 const fields={
  home:[['heroSubtitle','وصف الرئيسية'],['impactLabel','وصف عدد المستفيدين'],['homePathHeading','عنوان المسار'],['homePathDescription','وصف المسار'],['homeCoursesHeading','عنوان الدورات'],['homeWorkHeading','عنوان أعمالنا'],['homeWorkDescription','وصف أعمالنا'],['homeJoinHeading','عنوان الانضمام'],['homeJoinDescription','وصف الانضمام']],
  about:[['aboutSubtitle','وصف من نحن'],['aboutHeading','العنوان الرئيسي'],['aboutIntro','تعريف الفريق'],['vision','الرؤية'],['mission','الرسالة'],['values','القيم'],['educationalMethod','المنهج التعليمي'],['teamIntro','مقدمة الأعضاء']],
@@ -25,11 +25,32 @@ for(const [type,section,allowed] of [['courses','الدورات',[['title','عن
 const result=results[['courses','events','team_members'].indexOf(type)+1];if(result.error){say('تعذر تحميل '+section+': '+result.error.message);continue}
 for(const item of result.data||[])for(const [field,label] of allowed){const ar=item[field];if(typeof ar==='string'&&ar.trim())rows.push({entity_type:type,entity_id:String(item.id),field_name:field,ar,label,section,context:item.title||item.name||''});}}
 render();say('تم تحميل '+rows.length+' حقلًا نصيًا. المحتوى الجديد يظهر عند التحديث.');}
-function render(){const q=$('search').value.trim().toLowerCase(),box=$('list');box.replaceChildren();let previous='';for(const r of rows.filter(x=>!q||[x.ar,x.label,x.section,x.context].some(v=>String(v).toLowerCase().includes(q)))){
-if(previous!==r.section){previous=r.section;const h=document.createElement('h3');h.textContent=previous;h.className='section-heading';box.append(h)}
-const item=document.createElement('div');item.className='item';const info=document.createElement('div');const loc=localizations.get(key(r));const name=document.createElement('strong');name.textContent=r.label+(r.context?' — '+r.context:'');const ar=document.createElement('p');ar.textContent=r.ar;const badge=document.createElement('small');badge.textContent=loc?.translation_en?(loc.source_snapshot===r.ar?'✓ مترجم':'⚠ يحتاج مراجعة'):'بانتظار الترجمة';const b=document.createElement('button');b.textContent='تعديل وترجمة';b.onclick=()=>edit(r);info.append(name,ar,badge);item.append(info,b);box.append(item)}}
-function edit(r){selected=r;const loc=localizations.get(key(r));$('edit-heading').textContent=r.label+' — '+r.section;$('edited-ar').value=r.ar;$('english').value=loc?.translation_en||'';$('edit-card').hidden=false;$('edit-card').scrollIntoView({behavior:'smooth'});}
-$('save').onclick=async()=>{if(!selected)return;const ar=$('edited-ar').value.trim(),en=$('english').value.trim();$('save').disabled=true;$('save').textContent='جارٍ الحفظ...';if(!ar){say('النص العربي لا يمكن أن يكون فارغًا.');$('save').disabled=false;$('save').textContent='حفظ التعديل والترجمة';return}const {error}=await db.rpc('medaura_save_localized_content',{p_entity_type:selected.entity_type,p_entity_id:selected.entity_id,p_field:selected.field_name,p_ar:ar,p_en:en});$('save').disabled=false;$('save').textContent='حفظ التعديل والترجمة';if(error){say('فشل الحفظ: '+error.message);return}$('edit-card').hidden=true;selected=null;await refresh();say('✓ تم حفظ النص العربي والترجمة بنجاح.');};
-$('cancel').onclick=()=>{$('edit-card').hidden=true;selected=null};$('reload').onclick=()=>refresh().catch(e=>say(e.message));$('search').oninput=render;
+function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
+function render(){
+ const q=$('search').value.trim().toLowerCase(),box=$('list');box.replaceChildren();let previous='',count=0;
+ for(const r of rows.filter(x=>!q||[x.ar,x.label,x.section,x.context].some(v=>String(v).toLowerCase().includes(q)))){
+  count++;if(previous!==r.section){previous=r.section;box.append(el('h3','section-heading',previous));}
+  const k=key(r),loc=localizations.get(k),draft=drafts.get(k),card=el('article','translation-row');
+  const head=el('div','translation-head');const meta=el('div','translation-meta');meta.append(el('strong','field-title',r.label),el('span','field-context',r.context||r.section));
+  const state=el('span','state '+(loc?.translation_en?(loc.source_snapshot===r.ar?'done':'review'):'pending'),loc?.translation_en?(loc.source_snapshot===r.ar?'مترجم':'يحتاج مراجعة'):'بانتظار الترجمة');head.append(meta,state);
+  const grid=el('div','inline-grid');
+  const arPanel=el('div','language-box');const arLabel=el('label','lang-label','العربية');const ar=el('textarea','inline-text');ar.dir='rtl';ar.lang='ar';ar.value=draft?.ar??r.ar;ar.setAttribute('aria-label','النص العربي: '+r.label);ar.rows=3;
+  const enPanel=el('div','language-box');const enLabel=el('label','lang-label','English');const en=el('textarea','inline-text');en.dir='ltr';en.lang='en';en.value=draft?.en??loc?.translation_en??'';en.placeholder='Write the English translation…';en.setAttribute('aria-label','English translation: '+r.label);en.rows=3;
+  arPanel.append(arLabel,ar);enPanel.append(enLabel,en);grid.append(arPanel,enPanel);
+  const foot=el('div','row-footer'),hint=el('span','row-hint','التغييرات تُحفظ عند الضغط على حفظ');const save=el('button','save-btn','حفظ التعديل');save.type='button';
+  const dirty=()=>{drafts.set(k,{ar:ar.value,en:en.value});save.classList.add('unsaved');hint.textContent='تعديلات غير محفوظة';};ar.addEventListener('input',dirty);en.addEventListener('input',dirty);
+  save.disabled=saving.has(k);if(saving.has(k))save.textContent='جارٍ الحفظ…';
+  save.onclick=async()=>{const arValue=ar.value.trim(),enValue=en.value.trim();if(!arValue){hint.textContent='النص العربي لا يمكن أن يكون فارغًا';hint.className='row-hint error';ar.focus();return;}
+   if(saving.has(k))return;saving.add(k);save.disabled=true;save.textContent='جارٍ الحفظ…';hint.textContent='';
+   const {error}=await db.rpc('medaura_save_localized_content',{p_entity_type:r.entity_type,p_entity_id:r.entity_id,p_field:r.field_name,p_ar:arValue,p_en:enValue});
+   saving.delete(k);save.disabled=false;save.textContent='حفظ التعديل';
+   if(error){hint.textContent='تعذر الحفظ: '+error.message;hint.className='row-hint error';return;}
+   r.ar=arValue;localizations.set(k,{source_snapshot:arValue,translation_en:enValue});drafts.delete(k);save.classList.remove('unsaved');hint.textContent='✓ تم الحفظ في Supabase';hint.className='row-hint success';state.textContent=enValue?'مترجم':'بانتظار الترجمة';state.className='state '+(enValue?'done':'pending');say('تم حفظ '+r.label+' بنجاح.');
+  };
+  foot.append(hint,save);card.append(head,grid,foot);box.append(card);
+ }
+ if(!count)box.append(el('p','empty','لا توجد نصوص مطابقة للبحث.'));
+}
+$('reload').onclick=()=>{drafts.clear();refresh().catch(e=>say(e.message))};$('search').oninput=render;
 $('sign-in').onclick=async()=>{const {error}=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)say(error.message);else init().catch(e=>say(e.message))};
 $('sign-out').onclick=async()=>{await db.auth.signOut();init()};init().catch(e=>say('تعذر فتح لوحة الترجمة: '+e.message));
