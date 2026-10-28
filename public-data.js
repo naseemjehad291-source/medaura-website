@@ -22,6 +22,18 @@
   // Optional English translations are entered as site settings ending in _en.
   // The Arabic originals remain authoritative and are never machine-translated.
   d.bilingualFields={};
+  // Stable entity/field translations; new records are included on every page load.
+  try {
+    const lr=await fetch(root+'medaura_content_localizations?select=entity_type,entity_id,field_name,source_snapshot,translation_en',{headers});
+    if(lr.ok){const translations=await lr.json();const lookup={courses,events,team_members:team};
+      for(const t of translations){if(!t.translation_en)continue;
+        let ar='';if(t.entity_type==='site_settings')ar=d.site[t.field_name]||'';
+        else {const record=(lookup[t.entity_type]||[]).find(x=>String(x.id)===t.entity_id);ar=record?.[t.field_name]||'';}
+        if(ar && ar===t.source_snapshot)d.bilingualFields[ar.trim()]=t.translation_en;
+      }
+    }
+  } catch(e){console.warn('Content localizations unavailable',e)}
+
   for(const [key,value] of Object.entries(d.site))if(key.endsWith('_en')&&typeof value==='string'){
     const ar=d.site[key.slice(0,-3)];if(typeof ar==='string'&&ar.trim()&&value.trim())d.bilingualFields[ar.trim()]=value.trim();
   }
