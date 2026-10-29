@@ -49,5 +49,6 @@
   d.courses=courses.map(c=>({id:c.id,title:c.title,cat:'دورات MEDAURA',level:'جميع المستويات',duration:'التفاصيل قريباً',format:c.location||'يُحدد لاحقاً',status:c.status==='completed'?'done':c.status,instructor:c.instructor||'MEDAURA TEAM',photo:c.image_url||'',register:c.registration_url||'',summary:c.description||'',goals:[],sample:false}));
   d.events=events.map(e=>({id:e.id,title:e.title,date:e.event_date||e.created_at,place:e.location||'',course:'',summary:e.description||'',photos:e.image_url?[e.image_url]:[],sample:false}));
   if(typeof window.MEDAURA_REFRESH==='function')window.MEDAURA_REFRESH();
+  window.dispatchEvent(new Event('medaura:content-loaded'));
  }catch(e){console.warn('MEDAURA: published content could not be loaded',e);const d=window.MEDAURA;d.courses=[];d.events=[];if(typeof window.MEDAURA_REFRESH==='function')window.MEDAURA_REFRESH();}
 })();

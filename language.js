@@ -20,20 +20,21 @@ const textNodes=(root)=>{const w=document.createTreeWalker(root,NodeFilter.SHOW_
 function translateNode(node){if(node.parentElement?.closest('script,style,svg,textarea,[contenteditable="true"],.language-morph,.intro-brand'))return;
  if(!originalText.has(node))originalText.set(node,node.nodeValue);
  const raw=originalText.get(node),match=raw.match(/^(\s*)([\s\S]*?)(\s*)$/);if(!match)return;
- let t=translated(match[2])||fieldLookup()[normalized(match[2])];
+ let t=fieldLookup()[normalized(match[2])]||translated(match[2]);
  if(!t&&current==='en'){
   const k=normalized(match[2]);const prefix={'المستوى:':'Level:','المحاضر:':'Instructor:','إنستغرام:':'Instagram:','البريد:':'Email:','تيليغرام:':'Telegram:'};
   for(const [ar,en] of Object.entries(prefix))if(k.startsWith(ar)){t=en+k.slice(ar.length);break}
  }
  const replacement=current==='en'?(t||match[2]):(arabicEdits.get(normalized(match[2]))||match[2]);const next=match[1]+replacement+match[3];if(node.nodeValue!==next)node.nodeValue=next;
 }
-function translateAttrs(el){for(const attr of ['placeholder','aria-label','title','alt']){if(!el.hasAttribute(attr))continue;let stored=originalAttr.get(el);if(!stored){stored={};originalAttr.set(el,stored)}if(!(attr in stored))stored[attr]=el.getAttribute(attr);const t=translated(stored[attr]);const next=current==='en'?(t||stored[attr]):(arabicEdits.get(normalized(stored[attr]))||stored[attr]);if(el.getAttribute(attr)!==next)el.setAttribute(attr,next);}}
+function translateAttrs(el){for(const attr of ['placeholder','aria-label','title','alt']){if(!el.hasAttribute(attr))continue;let stored=originalAttr.get(el);if(!stored){stored={};originalAttr.set(el,stored)}if(!(attr in stored))stored[attr]=el.getAttribute(attr);const t=fieldLookup()[normalized(stored[attr])]||translated(stored[attr]);const next=current==='en'?(t||stored[attr]):(arabicEdits.get(normalized(stored[attr]))||stored[attr]);if(el.getAttribute(attr)!==next)el.setAttribute(attr,next);}}
 function apply(root=document){const target=root.nodeType===1?root:document.body;if(!target)return;for(const n of textNodes(target))translateNode(n);for(const el of [target,...target.querySelectorAll('*')])translateAttrs(el);
  document.documentElement.lang=current;document.documentElement.dir=current==='en'?'ltr':'rtl';document.getElementById('lang-ar')?.setAttribute('aria-pressed',String(current==='ar'));document.getElementById('lang-en')?.setAttribute('aria-pressed',String(current==='en'));
 }
 function change(lang){if(lang===current)return;document.body.classList.add('language-changing');window.setTimeout(()=>{current=lang;localStorage.setItem('medaura-public-language',lang);apply();document.body.classList.remove('language-changing');},180)}
 function start(){document.getElementById('lang-ar')?.addEventListener('click',()=>change('ar'));document.getElementById('lang-en')?.addEventListener('click',()=>change('en'));
  apply();loadApproved();const app=document.getElementById('app')||document.body;if(app){let queued=false;new MutationObserver(mutations=>{if(!mutations.some(m=>m.type==='childList'))return;if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;apply(app)})}).observe(app,{childList:true,subtree:true});}
+ window.addEventListener('medaura:content-loaded',()=>apply());
  window.addEventListener('hashchange',()=>setTimeout(()=>apply(),0));}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
