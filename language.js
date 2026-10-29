@@ -12,10 +12,27 @@ const fieldLookup=()=>window.MEDAURA?.bilingualFields||{};
 const approved=new Map(),arabicEdits=new Map();
 async function loadApproved(){
  const cfg=window.MEDAURA_SUPABASE;if(!cfg?.url||!cfg?.publishableKey)return;
- try{const response=await fetch(`${cfg.url}/rest/v1/medaura_public_translations?select=source_ar,edited_ar,translation_en&limit=1000`,{headers:{apikey:cfg.publishableKey}});
- if(!response.ok)return;for(const item of await response.json()){approved.set(normalized(item.source_ar),item.translation_en);if(item.edited_ar)arabicEdits.set(normalized(item.source_ar),item.edited_ar)}
- apply();}catch(e){console.warn('MEDAURA translation lookup unavailable',e)}
+ const headers={apikey:cfg.publishableKey};
+ try{
+  const [legacy,linked]=await Promise.all([
+   fetch(`${cfg.url}/rest/v1/medaura_public_translations?select=source_ar,edited_ar,translation_en&limit=1000`,{headers}),
+   fetch(`${cfg.url}/rest/v1/medaura_content_localizations?select=entity_type,entity_id,field_name,source_snapshot,translation_en&limit=5000`,{headers})
+  ]);
+  if(legacy.ok)for(const item of await legacy.json()){
+   if(item.translation_en)approved.set(normalized(item.source_ar),item.translation_en);
+   if(item.edited_ar)arabicEdits.set(normalized(item.source_ar),item.edited_ar);
+  }
+  // The Translation Admin writes to this entity-linked table, not the legacy table.
+  // Apply its approved translations last so they take priority over older dictionaries.
+  if(linked.ok)for(const item of await linked.json()){
+   const source=typeof item.source_snapshot==='string'?normalized(item.source_snapshot):'';
+   if(source&&item.translation_en?.trim())approved.set(source,item.translation_en);
+  }
+  else console.warn('MEDAURA entity-linked translations unavailable',linked.status);
+  apply();
+ }catch(e){console.warn('MEDAURA translation lookup unavailable',e)}
 }
+
 const textNodes=(root)=>{const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;const a=[];while(n=w.nextNode())a.push(n);return a};
 function translateNode(node){if(node.parentElement?.closest('script,style,svg,textarea,[contenteditable="true"],.language-morph,.intro-brand'))return;
  if(!originalText.has(node))originalText.set(node,node.nodeValue);
