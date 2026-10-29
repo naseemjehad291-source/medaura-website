@@ -1,0 +1,7 @@
+MEDAURA translation coverage review (29 Oct 2026)
+
+The static catalog has been expanded from the public HTML and JS files. The Translation Admin groups public UI copy by source file and also lists new Arabic site_settings text keys for visibility.
+
+IMPORTANT: New site_settings keys outside the server RPC allowlist will show a permission error when saved; they are intentionally not granted arbitrary write access. Text generated from user inputs, private student data, and external content are excluded.
+
+Live Supabase and browser end-to-end tests have NOT been performed. Do not publish to main without testing AR/EN on all routes and verifying that the saved copy persists after reload.

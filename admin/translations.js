@@ -9,6 +9,26 @@ const fields={
  contact:[['contactIntro','مقدمة التواصل'],['contactChannelsHeading','عنوان القنوات'],['contactPartnerHeading','عنوان الشراكات']]
 };
 const key=r=>[r.entity_type,r.entity_id,r.field_name].join('::');
+// Group the static copy by the public page where it is used; a shared phrase
+// remains a single editable key so updates apply consistently across pages.
+const publicSources={
+ 'الرئيسية': ['../index.html','../content.js'],
+ 'نماذج التسجيل': ['../form.html','../form.js'],
+ 'الشهادات العامة': ['../certificate.html','../certificate.js','../verify.html','../verify.js'],
+ 'أعمالنا': ['../work-public.js']
+};
+async function staticSections(catalog){
+ const sources={};
+ await Promise.all(Object.entries(publicSources).map(async ([section,paths])=>{
+  const texts=await Promise.all(paths.map(async path=>{try{const r=await fetch(path,{cache:'no-store'});return r.ok?await r.text():''}catch{return ''}}));
+  sources[section]=texts.join('\n');
+ }));
+ return catalog.map(source=>{
+  const section=Object.keys(sources).find(k=>sources[k].includes(source))||'نصوص عامة مشتركة';
+  return {source,section};
+ });
+}
+
 const say=t=>$('status').textContent=t;
 async function init(){const {data:{user:u}}=await db.auth.getUser();user=u;$('editor').hidden=true;if(!u){window.location.replace('index.html');return}
 const [{data:role},{data:editor}]=await Promise.all([db.from('admin_roles').select('role').eq('user_id',u.id).maybeSingle(),db.from('medaura_translation_editors').select('user_id').eq('user_id',u.id).maybeSingle()]);
@@ -21,6 +41,16 @@ if(results[4].error)throw Error('شغّل ملف TRANSLATION-CONTENT-SQL.sql ف�
 localizations=new Map((results[4].data||[]).map(x=>[key(x),x]));legacyTranslations=new Map((results[6].data||[]).map(x=>[x.source_ar,x]));rows=[];
 const settings=Object.fromEntries((results[0].data||[]).map(x=>[x.key,x.value]));
 for(const [section,list] of Object.entries(fields))for(const [field,label] of list){const ar=settings[field];if(typeof ar==='string'&&ar.trim())rows.push({entity_type:'site_settings',entity_id:field,field_name:field,ar,label,section});}
+// Include newly added public-facing site copy without exposing configuration,
+// links, JSON collections, private identifiers, or numeric settings.
+const knownSettings=new Set(Object.values(fields).flat().map(x=>x[0]));
+const unsafeSetting=/(url|link|email|phone|token|secret|key|password|json|image|photo|logo|color|date|price|count|number|instagram|facebook|telegram|whatsapp|youtube|domain|map|id$)/i;
+for(const [field,ar] of Object.entries(settings)){
+ if(knownSettings.has(field)||unsafeSetting.test(field)||typeof ar!=='string'||!ar.trim()||ar.length>4000)continue;
+ // Only human-readable Arabic copy is included; editing a new setting requires
+ // the server RPC allowlist to be extended explicitly, never bypassed here.
+ if(/[\u0600-\u06ff]/.test(ar))rows.push({entity_type:'site_settings',entity_id:field,field_name:field,ar,label:field+' (يتطلب تصريح حفظ)',section:'نصوص إعدادات إضافية'});
+}
 let resourceItems=[];try{const raw=settings.resourcesJSON;resourceItems=typeof raw==='string'?JSON.parse(raw||'[]'):(Array.isArray(raw)?raw:[]);if(!Array.isArray(resourceItems))resourceItems=[];}catch{}
 for(const [i,item] of resourceItems.entries())for(const [field,label] of [['title','اسم المورد'],['cat','تصنيف المورد'],['type','نوع المورد']]){if(typeof item[field]==='string'&&item[field].trim())rows.push({entity_type:'resources',entity_id:String(i),field_name:field,ar:item[field],label,section:'المكتبة الطبية — الموارد',context:item.title||''});}
 const workResult=results[5];if(workResult.error)console.warn('Work translations unavailable:',workResult.error.message);if(!workResult.error)for(const item of workResult.data||[]){for(const [field,label] of [['title','عنوان العمل'],['excerpt','وصف العمل']])if(typeof item[field]==='string'&&item[field].trim())rows.push({entity_type:'work_posts',entity_id:String(item.id),field_name:field,ar:item[field],label,section:'أعمالنا',context:item.title||''});for(const [i,b] of (Array.isArray(item.blocks)?item.blocks:[]).entries())for(const field of ['text','caption'])if(typeof b[field]==='string'&&b[field].trim())rows.push({entity_type:'work_posts',entity_id:String(item.id),field_name:`blocks:${i}:${field}`,ar:b[field],label:field==='text'?'نص المحتوى':'تعليق الصورة',section:'أعمالنا',context:item.title||''});}
@@ -32,7 +62,7 @@ try {
  const response=await fetch('../translation-static-catalog.json',{cache:'no-store'});
  if(!response.ok)throw Error('HTTP '+response.status);
  const catalog=await response.json();
- for(const source of catalog)rows.push({entity_type:'static',entity_id:source,field_name:'text',ar:legacyTranslations.get(source)?.edited_ar||source,label:'نص واجهة الموقع',section:'النصوص الثابتة والأزرار',source});
+ for(const item of await staticSections(catalog)){const source=item.source;rows.push({entity_type:'static',entity_id:source,field_name:'text',ar:legacyTranslations.get(source)?.edited_ar||source,label:'نص واجهة الموقع',section:item.section,source});}
 } catch(e){say('تعذر تحميل فهرس النصوص الثابتة: '+e.message)}
 render();say('تم تحميل '+rows.length+' حقلًا نصيًا. المحتوى الجديد يظهر عند التحديث.');}
 function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
