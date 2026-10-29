@@ -1,0 +1,15 @@
+MEDAURA Translation — broader content integration
+
+What changed:
+- Site settings, courses, events and team translations use saved entity-linked records.
+- Public page reloads the translation map after asynchronous content loading.
+- Translation Admin now lists resources and published/unpublished work text, including editable work block text and captions.
+- Work and resource Arabic edits use a restricted RPC that changes only the specific text fields; no image/link/date/price editing.
+- Resource and work English text is rendered via the public translation map.
+
+Deployment:
+1. Review and run TRANSLATION-EXTENDED-FIELDS.sql in Supabase SQL Editor (needed for resource and work saves only).
+2. Deploy files on the development branch; test Arabic/English content in all sections before merging into main.
+3. Hard-refresh after deployment; verify network access to medaura_content_localizations.
+
+Limitations: No live connection to production Supabase was used for tests. Existing untranslated static labels are not automatically translated. If a Super Admin later changes Arabic text directly, its previous English translation may require review. Resource identity uses list position, so reordering or deleting resources can require rechecking translations.

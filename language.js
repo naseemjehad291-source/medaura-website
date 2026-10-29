@@ -51,7 +51,7 @@ function apply(root=document){const target=root.nodeType===1?root:document.body;
 function change(lang){if(lang===current)return;document.body.classList.add('language-changing');window.setTimeout(()=>{current=lang;localStorage.setItem('medaura-public-language',lang);apply();document.body.classList.remove('language-changing');},180)}
 function start(){document.getElementById('lang-ar')?.addEventListener('click',()=>change('ar'));document.getElementById('lang-en')?.addEventListener('click',()=>change('en'));
  apply();loadApproved();const app=document.getElementById('app')||document.body;if(app){let queued=false;new MutationObserver(mutations=>{if(!mutations.some(m=>m.type==='childList'))return;if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;apply(app)})}).observe(app,{childList:true,subtree:true});}
- window.addEventListener('medaura:content-loaded',()=>apply());
+ window.addEventListener('medaura:content-loaded',()=>{loadApproved();apply()});
  window.addEventListener('hashchange',()=>setTimeout(()=>apply(),0));}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();

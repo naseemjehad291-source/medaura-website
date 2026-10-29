@@ -25,11 +25,11 @@
   // Stable entity/field translations; new records are included on every page load.
   try {
     const lr=await fetch(root+'medaura_content_localizations?select=entity_type,entity_id,field_name,source_snapshot,translation_en',{headers});
-    if(lr.ok){const translations=await lr.json();const lookup={courses,events,team_members:team};
+    if(lr.ok){const translations=await lr.json();window.MEDAURA_RESOURCE_TRANSLATIONS={};for(const t of translations)if(t.entity_type==='resources'&&t.translation_en)window.MEDAURA_RESOURCE_TRANSLATIONS[`${t.entity_id}:${t.field_name}`]=t.translation_en;const lookup={courses,events,team_members:team};
       for(const t of translations){if(!t.translation_en)continue;
         let ar='';if(t.entity_type==='site_settings')ar=d.site[t.field_name]||'';
         else {const record=(lookup[t.entity_type]||[]).find(x=>String(x.id)===t.entity_id);ar=record?.[t.field_name]||'';}
-        if(ar && ar===t.source_snapshot)d.bilingualFields[ar.trim()]=t.translation_en;
+        if(typeof ar==='string' && ar.trim()){d.bilingualFields[ar.trim()]=t.translation_en; if(t.source_snapshot?.trim())d.bilingualFields[t.source_snapshot.trim()]=t.translation_en;}
       }
     }
   } catch(e){console.warn('Content localizations unavailable',e)}
@@ -40,7 +40,9 @@
   for(const item of [...courses,...events,...team])for(const field of ['title','description','name','position','bio','excerpt','location','instructor']){
     if(typeof item[field]==='string'&&typeof item[field+'_en']==='string'&&item[field+'_en'].trim())d.bilingualFields[item[field].trim()]=item[field+'_en'].trim();
   }
-  if(d.site.resourcesJSON){try{const parsed=JSON.parse(d.site.resourcesJSON);if(Array.isArray(parsed))d.resources=parsed.filter(x=>x&&typeof x.title==='string').map(x=>({title:x.title,cat:x.cat||'',type:x.type||'مورد تعليمي',url:x.url||'',sample:false}));}catch(err){console.warn('Invalid resourcesJSON',err)}}
+  if(d.site.resourcesJSON){try{const parsed=typeof d.site.resourcesJSON==='string'?JSON.parse(d.site.resourcesJSON):d.site.resourcesJSON;if(Array.isArray(parsed))d.resources=parsed.filter(x=>x&&typeof x.title==='string').map(x=>({title:x.title,cat:x.cat||'',type:x.type||'مورد تعليمي',url:x.url||'',sample:false}));}catch(err){console.warn('Invalid resourcesJSON',err)}}
+  // Resources are stored as one JSON setting, so resolve their stable index/field translations.
+  if(Array.isArray(d.resources)){for(const [i,r] of d.resources.entries())for(const field of ['title','cat','type']){const t=window.MEDAURA_RESOURCE_TRANSLATIONS?.[`${i}:${field}`];if(t&&r[field])d.bilingualFields[r[field].trim()]=t;}}
   d.team=team;
   d.albums=albums.map(a=>({...a,photos:photos.filter(p=>p.album_id===a.id)}));
   if(d.site.studentsReached!==undefined)d.impact.studentsReached=d.site.studentsReached;
