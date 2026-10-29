@@ -12,28 +12,46 @@ const fieldLookup=()=>window.MEDAURA?.bilingualFields||{};
 const approved=new Map(),arabicEdits=new Map();
 async function loadApproved(){
  const cfg=window.MEDAURA_SUPABASE;if(!cfg?.url||!cfg?.publishableKey)return;
- try{const response=await fetch(`${cfg.url}/rest/v1/medaura_public_translations?select=source_ar,edited_ar,translation_en&limit=1000`,{headers:{apikey:cfg.publishableKey}});
- if(!response.ok)return;for(const item of await response.json()){approved.set(normalized(item.source_ar),item.translation_en);if(item.edited_ar)arabicEdits.set(normalized(item.source_ar),item.edited_ar)}
- apply();}catch(e){console.warn('MEDAURA translation lookup unavailable',e)}
+ const headers={apikey:cfg.publishableKey};
+ try{
+  const [legacy,linked]=await Promise.all([
+   fetch(`${cfg.url}/rest/v1/medaura_public_translations?select=source_ar,edited_ar,translation_en&limit=1000`,{headers}),
+   fetch(`${cfg.url}/rest/v1/medaura_content_localizations?select=entity_type,entity_id,field_name,source_snapshot,translation_en&limit=5000`,{headers})
+  ]);
+  if(legacy.ok)for(const item of await legacy.json()){
+   if(item.translation_en)approved.set(normalized(item.source_ar),item.translation_en);
+   if(item.edited_ar)arabicEdits.set(normalized(item.source_ar),item.edited_ar);
+  }
+  // The Translation Admin writes to this entity-linked table, not the legacy table.
+  // Apply its approved translations last so they take priority over older dictionaries.
+  if(linked.ok)for(const item of await linked.json()){
+   const source=typeof item.source_snapshot==='string'?normalized(item.source_snapshot):'';
+   if(source&&item.translation_en?.trim())approved.set(source,item.translation_en);
+  }
+  else console.warn('MEDAURA entity-linked translations unavailable',linked.status);
+  apply();
+ }catch(e){console.warn('MEDAURA translation lookup unavailable',e)}
 }
+
 const textNodes=(root)=>{const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;const a=[];while(n=w.nextNode())a.push(n);return a};
 function translateNode(node){if(node.parentElement?.closest('script,style,svg,textarea,[contenteditable="true"],.language-morph,.intro-brand'))return;
  if(!originalText.has(node))originalText.set(node,node.nodeValue);
  const raw=originalText.get(node),match=raw.match(/^(\s*)([\s\S]*?)(\s*)$/);if(!match)return;
- let t=translated(match[2])||fieldLookup()[normalized(match[2])];
+ let t=fieldLookup()[normalized(match[2])]||translated(match[2]);
  if(!t&&current==='en'){
   const k=normalized(match[2]);const prefix={'المستوى:':'Level:','المحاضر:':'Instructor:','إنستغرام:':'Instagram:','البريد:':'Email:','تيليغرام:':'Telegram:'};
   for(const [ar,en] of Object.entries(prefix))if(k.startsWith(ar)){t=en+k.slice(ar.length);break}
  }
  const replacement=current==='en'?(t||match[2]):(arabicEdits.get(normalized(match[2]))||match[2]);const next=match[1]+replacement+match[3];if(node.nodeValue!==next)node.nodeValue=next;
 }
-function translateAttrs(el){for(const attr of ['placeholder','aria-label','title','alt']){if(!el.hasAttribute(attr))continue;let stored=originalAttr.get(el);if(!stored){stored={};originalAttr.set(el,stored)}if(!(attr in stored))stored[attr]=el.getAttribute(attr);const t=translated(stored[attr]);const next=current==='en'?(t||stored[attr]):(arabicEdits.get(normalized(stored[attr]))||stored[attr]);if(el.getAttribute(attr)!==next)el.setAttribute(attr,next);}}
+function translateAttrs(el){for(const attr of ['placeholder','aria-label','title','alt']){if(!el.hasAttribute(attr))continue;let stored=originalAttr.get(el);if(!stored){stored={};originalAttr.set(el,stored)}if(!(attr in stored))stored[attr]=el.getAttribute(attr);const t=fieldLookup()[normalized(stored[attr])]||translated(stored[attr]);const next=current==='en'?(t||stored[attr]):(arabicEdits.get(normalized(stored[attr]))||stored[attr]);if(el.getAttribute(attr)!==next)el.setAttribute(attr,next);}}
 function apply(root=document){const target=root.nodeType===1?root:document.body;if(!target)return;for(const n of textNodes(target))translateNode(n);for(const el of [target,...target.querySelectorAll('*')])translateAttrs(el);
  document.documentElement.lang=current;document.documentElement.dir=current==='en'?'ltr':'rtl';document.getElementById('lang-ar')?.setAttribute('aria-pressed',String(current==='ar'));document.getElementById('lang-en')?.setAttribute('aria-pressed',String(current==='en'));
 }
 function change(lang){if(lang===current)return;document.body.classList.add('language-changing');window.setTimeout(()=>{current=lang;localStorage.setItem('medaura-public-language',lang);apply();document.body.classList.remove('language-changing');},180)}
 function start(){document.getElementById('lang-ar')?.addEventListener('click',()=>change('ar'));document.getElementById('lang-en')?.addEventListener('click',()=>change('en'));
  apply();loadApproved();const app=document.getElementById('app')||document.body;if(app){let queued=false;new MutationObserver(mutations=>{if(!mutations.some(m=>m.type==='childList'))return;if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;apply(app)})}).observe(app,{childList:true,subtree:true});}
+ window.addEventListener('medaura:content-loaded',()=>{loadApproved();apply()});
  window.addEventListener('hashchange',()=>setTimeout(()=>apply(),0));}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();

@@ -1,0 +1,5 @@
+MEDAURA translation coverage extension
+
+Added a static UI text inventory (translation-static-catalog.json) and inline editing of those strings for both Super Admin and Translation Admin using the existing medaura_public_translations table. No new SQL needed if sql/05-translation-admin.sql was previously applied.
+
+Limitations: catalog is derived from source HTML and existing language dictionaries, not a guarantee of every runtime-generated string. Changes to a repeated static phrase apply wherever the same original Arabic phrase is used. Content from Supabase continues to use the entity-linked editor and existing RPCs. The Supabase project was not available for live integration tests. Test on a preview branch first.
