@@ -1,5 +1,5 @@
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
-const cfg=window.MEDAURA_SUPABASE;
+const cfg=window.SYNAP_SUPABASE;
 const db=createClient(cfg.url,cfg.publishableKey);
 const panel=document.getElementById('v2-panel');
 const $=id=>document.getElementById(id);

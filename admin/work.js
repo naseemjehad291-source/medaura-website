@@ -1,5 +1,5 @@
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
-const cfg=window.MEDAURA_SUPABASE,db=createClient(cfg.url,cfg.publishableKey),panel=document.getElementById('v2-panel');
+const cfg=window.SYNAP_SUPABASE,db=createClient(cfg.url,cfg.publishableKey),panel=document.getElementById('v2-panel');
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let posts=[],current=null,blocks=[];
 const label={heading:'عنوان فرعي',text:'فقرة',image:'صورة',video:'فيديو'};

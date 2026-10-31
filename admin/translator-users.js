@@ -1,5 +1,5 @@
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
-const cfg=window.MEDAURA_SUPABASE,db=createClient(cfg.url,cfg.publishableKey),$=id=>document.getElementById(id);
+const cfg=window.SYNAP_SUPABASE,db=createClient(cfg.url,cfg.publishableKey),$=id=>document.getElementById(id);
 const panel=$('v2-panel');
 async function isSuper(){const {data:{user}}=await db.auth.getUser();if(!user)return false;const {data}=await db.from('admin_roles').select('role').eq('user_id',user.id).maybeSingle();return data?.role==='super_admin'}
 async function call(action,other={}){const {data:{session}}=await db.auth.getSession();if(!session)throw Error('يرجى تسجيل الدخول');const r=await fetch(`${cfg.url}/functions/v1/translator-users`,{method:'POST',headers:{'content-type':'application/json',apikey:cfg.publishableKey,authorization:`Bearer ${session.access_token}`},body:JSON.stringify({action,...other})});const data=await r.json().catch(()=>({}));if(!r.ok)throw Error(data.error||'تعذر تنفيذ العملية');return data}

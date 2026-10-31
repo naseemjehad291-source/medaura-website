@@ -1,6 +1,6 @@
 import {downloadCertificate,certId} from '../certificate-render.js';
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
-const cfg=window.MEDAURA_SUPABASE;
+const cfg=window.SYNAP_SUPABASE;
 const db=createClient(cfg.url,cfg.publishableKey);
 const $=id=>document.getElementById(id);
 const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -18,7 +18,7 @@ async function init(){
  }catch(e){$('gate').textContent=e.message}
 }
 async function loadCourses(){
- const {data,error}=await db.from('medaura_certificate_courses').select('id,title,issue_date,created_at').order('created_at',{ascending:false});
+ const {data,error}=await db.from('synap_certificate_courses').select('id,title,issue_date,created_at').order('created_at',{ascending:false});
  if(error){$('courses-list').textContent='تعذّر تحميل الدورات: '+error.message;return}
  courses=data||[];
  $('courses-list').innerHTML=!courses.length?'لم تُضف دورات شهادات بعد.':'<div class="tablewrap"><table><thead><tr><th>الدورة</th><th>تاريخ الإصدار</th></tr></thead><tbody>'+courses.map(c=>`<tr><td>${escapeHTML(c.title)}</td><td>${escapeHTML(c.issue_date)}</td></tr>`).join('')+'</tbody></table></div>';
@@ -30,7 +30,7 @@ $('course-form').addEventListener('submit',async e=>{
  try{
   const title=$('course-title').value.trim(),issue_date=$('issue-date').value;
   if(title.length<2||!issue_date)throw Error('أدخل اسم الدورة والتاريخ.');
-  const {error}=await db.from('medaura_certificate_courses').insert({title,issue_date});
+  const {error}=await db.from('synap_certificate_courses').insert({title,issue_date});
   if(error)throw error;
   message('course-status','تم حفظ الدورة بنجاح.');$('course-title').value='';await loadCourses();
  }catch(err){message('course-status',err.message,true)}finally{btn.disabled=false}
@@ -103,7 +103,7 @@ $('issue-certificates').addEventListener('click',async()=>{
   let created=0,skipped=0;const errors=[];
   // Individual inserts let us report duplicates and partial failures without overwriting existing certificates.
   for(const row of selected){
-   const {error}=await db.from('medaura_certificates').insert({...row,course_id:courseId});
+   const {error}=await db.from('synap_certificates').insert({...row,course_id:courseId});
    if(!error)created++;
    else if(error.code==='23505')skipped++;
    else{errors.push(`${row.student_name}: ${error.message}`);if(errors.length>=5)break}
@@ -115,7 +115,7 @@ $('issue-certificates').addEventListener('click',async()=>{
 async function loadIssued(){
  const courseId=$('issued-course').value, list=$('issued-list');list.replaceChildren();if(!courseId)return;
  list.textContent='جارٍ تحميل الشهادات...';
- const {data,error}=await db.from('medaura_certificates').select('id,certificate_number,student_name,student_university_id,status').eq('course_id',courseId).order('certificate_number',{ascending:false}).limit(500);
+ const {data,error}=await db.from('synap_certificates').select('id,certificate_number,student_name,student_university_id,status').eq('course_id',courseId).order('certificate_number',{ascending:false}).limit(500);
  if(error){list.textContent='تعذر التحميل: '+error.message;return}
  list.replaceChildren();if(!data?.length){list.textContent='لا توجد شهادات في هذه الدورة.';return}
  const course=courses.find(c=>c.id===courseId);

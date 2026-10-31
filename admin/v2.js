@@ -1,5 +1,5 @@
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
-const cfg=window.MEDAURA_SUPABASE,db=createClient(cfg.url,cfg.publishableKey),panel=document.getElementById('v2-panel');
+const cfg=window.SYNAP_SUPABASE,db=createClient(cfg.url,cfg.publishableKey),panel=document.getElementById('v2-panel');
 const $=id=>document.getElementById(id);let mode='',items=[];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const defs={team:{table:'team_members',title:'أعضاء الفريق',fields:[['name','اسم العضو','text'],['position','المنصب','text'],['bio','نبذة','textarea'],['photo_url','رابط الصورة','image'],['display_order','الترتيب','number'],['is_published','منشور','checkbox']]},albums:{table:'gallery_albums',title:'ألبومات الصور',fields:[['title','اسم الألبوم','text'],['description','الوصف','textarea'],['cover_url','صورة الغلاف','image'],['display_order','الترتيب','number'],['is_published','منشور','checkbox']]},photos:{table:'gallery_photos',title:'صور الألبوم',fields:[['album_id','معرّف الألبوم','text'],['image_url','الصورة','image'],['caption','التعليق','text'],['display_order','الترتيب','number'],['is_published','منشور','checkbox']]}};

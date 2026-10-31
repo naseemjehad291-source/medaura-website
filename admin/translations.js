@@ -1,5 +1,5 @@
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
-const c=window.MEDAURA_SUPABASE,db=createClient(c.url,c.publishableKey),$=id=>document.getElementById(id);
+const c=window.SYNAP_SUPABASE,db=createClient(c.url,c.publishableKey),$=id=>document.getElementById(id);
 let user=null,rows=[],localizations=new Map(),legacyTranslations=new Map(),drafts=new Map(),saving=new Set();
 const fields={
  home:[['heroSubtitle','وصف الرئيسية'],['impactLabel','وصف عدد المستفيدين'],['homePathHeading','عنوان المسار'],['homePathDescription','وصف المسار'],['homeCoursesHeading','عنوان الدورات'],['homeWorkHeading','عنوان أعمالنا'],['homeWorkDescription','وصف أعمالنا'],['homeJoinHeading','عنوان الانضمام'],['homeJoinDescription','وصف الانضمام']],
@@ -31,11 +31,11 @@ async function staticSections(catalog){
 
 const say=t=>$('status').textContent=t;
 async function init(){const {data:{user:u}}=await db.auth.getUser();user=u;$('editor').hidden=true;if(!u){window.location.replace('index.html');return}
-const [{data:role},{data:editor}]=await Promise.all([db.from('admin_roles').select('role').eq('user_id',u.id).maybeSingle(),db.from('medaura_translation_editors').select('user_id').eq('user_id',u.id).maybeSingle()]);
+const [{data:role},{data:editor}]=await Promise.all([db.from('admin_roles').select('role').eq('user_id',u.id).maybeSingle(),db.from('synap_translation_editors').select('user_id').eq('user_id',u.id).maybeSingle()]);
 if(role?.role!=='super_admin'&&!editor){say('هذا الحساب غير مخوّل للترجمة.');return}
 $('editor').hidden=false;await refresh();}
 async function refresh(){say('جارٍ تحميل المحتوى...');const queries=[
- db.from('site_settings').select('key,value'),db.from('courses').select('id,title,description,instructor'),db.from('events').select('id,title,description'),db.from('team_members').select('id,name,position,bio'),db.from('medaura_content_localizations').select('*'),db.from('work_posts').select('id,title,excerpt,blocks'),db.from('medaura_public_translations').select('source_ar,edited_ar,translation_en')];
+ db.from('site_settings').select('key,value'),db.from('courses').select('id,title,description,instructor'),db.from('events').select('id,title,description'),db.from('team_members').select('id,name,position,bio'),db.from('synap_content_localizations').select('*'),db.from('work_posts').select('id,title,excerpt,blocks'),db.from('synap_public_translations').select('source_ar,edited_ar,translation_en')];
 const results=await Promise.all(queries);if(results[0].error)throw results[0].error;
 if(results[4].error)throw Error('شغّل ملف TRANSLATION-CONTENT-SQL.sql في Supabase أولًا: '+results[4].error.message);
 localizations=new Map((results[4].data||[]).map(x=>[key(x),x]));legacyTranslations=new Map((results[6].data||[]).map(x=>[x.source_ar,x]));rows=[];
@@ -85,10 +85,10 @@ function render(){
    let error;
    if(r.entity_type==='static'){
     // Keep the immutable source key: the public language switch looks up by original Arabic.
-    const result=await db.from('medaura_public_translations').upsert({source_ar:r.source,edited_ar:arValue,translation_en:enValue||' ',updated_by:user.id,updated_at:new Date().toISOString()},{onConflict:'source_ar'});
+    const result=await db.from('synap_public_translations').upsert({source_ar:r.source,edited_ar:arValue,translation_en:enValue||' ',updated_by:user.id,updated_at:new Date().toISOString()},{onConflict:'source_ar'});
     error=result.error;
    }else{
-    const result=await db.rpc(['resources','work_posts'].includes(r.entity_type)?'medaura_save_extended_translation':'medaura_save_localized_content',{p_entity_type:r.entity_type,p_entity_id:r.entity_id,p_field:r.field_name,p_ar:arValue,p_en:enValue});error=result.error;
+    const result=await db.rpc(['resources','work_posts'].includes(r.entity_type)?'synap_save_extended_translation':'synap_save_localized_content',{p_entity_type:r.entity_type,p_entity_id:r.entity_id,p_field:r.field_name,p_ar:arValue,p_en:enValue});error=result.error;
    }
    saving.delete(k);save.disabled=false;save.textContent='حفظ التعديل';
    if(error){hint.textContent='تعذر الحفظ: '+error.message;hint.className='row-hint error';return;}

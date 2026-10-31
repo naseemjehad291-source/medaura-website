@@ -2,10 +2,10 @@
    status: open (مفتوح للتسجيل) | upcoming (قريباً) | done (مكتملة)
    photo: اسم ملف داخل مجلد photos، مثل "workshop1.jpg". اتركه فارغاً لعرض إطار مؤقت.
    sample: true تعني مثالاً تجريبياً يظهر عليه وسم "مثال تجريبي". احذفه عند إضافة محتوى حقيقي. */
-window.MEDAURA = {
+window.SYNAP = {
   impact: {
     studentsReached: null, // عدّلها لعدد الطلاب المستفيدين الفعلي، مثال: 240
-    impactLabel: "طالب وطالبة استفادوا من MEDAURA"
+    impactLabel: "طالب وطالبة استفادوا من SYNAP"
   },
   links: {          // روابط حقيقية فقط. اتركها فارغة إن لم تتوفر.
     joinForm: "",   // رابط نموذج Google للانضمام

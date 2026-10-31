@@ -1,7 +1,7 @@
 /* Fetch published content only; RLS is enforced by Supabase, not by this script. */
 (async function(){
- const cfg=window.MEDAURA_SUPABASE;
- if(!cfg||!window.MEDAURA)return;
+ const cfg=window.SYNAP_SUPABASE;
+ if(!cfg||!window.SYNAP)return;
  const headers={'apikey':cfg.publishableKey};
  const root=cfg.url+'/rest/v1/';
  async function load(table){
@@ -17,15 +17,15 @@
   fetch(root+'gallery_albums?select=*&is_published=eq.true&order=display_order.asc',{headers}).then(r=>r.ok?r.json():[]),
   fetch(root+'gallery_photos?select=*&is_published=eq.true&order=display_order.asc',{headers}).then(r=>r.ok?r.json():[])
  ]);
-  const d=window.MEDAURA;
+  const d=window.SYNAP;
   d.site=Object.fromEntries(settings.map(x=>[x.key,x.value]));
   // Optional English translations are entered as site settings ending in _en.
   // The Arabic originals remain authoritative and are never machine-translated.
   d.bilingualFields={};
   // Stable entity/field translations; new records are included on every page load.
   try {
-    const lr=await fetch(root+'medaura_content_localizations?select=entity_type,entity_id,field_name,source_snapshot,translation_en',{headers});
-    if(lr.ok){const translations=await lr.json();window.MEDAURA_RESOURCE_TRANSLATIONS={};for(const t of translations)if(t.entity_type==='resources'&&t.translation_en)window.MEDAURA_RESOURCE_TRANSLATIONS[`${t.entity_id}:${t.field_name}`]=t.translation_en;const lookup={courses,events,team_members:team};
+    const lr=await fetch(root+'synap_content_localizations?select=entity_type,entity_id,field_name,source_snapshot,translation_en',{headers});
+    if(lr.ok){const translations=await lr.json();window.SYNAP_RESOURCE_TRANSLATIONS={};for(const t of translations)if(t.entity_type==='resources'&&t.translation_en)window.SYNAP_RESOURCE_TRANSLATIONS[`${t.entity_id}:${t.field_name}`]=t.translation_en;const lookup={courses,events,team_members:team};
       for(const t of translations){if(!t.translation_en)continue;
         let ar='';if(t.entity_type==='site_settings')ar=d.site[t.field_name]||'';
         else {const record=(lookup[t.entity_type]||[]).find(x=>String(x.id)===t.entity_id);ar=record?.[t.field_name]||'';}
@@ -42,15 +42,15 @@
   }
   if(d.site.resourcesJSON){try{const parsed=typeof d.site.resourcesJSON==='string'?JSON.parse(d.site.resourcesJSON):d.site.resourcesJSON;if(Array.isArray(parsed))d.resources=parsed.filter(x=>x&&typeof x.title==='string').map(x=>({title:x.title,cat:x.cat||'',type:x.type||'مورد تعليمي',url:x.url||'',sample:false}));}catch(err){console.warn('Invalid resourcesJSON',err)}}
   // Resources are stored as one JSON setting, so resolve their stable index/field translations.
-  if(Array.isArray(d.resources)){for(const [i,r] of d.resources.entries())for(const field of ['title','cat','type']){const t=window.MEDAURA_RESOURCE_TRANSLATIONS?.[`${i}:${field}`];if(t&&r[field])d.bilingualFields[r[field].trim()]=t;}}
+  if(Array.isArray(d.resources)){for(const [i,r] of d.resources.entries())for(const field of ['title','cat','type']){const t=window.SYNAP_RESOURCE_TRANSLATIONS?.[`${i}:${field}`];if(t&&r[field])d.bilingualFields[r[field].trim()]=t;}}
   d.team=team;
   d.albums=albums.map(a=>({...a,photos:photos.filter(p=>p.album_id===a.id)}));
   if(d.site.studentsReached!==undefined)d.impact.studentsReached=d.site.studentsReached;
   if(d.site.impactLabel)d.impact.impactLabel=d.site.impactLabel;
   for(const key of ['email','instagram','telegram','joinForm','contactForm','partnerForm'])if(d.site[key])d.links[key]=d.site[key];
-  d.courses=courses.map(c=>({id:c.id,title:c.title,cat:'دورات MEDAURA',level:'جميع المستويات',duration:'التفاصيل قريباً',format:c.location||'يُحدد لاحقاً',status:c.status==='completed'?'done':c.status,instructor:c.instructor||'MEDAURA TEAM',photo:c.image_url||'',register:c.registration_url||'',summary:c.description||'',goals:[],sample:false}));
+  d.courses=courses.map(c=>({id:c.id,title:c.title,cat:'دورات SYNAP',level:'جميع المستويات',duration:'التفاصيل قريباً',format:c.location||'يُحدد لاحقاً',status:c.status==='completed'?'done':c.status,instructor:c.instructor||'SYNAP TEAM',photo:c.image_url||'',register:c.registration_url||'',summary:c.description||'',goals:[],sample:false}));
   d.events=events.map(e=>({id:e.id,title:e.title,date:e.event_date||e.created_at,place:e.location||'',course:'',summary:e.description||'',photos:e.image_url?[e.image_url]:[],sample:false}));
-  if(typeof window.MEDAURA_REFRESH==='function')window.MEDAURA_REFRESH();
-  window.dispatchEvent(new Event('medaura:content-loaded'));
- }catch(e){console.warn('MEDAURA: published content could not be loaded',e);const d=window.MEDAURA;d.courses=[];d.events=[];if(typeof window.MEDAURA_REFRESH==='function')window.MEDAURA_REFRESH();}
+  if(typeof window.SYNAP_REFRESH==='function')window.SYNAP_REFRESH();
+  window.dispatchEvent(new Event('synap:content-loaded'));
+ }catch(e){console.warn('SYNAP: published content could not be loaded',e);const d=window.SYNAP;d.courses=[];d.events=[];if(typeof window.SYNAP_REFRESH==='function')window.SYNAP_REFRESH();}
 })();

@@ -1,0 +1,41 @@
+
+/* SYNAP 2026 / fresh identity — presentation only; existing data and routing preserved */
+:root{--teal:#14B8A6!important;--navy:#0B1F2A!important;--acc:#18C5B4!important;--mist:#F5FAF9!important;--ink:#102D3A!important;--mute:#607680!important;--line:#DFECEA!important;--r:24px!important;--pulse:#14B8A6!important;--pulse-ink:#0B1F2A!important}
+body{background:#fff!important;color:#0B1F2A!important;font-family:'IBM Plex Sans Arabic',system-ui,sans-serif!important}
+.wrap,.bar{max-width:1220px!important}
+header{background:rgba(255,255,255,.94)!important;border-bottom:1px solid #E4EFED!important;box-shadow:none!important}
+.bar{padding:12px 24px!important;gap:22px!important}
+.bar img{height:53px!important;max-width:172px!important}
+nav{gap:5px!important}nav a{border-radius:100px!important;padding:9px 15px!important;font-weight:650!important}
+nav a:hover,nav a[aria-current=page]{background:#E8F8F4!important;color:#076D65!important}
+.hero{background:#fff!important;color:#0B1F2A!important;min-height:0!important;padding:72px 0 78px!important;isolation:isolate}
+.hero .wrap{min-height:420px!important;align-items:center!important;grid-template-columns:1.15fr .85fr!important;gap:55px!important}
+.hero:before{inset:auto!important;right:-110px!important;top:40px!important;width:360px!important;height:360px!important;border:2px solid #D4F5EB!important;box-shadow:0 0 0 46px #F0FBF8,0 0 0 94px #F9FDFC!important}
+.hero:after{display:none!important}
+.hero h1{font-size:clamp(2.5rem,5vw,4.6rem)!important;line-height:1.13!important;letter-spacing:-.045em!important;color:#0B1F2A!important}
+.hero h1 em,.hero h1 span{color:#079C8D!important;font-style:normal!important}
+.hero p,.hero .hero-arabic{color:#536B73!important;max-width:45ch!important}
+.hero-kicker{background:#E8FAF5!important;border:1px solid #C9EEE6!important;color:#087F75!important;letter-spacing:.06em!important}
+.hero-kicker:before{background:#14B8A6!important;box-shadow:none!important}
+.arch{width:min(430px,100%)!important;min-height:330px!important;aspect-ratio:1.1!important;border-radius:36px!important;background:#F4FBF9!important;border:1px solid #E1F2EE!important;box-shadow:18px 18px 0 #DDF7F0!important;transform:rotate(-2deg)!important;padding:35px!important}
+.arch:before,.arch:after,.pulse-orbit{display:none!important}
+.hero-logo{max-width:360px!important;filter:none!important;animation:none!important}
+.hero-identity-line{color:#0B7169!important;letter-spacing:.14em!important}
+.btn,.btn.w,.btn.o{background:#0B1F2A!important;color:white!important;border:2px solid #0B1F2A!important;border-radius:99px!important;padding:12px 23px!important;box-shadow:none!important}
+.btn.w{background:#14B8A6!important;border-color:#14B8A6!important;color:#062D2C!important}
+.btn.o{background:transparent!important;color:#0B1F2A!important;border-color:#B6D4D0!important}
+.btn:hover{transform:translateY(-3px)!important;box-shadow:0 9px 24px rgba(10,70,70,.12)!important}
+section{padding:70px 0!important}.alt,.impact-section{background:#F6FBF9!important}
+.ph1{background:#F1FAF7!important;color:#0B1F2A!important;padding:65px 0!important}
+.ph1 h1{color:#0B1F2A!important;font-size:clamp(2.1rem,4vw,3.3rem)!important}.ph1 .lead{color:#587078!important}.ph1:after{border-color:#B3EADF!important}
+.card,.box,.work-card,.join-card,.principle-card{background:#fff!important;border:1px solid #DCEAE7!important;border-radius:24px!important;box-shadow:0 7px 28px rgba(12,52,56,.045)!important}
+.card:hover,.box:hover{border-color:#14B8A6!important;box-shadow:0 18px 36px rgba(12,52,56,.095)!important}
+.chip{background:#0B1F2A!important}.s-open{background:#079C8D!important}
+.impact-panel{background:#0B1F2A!important;border-radius:28px!important;box-shadow:none!important}
+.impact-panel h2{color:#fff!important}.impact-panel p{color:#C8E4DF!important}
+footer{background:#0B1F2A!important}
+#intro{background:#fff!important}#intro:after{border-color:#B5E9DF!important}
+#intro img{animation:none!important}
+.path-step,.signature-card{border-radius:24px!important}
+@media(max-width:720px){.hero{padding:36px 0 54px!important}.hero .wrap{grid-template-columns:1fr!important;gap:40px!important;min-height:0!important}.hero h1{font-size:2.65rem!important}.arch{width:min(300px,90%)!important;min-height:240px!important;padding:22px!important;box-shadow:10px 10px 0 #DDF7F0!important}.bar img{height:43px!important}nav{background:#fff!important}}
+@media(prefers-reduced-motion:reduce){.arch{transform:none!important}}

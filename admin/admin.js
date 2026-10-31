@@ -1,7 +1,7 @@
 
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
 
-const cfg=window.MEDAURA_SUPABASE;
+const cfg=window.SYNAP_SUPABASE;
 const supabase=createClient(cfg.url,cfg.publishableKey,{
   auth:{
     persistSession:true,
@@ -90,7 +90,7 @@ async function check(){
   // Translator accounts use a separate allowlist: route to restricted editor.
   if(!verifiedRole && !result.error){
     const {data:translator,error:translatorError}=await supabase
-      .from('medaura_translation_editors')
+      .from('synap_translation_editors')
       .select('user_id')
       .eq('user_id',user.id)
       .maybeSingle();

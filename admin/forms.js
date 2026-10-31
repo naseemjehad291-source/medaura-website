@@ -1,7 +1,7 @@
 
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
 
-const cfg = window.MEDAURA_SUPABASE;
+const cfg = window.SYNAP_SUPABASE;
 const db = createClient(cfg.url, cfg.publishableKey);
 const $ = id => document.getElementById(id);
 
@@ -75,14 +75,14 @@ async function init() {
   }
 }
 
-// MEDAURA NOTIFICATION SETTINGS
+// SYNAP NOTIFICATION SETTINGS
 
 async function loadNotificationSettings() {
   const msg = $('notification-message');
 
   try {
     const {data, error} = await db
-      .from('medaura_notification_settings')
+      .from('synap_notification_settings')
       .select('recipient_email,enabled')
       .eq('id', 1)
       .single();
@@ -129,7 +129,7 @@ $('notification-form').onsubmit = async e => {
     }
 
     const {data, error} = await db
-      .from('medaura_notification_settings')
+      .from('synap_notification_settings')
       .update({
         recipient_email: email,
         enabled,
@@ -161,7 +161,7 @@ $('notification-form').onsubmit = async e => {
 
 async function load() {
   const {data, error} = await db
-    .from('medaura_forms')
+    .from('synap_forms')
     .select('*')
     .order('created_at', {ascending: false});
 
@@ -424,10 +424,10 @@ $('form-editor').onsubmit = async e => {
     };
 
     const r = editing
-      ? await db.from('medaura_forms')
+      ? await db.from('synap_forms')
           .update(payload)
           .eq('id', editing)
-      : await db.from('medaura_forms')
+      : await db.from('synap_forms')
           .insert(payload);
 
     if (r.error) throw r.error;
@@ -449,7 +449,7 @@ async function responses(f) {
     await guard();
 
     const {data, error} = await db
-      .from('medaura_form_submissions')
+      .from('synap_form_submissions')
       .select('id,answers,created_at')
       .eq('form_id', f.id)
       .order('created_at', {ascending: false})
@@ -554,7 +554,7 @@ $('export').onclick = () => {
   const a = document.createElement('a');
 
   a.href = url;
-  a.download = 'medaura-submissions.csv';
+  a.download = 'synap-submissions.csv';
   a.click();
 
   URL.revokeObjectURL(url);

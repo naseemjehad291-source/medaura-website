@@ -1,12 +1,12 @@
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
-const cfg=window.MEDAURA_SUPABASE;
+const cfg=window.SYNAP_SUPABASE;
 const db=createClient(cfg.url,cfg.publishableKey);
 const panel=document.getElementById('v2-panel');
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const groups={
  method:{title:'منهجنا التعليمي',fields:[['educationalMethod','وصف منهجنا التعليمي','textarea']]},
  contact:{title:'رسالة أو شراكة',fields:[['contactForm','رابط أرسل رسالة','url'],['partnerForm','رابط نموذج الشراكات','url']]},
- join:{title:'انضم إلى MEDAURA',fields:[['joinIntro','مقدمة صفحة الانضمام','textarea'],['joinHeading','العنوان الرئيسي','text'],['joinDescription','الوصف تحت العنوان','textarea'],...[
+ join:{title:'انضم إلى SYNAP',fields:[['joinIntro','مقدمة صفحة الانضمام','textarea'],['joinHeading','العنوان الرئيسي','text'],['joinDescription','الوصف تحت العنوان','textarea'],...[
  ['volunteer','تطوّع مع الفريق'],['membership','طلب العضوية'],['trainer','شارك كمحاضر'],['partner','اقترح شراكة']
  ].flatMap(([key,title])=>[[`join_${key}_title`,`عنوان بطاقة ${title}`,'text'],[`join_${key}_description`,`وصف بطاقة ${title}`,'textarea'],[`join_${key}_button`,`نص زر ${title}`,'text'],[`join_${key}_url`,`رابط بطاقة ${title}`,'url']]) ]}
 };
