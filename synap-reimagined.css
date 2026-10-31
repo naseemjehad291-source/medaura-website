@@ -1,0 +1,58 @@
+/* SYNAP reimagined: distinct editorial layout, original logo, neuron-based opening */
+:root{--navy:#092b3a;--teal:#0aa99b;--acc:#2cd5be;--mist:#f4faf7;--ink:#092b3a;--line:#dcebe7;--r:22px}
+body{background:#fff!important;color:#092b3a!important}
+header{border-bottom:1px solid #e7efed!important;background:rgba(255,255,255,.95)!important}
+.bar{max-width:1320px!important;padding:12px 30px!important}
+.bar>a:first-child{display:flex;align-items:center;max-width:180px;overflow:hidden}
+.bar>a:first-child img{width:175px!important;height:70px!important;max-width:none!important;object-fit:contain}
+nav a{font-weight:700!important;font-size:.89rem!important;padding:8px 12px!important}
+nav a[aria-current=page]{background:#092b3a!important;color:white!important}
+nav a.admin-entry{background:#0db7a6!important;color:#06343b!important;border-radius:13px!important}
+.hero{background:#fff!important;position:relative;overflow:hidden;padding:95px 0 100px!important}
+.hero:before{content:''!important;position:absolute!important;inset:auto!important;top:-250px!important;left:-160px!important;width:700px!important;height:700px!important;border:0!important;border-radius:50%!important;background:radial-gradient(circle,#e0faf2 0%,#f4fffb 50%,transparent 72%)!important;box-shadow:none!important;animation:none!important}
+.hero .wrap{max-width:1250px!important;grid-template-columns:1.2fr .8fr!important;gap:65px!important;align-items:center!important;min-height:460px!important}
+.hero h1{font-size:clamp(2.9rem,5.5vw,5.3rem)!important;max-width:16ch!important;letter-spacing:-.06em!important;line-height:1.26!important;color:#092b3a!important}
+.hero h1 em{color:#06ad9d!important;white-space:normal!important}
+.hero h1 em:after{display:none!important}
+.hero .hero-arabic{font-size:1.18rem!important;font-weight:650!important;color:#365866!important}
+.hero p{color:#5a717b!important;max-width:49ch!important}
+.hero-kicker{background:transparent!important;color:#068d82!important;border:0!important;padding:0!important;letter-spacing:.12em!important;font-family:Outfit,sans-serif!important}
+.hero-kicker:before{display:none!important}
+.hero .btn{border-radius:15px!important;padding:13px 25px!important}
+.hero .btn.w{background:#0bb7a5!important;border-color:#0bb7a5!important;color:#07333b!important}
+.hero .btn.o{background:#fff!important;color:#092b3a!important;border-color:#bddbd6!important}
+.hero .arch{width:min(480px,100%)!important;min-height:450px!important;aspect-ratio:1!important;border-radius:45% 55% 55% 45% / 55% 42% 58% 45%!important;background:radial-gradient(circle at 30% 20%,#fff,#e6faf3 65%,#c5f2e7)!important;border:1px solid #c5eae1!important;box-shadow:20px 20px 0 #e6f8f1!important;transform:none!important;position:relative!important;display:grid!important;place-items:center!important;padding:28px!important;overflow:visible!important}
+.hero .hero-identity{position:relative;z-index:2;width:100%;display:grid;justify-items:center}
+.hero .hero-logo{max-width:400px!important;width:100%!important;animation:none!important;filter:none!important}
+.hero-identity-line{font-family:Outfit,sans-serif!important;font-size:.8rem!important;letter-spacing:.23em!important;color:#087e75!important}
+.syn-hero-orbit{position:absolute;border:1.5px dashed rgba(5,150,134,.32);border-radius:50%;inset:-30px;pointer-events:none;animation:syn-spin 28s linear infinite}
+.syn-hero-orbit-two{inset:30px;border-style:solid;opacity:.35;animation-direction:reverse}
+.syn-hero-spark{position:absolute;width:17px;height:17px;border-radius:50%;background:#00bba6;box-shadow:0 0 0 9px #d8f7ec}
+.syn-spark-a{top:12%;left:2%}.syn-spark-b{bottom:13%;right:0;width:11px;height:11px;background:#0b3a49}
+@keyframes syn-spin{to{transform:rotate(360deg)}}
+section{padding:84px 0!important}
+section.alt{background:#f4faf7!important}
+.card,.box,.work-card,.join-card,.principle-card{border-radius:21px!important;border:1px solid #e2eeeb!important;box-shadow:0 12px 38px rgba(9,43,58,.045)!important}
+.card:hover{transform:translateY(-7px)!important;box-shadow:0 20px 45px rgba(9,43,58,.11)!important}
+.ph1{background:#e8f9f2!important;border-bottom:1px solid #d4eee5!important}
+footer{background:#092b3a!important}
+/* neuron-themed opening — no ECG, crosses or generic medical icons */
+#intro{background:#fff!important;animation:syn-intro-fade .6s ease 2.65s forwards!important;overflow:hidden!important;isolation:isolate!important;display:grid!important;place-items:center!important}
+#intro:before,#intro:after{display:none!important}
+.syn-neuron-field{position:absolute;inset:0;z-index:1;display:grid;place-items:center;opacity:.7}
+.syn-neuron-field svg{width:100%;height:100%;min-width:1000px}
+.syn-neuron{stroke-dasharray:1200;stroke-dashoffset:1200;animation:syn-neuron-draw 1.8s ease-out forwards}
+.syn-neuron-right{animation-delay:.3s}
+.syn-signals circle{fill:#09bfa8;opacity:0;animation:syn-signal-pop .5s ease 1.3s forwards}
+.syn-signals circle:nth-child(2){animation-delay:1.45s}.syn-signals circle:nth-child(3){animation-delay:1.6s}.syn-signals circle:nth-child(4){animation-delay:1.75s}
+.syn-intro-center{z-index:2;position:relative;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;padding:24px 28px;border-radius:30px;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);animation:syn-center-in .7s .5s both}
+.syn-intro-logo{width:min(70vw,450px);height:auto;display:block}
+.syn-intro-eyebrow{font:700 .75rem Outfit,sans-serif;letter-spacing:.22em;color:#008d81}
+.syn-intro-center p{margin:0;font-size:.96rem;color:#41616c;font-weight:650}
+.syn-intro-loading{width:145px;height:3px;border-radius:5px;background:#e1f3ed;overflow:hidden;margin-top:12px}
+.syn-intro-loading span{display:block;height:100%;width:100%;background:#00b9a6;transform-origin:left;animation:syn-load 2.3s ease both}
+#skip-intro{position:absolute!important;bottom:25px!important;left:25px!important;z-index:10!important;background:#e8f7f2!important;color:#0b5c57!important;border:0!important;border-radius:14px!important;padding:10px 18px!important;cursor:pointer!important}
+#intro.intro-skipped{animation:syn-intro-fade .2s ease forwards!important}
+@keyframes syn-neuron-draw{to{stroke-dashoffset:0}}@keyframes syn-signal-pop{to{opacity:1}}@keyframes syn-load{from{transform:scaleX(0)}to{transform:scaleX(1)}}@keyframes syn-center-in{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}@keyframes syn-intro-fade{to{opacity:0;visibility:hidden;pointer-events:none}}
+@media(max-width:760px){.bar{padding:9px 16px!important}.bar>a:first-child img{width:120px!important;height:52px!important}.hero{padding:55px 0 70px!important}.hero .wrap{grid-template-columns:1fr!important;gap:45px!important;min-height:0!important}.hero h1{font-size:clamp(2.5rem,9vw,3.8rem)!important}.hero .arch{width:min(300px,85vw)!important;min-height:300px!important;margin:auto!important;box-shadow:10px 10px 0 #e6f8f1!important}.syn-neuron-field svg{min-width:850px}.syn-intro-logo{width:min(75vw,320px)}.syn-intro-center p{font-size:.78rem}}
+@media(prefers-reduced-motion:reduce){#intro{display:none!important}.syn-neuron,.syn-signals circle,.syn-intro-loading span,.syn-hero-orbit{animation:none!important}}

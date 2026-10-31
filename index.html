@@ -597,30 +597,30 @@ main section:not(.signature-section):not(.hero):not(.ph1) .signature-heading p {
 }
 </style>
 <link rel="stylesheet" href="synap-theme.css">
+<link rel="stylesheet" href="synap-reimagined.css">
 </head>
 <body class="synap-intro-running">
 <div id="scroll-progress" aria-hidden="true"></div>
 <div id="intro" aria-hidden="true">
-  <div class="intro-backdrop" aria-hidden="true">
-    <span class="intro-orbit intro-orbit-a"></span>
-    <span class="intro-orbit intro-orbit-b"></span>
-    <span class="intro-orbit intro-orbit-c"></span>
-    <span class="intro-cross"></span>
-  </div>
-  <div class="intro-composition intro-3d-stage"><div class="intro-logo-3d"><span class="intro-logo-halo"></span><img src="synap-synap-logo.png" alt="" class="intro-real-logo"></div>
-    <div class="intro-letter-stage" role="img" aria-label="SYNAP — Learn. Apply. Save Lives."><svg viewBox="0 0 820 180" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><text class="signature-letter signature-word" x="410" y="128" text-anchor="middle" textLength="684" lengthAdjust="spacing">SYNAP</text></svg><span class="signature-sub">MEDICAL TEAM</span></div>
-    <svg class="intro-ecg" viewBox="0 0 900 110" role="presentation" aria-hidden="true">
-      <path class="ecg-base" d="M8 58H325L355 58L379 48L405 68L448 10L491 99L519 58H892"/>
-      <path class="ecg-trace" d="M8 58H325L355 58L379 48L405 68L448 10L491 99L519 58H892"/>
+  <div class="syn-neuron-field">
+    <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs><linearGradient id="neural-ink" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#05bca9"/><stop offset="1" stop-color="#073847"/></linearGradient></defs>
+      <g class="syn-neuron syn-neuron-left" fill="none" stroke="url(#neural-ink)" stroke-width="4" stroke-linecap="round">
+        <path d="M-30 280 Q120 280 190 340 T330 350 Q420 350 515 350"/><path d="M190 340 Q150 210 75 165 M190 340 Q140 445 60 510 M330 350 Q380 235 445 208 M330 350 Q385 470 460 510"/>
+        <path d="M75 165 Q35 105 12 100 M75 165 Q110 110 133 96 M60 510 Q40 555 0 590 M445 208 Q470 170 510 170 M460 510 Q490 550 520 560"/>
+      </g>
+      <g class="syn-neuron syn-neuron-right" fill="none" stroke="url(#neural-ink)" stroke-width="4" stroke-linecap="round">
+        <path d="M1220 420 Q1080 420 1000 370 T870 350 Q800 350 690 350"/><path d="M1000 370 Q1040 250 1120 210 M1000 370 Q1040 485 1130 520 M870 350 Q825 250 780 205 M870 350 Q820 465 775 500"/>
+      </g>
+      <g class="syn-signals"><circle cx="560" cy="350" r="8"/><circle cx="590" cy="350" r="5"/><circle cx="625" cy="350" r="7"/><circle cx="655" cy="350" r="4"/></g>
     </svg>
-    <p class="intro-tagline" dir="ltr">Learn <span>·</span> Apply <span>·</span> Save Lives</p>
   </div>
-  <button type="button" id="skip-intro" aria-label="تخطي المقدمة">تخطي المقدمة ↗</button>
-  <div class="intro-bottomline"><span></span><small>MEDICAL EDUCATIONAL TEAM</small><span></span></div>
+  <div class="syn-intro-center"><span class="syn-intro-eyebrow">A NEW CONNECTION BEGINS</span><img src="synap-original-logo.png" alt="" class="syn-intro-logo"><p>من فكرة، لاتصال، لمعرفة تصنع فرقًا.</p><div class="syn-intro-loading"><span></span></div></div>
+  <button type="button" id="skip-intro" aria-label="تخطي المقدمة">تخطّي المقدمة ←</button>
 </div>
 <a class="skip" href="#app" onclick="event.preventDefault();document.getElementById('app').focus()">انتقل إلى المحتوى</a>
 <header><div class="bar">
-<a href="#/" aria-label="SYNAP الرئيسية"><img src="synap-synap-logo.png" alt="شعار SYNAP Medical Team"></a>
+<a href="#/" aria-label="SYNAP الرئيسية"><img src="synap-original-logo.png" alt="شعار SYNAP Medical Team"></a>
 <button id="mt" aria-expanded="false" aria-controls="nv">القائمة</button>
 <nav id="nv" aria-label="التنقل الرئيسي">
 <a href="#/" data-p="">الرئيسية</a><a href="#/about" data-p="about">من نحن</a><a href="#/courses" data-p="courses">الدورات والورشات</a><a href="#/work" data-p="work">أعمالنا</a><a href="#/resources" data-p="resources">المكتبة الطبية</a><a href="#/join" data-p="join">انضم إلى <bdi>SYNAP</bdi></a><a href="#/contact" data-p="contact">تواصل معنا</a><a href="admin/" class="admin-entry" aria-label="تسجيل دخول إدارة SYNAP">تسجيل الدخول ↗</a>
@@ -664,7 +664,7 @@ const link=(u,t,c='btn')=>safe(u)?`<a class="${c}" href="${esc(u)}" target="_bla
 const head=(t,s)=>`<section class="ph1"><div class="wrap"><h1>${t}</h1><p class="lead">${s||''}</p></div></section>`;
 const V={
 '':()=>{const up=D.courses.filter(c=>c.status!=='done').slice(0,3);
-return `<section class="hero"><div class="wrap" style="position:relative"><div><p class="hero-kicker" style="color:#B7E8DF;font-weight:700;margin:0 0 10px">SYNAP · MEDICAL EDUCATION</p><h1>Curiosity. <em>Connection.</em><br><span class="hero-save">Real Growth.</span></h1><p class="hero-arabic">${esc(D.site?.heroSubtitle||'نتعلّم المعرفة، نطبّق المهارة، ونصنع فرقًا.')}</p><p>مساحة شبابية تجمع العقول الفضولية، والتعلّم الفعّال، والتجربة العملية.</p><div class="btns"><a class="btn w" href="#/courses">استكشف الدورات</a><a class="btn o" href="#/about">تعرّف على <bdi>SYNAP</bdi></a></div></div><div class="arch"><svg class="pulse-orbit" viewBox="0 0 330 370" aria-hidden="true"><circle class="track" cx="165" cy="175" r="145"/><circle class="track" cx="165" cy="175" r="126"/><circle class="satellite" cx="165" cy="30" r="4"/><circle class="satellite" cx="310" cy="175" r="3" style="animation-direction:reverse;animation-duration:21s"/></svg><div class="hero-identity"><img class="hero-logo" src="synap-synap-logo.png" alt="شعار SYNAP Medical Team"><div class="hero-identity-line" dir="ltr">CONNECT <span>·</span> LEARN <span>·</span> GROW</div></div></div>
+return `<section class="hero"><div class="wrap" style="position:relative"><div><p class="hero-kicker" style="color:#B7E8DF;font-weight:700;margin:0 0 10px">SYNAP / CONNECTED LEARNING</p><h1>كل فكرة تبدأ <em>باتصال.</em><br><span class="hero-save">وكل اتصال يصنع أثرًا.</span></h1><p class="hero-arabic">${esc(D.site?.heroSubtitle||'نتعلّم المعرفة، نطبّق المهارة، ونصنع فرقًا.')}</p><p>نتعلم معًا، نشارك الأفكار، ونحوّل المعرفة إلى تجربة حقيقية.</p><div class="btns"><a class="btn w" href="#/courses">استكشف الدورات</a><a class="btn o" href="#/about">تعرّف على <bdi>SYNAP</bdi></a></div></div><div class="arch"><div class="syn-hero-orbit syn-hero-orbit-one"></div><div class="syn-hero-orbit syn-hero-orbit-two"></div><span class="syn-hero-spark syn-spark-a"></span><span class="syn-hero-spark syn-spark-b"></span><svg class="pulse-orbit" viewBox="0 0 330 370" aria-hidden="true"><circle class="track" cx="165" cy="175" r="145"/><circle class="track" cx="165" cy="175" r="126"/><circle class="satellite" cx="165" cy="30" r="4"/><circle class="satellite" cx="310" cy="175" r="3" style="animation-direction:reverse;animation-duration:21s"/></svg><div class="hero-identity"><img class="hero-logo" src="synap-original-logo.png" alt="شعار SYNAP Medical Team"><div class="hero-identity-line" dir="ltr">CONNECT <span>·</span> LEARN <span>·</span> GROW</div></div></div>
 <svg class="thread" viewBox="0 0 400 120" aria-hidden="true"><path d="M395 118C360 30 290 10 240 60S120 100 5 30" fill="none" stroke="#2A9D9A" stroke-width="3" stroke-linecap="round"/><circle cx="5" cy="30" r="6" fill="#2A9D9A"/></svg></div></section>
 <section class="impact-section" aria-labelledby="impact-title"><div class="wrap"><div class="impact-panel"><div class="impact-copy"><span class="impact-eyebrow">SYNAP · LEARNING PULSE</span><h2 id="impact-title">كل مهارة بتفتح بابًا جديدًا.</h2><p>نؤمن أن التعليم الطبي الأقوى يجمع بين الفهم، والتجربة، والتعلّم المستمر.</p><div class="impact-number impact-unset" id="impact-count" aria-live="polite">أضف الرقم</div><span class="impact-caption" id="impact-caption">عدد الطلاب المستفيدين — قابل للتعديل من content.js</span></div><div class="impact-figure" aria-hidden="true"><svg viewBox="0 0 120 120"><circle class="orbit" cx="60" cy="60" r="42"/><circle class="orbit" cx="60" cy="60" r="28" style="animation-direction:reverse;animation-duration:17s"/><path d="M18 62 C32 62 32 35 46 35 S61 86 76 86 S91 55 103 55" fill="none" stroke="#9AE4D6" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 5"><animate attributeName="stroke-dashoffset" values="32;0" dur="3s" repeatCount="indefinite"/></path><circle class="core" cx="60" cy="60" r="9"/><circle class="node" cx="18" cy="62" r="3"/><circle class="node" cx="103" cy="55" r="3" style="animation-delay:.7s"/></svg></div></div></div></section>
 <section class="signature-section" aria-labelledby="constellation-title"><div class="wrap">
