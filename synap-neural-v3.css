@@ -1,0 +1,43 @@
+/* SYNAP / Neural Flow V3 — visual layer only. Existing application JS preserved. */
+:root{--syn3-navy:#092d3b;--syn3-teal:#09bba9;--syn3-mint:#b2f4e3}
+body{background:#fff!important}
+header{background:rgba(255,255,255,.91)!important;backdrop-filter:blur(18px);border-bottom:1px solid #e2f1ee}
+.bar>a img{height:57px!important;width:auto!important;max-width:180px!important;object-fit:contain}
+#intro{display:grid!important;place-items:center!important;perspective:1200px!important;background:radial-gradient(circle at 50% 50%,#fff 10%,#f0fffa 70%,#e2f6f2 100%)!important;animation:syn3-out .75s cubic-bezier(.76,0,.2,1) 3.25s forwards!important;overflow:hidden}
+#intro::before,#intro::after{display:none!important}
+.syn3-intro-world{position:absolute;inset:0;perspective:1100px;transform-style:preserve-3d;animation:syn3-world 3.5s cubic-bezier(.2,.7,.3,1) both}
+.syn3-neuron{position:absolute;width:220px;height:220px;transform-style:preserve-3d;filter:drop-shadow(0 25px 18px rgba(7,102,102,.12))}
+.syn3-neuron-a{left:calc(50% - 400px);top:calc(50% - 110px);transform:rotateY(-22deg) rotateZ(-12deg) scale(1.06)}
+.syn3-neuron-b{right:calc(50% - 400px);top:calc(50% - 110px);transform:rotateY(26deg) rotateZ(14deg) scale(1.06)}
+.syn3-soma{position:absolute;left:77px;top:77px;width:66px;height:66px;border-radius:42% 58% 48% 52%;background:radial-gradient(circle at 28% 25%,#d5fff1,#4dd8bd 43%,#008b8e 75%,#06475a);box-shadow:inset -10px -10px 18px #065d6b55,0 10px 24px #009f9b33;animation:syn3-breathe 2.2s ease-in-out infinite}
+.syn3-branch{position:absolute;left:110px;top:105px;width:112px;height:13px;transform-origin:0 50%;border-radius:100% 50% 50% 100%;background:linear-gradient(90deg,#0d9e9b,#67dcca 70%,#c6fff0);box-shadow:0 4px 8px #067c7a20}
+.syn3-branch:after{content:"";position:absolute;right:-8px;top:-6px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#e7fff7,#15c3ac 70%,#047e86)}
+.syn3-branch.b1{transform:rotate(-90deg) scaleX(.95)}.syn3-branch.b2{transform:rotate(-38deg)}.syn3-branch.b3{transform:rotate(28deg) scaleX(1.15)}.syn3-branch.b4{transform:rotate(82deg) scaleX(.85)}.syn3-branch.b5{transform:rotate(155deg) scaleX(1.1)}
+.syn3-axon{position:absolute;left:calc(50% - 180px);top:50%;width:360px;height:3px;background:linear-gradient(90deg,transparent,#4bcab9 18%,#0caeaa 50%,#4bcab9 82%,transparent);transform:translateY(-50%) rotateX(30deg);box-shadow:0 0 20px #27c6b766;opacity:.65}
+.syn3-pulse{position:absolute;top:-8px;left:0;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 0 0 6px #64e3c955,0 0 18px 10px #19d4bd99;animation:syn3-travel 1.45s cubic-bezier(.35,.15,.6,.9) .4s both}.syn3-pulse.delay{animation-delay:1.5s}
+.syn3-intro-copy{z-index:5;position:relative;display:flex;align-items:center;flex-direction:column;gap:13px;padding:20px 30px;animation:syn3-reveal .8s 1.2s both;text-align:center}
+.syn3-intro-copy img{width:min(42vw,280px)!important;max-height:230px!important;object-fit:contain;filter:drop-shadow(0 9px 17px #003b4d12)}
+.syn3-kicker,.syn3-tiny{font:700 11px/1.6 'Outfit',sans-serif;letter-spacing:.26em;color:#218e89;direction:ltr}
+.syn3-intro-copy p{font-size:clamp(1.1rem,2.8vw,1.5rem);font-weight:700;color:#073c49;margin:0}
+#skip-intro{position:absolute;z-index:9;bottom:30px;left:30px;border:1px solid #c8e9e2;background:#ffffffcc;color:#15545b;border-radius:40px;padding:9px 17px;cursor:pointer}
+.hero{background:linear-gradient(130deg,#f7fffc 0%,#fff 52%,#ecfaf6 100%)!important;color:#082f3d!important;border-bottom:1px solid #e4f4ef;overflow:hidden}
+.hero h1{color:#082f3d!important}.hero h1 em{color:#009f99!important}.hero h1 .hero-save{color:#185968!important}.hero p,.hero p:not(.hero-kicker){color:#426872!important}.hero-kicker{color:#008c8a!important;border-color:#bfe6dc!important;background:#fff!important}
+.hero .btn.w{background:#00a99b!important;color:#fff!important;border-color:#00a99b!important}.hero .btn.o{background:#fff!important;color:#0b5760!important;border-color:#b5ded7!important}
+.hero .arch{position:relative;background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important;min-height:350px!important;animation:none!important}
+.hero .arch:before,.hero .arch:after{display:none!important}
+.hero-identity{position:relative;z-index:3!important;background:rgba(255,255,255,.74);border:1px solid #d6eee7;border-radius:35px;padding:22px 12px;box-shadow:0 30px 70px #08494c14;backdrop-filter:blur(12px)}
+.hero-identity .hero-logo{max-width:280px!important;filter:none!important}
+.syn3-hero-neuron{position:absolute;inset:-10% -15%;z-index:0;transform:rotateX(24deg) rotateY(-18deg);transform-style:preserve-3d;animation:syn3-float 6s ease-in-out infinite}
+.syn3-hub{position:absolute;left:50%;top:50%;width:88px;height:88px;transform:translate(-50%,-50%);border-radius:44% 56% 61% 39%;background:radial-gradient(circle at 30% 25%,#d5fff5,#34d5bb 50%,#067989);box-shadow:inset -13px -13px 18px #08606b44,0 18px 34px #009c9c2d}
+.syn3-wire{position:absolute;left:50%;top:50%;height:11px;width:45%;border-radius:40px;background:linear-gradient(90deg,#0a9c9d,#6be2cb);transform-origin:left center;box-shadow:0 7px 15px #008c8c24}
+.syn3-wire:after{content:"";position:absolute;right:0;top:-10px;width:29px;height:29px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#e7fff9,#17bcae 70%,#087789)}
+.syn3-wire.w1{transform:rotate(-120deg)}.syn3-wire.w2{transform:rotate(-42deg)}.syn3-wire.w3{transform:rotate(26deg)}.syn3-wire.w4{transform:rotate(104deg)}.syn3-wire.w5{transform:rotate(166deg)}
+#app .card,#app .course-card,#app .feature-card{transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease}
+#app .card:hover,#app .course-card:hover,#app .feature-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px #004e5c15}
+@keyframes syn3-world{0%{transform:translateZ(-300px) rotateY(-12deg) scale(.8);opacity:0}35%{opacity:1}100%{transform:translateZ(50px) rotateY(0) scale(1.08);opacity:1}}
+@keyframes syn3-reveal{from{opacity:0;transform:translateY(18px) scale(.94)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes syn3-travel{from{transform:translateX(0) scale(.65);opacity:0}20%{opacity:1}to{transform:translateX(350px) scale(1.4);opacity:0}}
+@keyframes syn3-breathe{50%{transform:scale(1.09)}}@keyframes syn3-float{50%{transform:rotateX(17deg) rotateY(-10deg) translateY(-14px)}}
+@keyframes syn3-out{to{opacity:0;visibility:hidden;pointer-events:none;transform:scale(1.06)}}
+@media(max-width:760px){.syn3-neuron-a{left:-100px;top:28%;transform:scale(.65)}.syn3-neuron-b{right:-100px;top:55%;transform:scale(.65)}.syn3-axon{width:75vw;left:12.5vw}.syn3-intro-copy img{width:min(58vw,230px)!important}.syn3-kicker{font-size:9px}.hero .arch{min-height:260px!important}.syn3-hero-neuron{inset:0}}
+@media(prefers-reduced-motion:reduce){#intro{animation:syn3-out .2s .1s forwards!important}.syn3-intro-world,.syn3-intro-copy,.syn3-pulse,.syn3-hero-neuron,.syn3-soma{animation:none!important}}
